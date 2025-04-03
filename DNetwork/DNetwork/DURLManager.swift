@@ -11,11 +11,13 @@ public enum DURLManager {
     case api
     case appInfo
     case appStore
+    case proposeFunction
+    case notice
     
     public var urlString: String {
         switch self {
         case .privacyPolicy:
-            return "https://littlemoom.notion.site/bbs-term?pvs=4"
+            return "__REDACTED_PRIVACY_POLICY_URL__"
         case .feedback:
             return "__REDACTED_FEEDBACK_URL__"
         case .api:
@@ -24,6 +26,10 @@ public enum DURLManager {
             return "__REDACTED_APP_INFO_URL__"
         case .appStore:
             return "__REDACTED_APP_STORE_URL__"
+        case .proposeFunction:
+            return "__REDACTED_PROPOSE_FUNCTION_URL__"
+        case .notice:
+            return "__REDACTED_NOTICE_URL__"
         }
     }
 }

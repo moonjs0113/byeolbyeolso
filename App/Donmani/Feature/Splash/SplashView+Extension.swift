@@ -12,14 +12,12 @@ extension SplashView {
     func loadData() {
         Task {
             let keychainManager = KeychainManager()
+//            keychainManager.saveToKeychain(to: .uuid, value: "__REDACTED_ADMIN_ID__")
             let (key, _) = keychainManager.generateUUID()
 //            print(key)
-            let isFirstUser = keychainManager.getUserName().isEmpty
+//            let isFirstUser = keychainManager.getUserName().isEmpty
             NetworkService.setUserKey(key)
             var userName = try await NetworkService.User().register()
-            if isFirstUser {
-                userName += "님의 별통이"
-            }
             userName = try await NetworkService.User().update(name: userName)
             keychainManager.setUserName(name: userName)
             DataStorage.setUserName(userName)
@@ -47,7 +45,6 @@ extension SplashView {
                 }
                 DataStorage.setRecord(record)
             }
-            
             let appVersion = (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String) ?? "0.0"
             let storeVerion = try await NetworkService.Version().fetchAppVersionFromAppStore()
             let isLatestVersion = VersionManager().isLastestVersion(store: storeVerion, current: appVersion)

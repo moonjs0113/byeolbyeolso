@@ -16,7 +16,7 @@ extension SplashView {
                     checkAppVersion()
                 }
                 let keychainManager = KeychainManager()
-//                            keychainManager.saveToKeychain(to: .uuid, value: "__REDACTED_ADMIN_ID__")
+//              keychainManager.saveToKeychain(to: .uuid, value: "__REDACTED_ADMIN_ID__")
                 let (key, _) = keychainManager.generateUUID()
                 //            print(key)
                 //            let isFirstUser = keychainManager.getUserName().isEmpty
@@ -66,7 +66,5 @@ extension SplashView {
                 }
             }
         }
-        
     }
-    
 }

@@ -16,7 +16,7 @@ struct RecordListView: View {
     var body: some View {
         ZStack {
             BackgroundView()
-            VStack(alignment: .center,spacing: 0) {
+            VStack(alignment: .center, spacing: 0) {
                 // Navigation Bar
                 ZStack {
                     HStack {

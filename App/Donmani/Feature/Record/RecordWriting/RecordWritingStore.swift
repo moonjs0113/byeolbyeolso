@@ -210,7 +210,8 @@ struct RecordWritingStore {
                     parameters[.bad] = (state.savedCategory?.getInstance() as BadCategory?)?.title ?? "Bad"
                 }
                 GA.Click(event: .recordNexttimeButton).send(parameters: parameters)
-            case .binding:
+            
+            default:
                 break
             }
             return .none

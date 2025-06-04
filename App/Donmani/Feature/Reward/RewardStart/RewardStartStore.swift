@@ -14,16 +14,16 @@ struct RewardStartStore {
     struct Context {
         let recordCount: Int
         let isNotOpened: Bool
-        let isFirstOpened: Bool
+//        let isFirstOpened: Bool
         
         init(
             recordCount: Int,
-            isNotOpened: Bool,
-            isFirstOpened: Bool
+            isNotOpened: Bool
+//            isFirstOpened: Bool
         ) {
             self.recordCount = recordCount
             self.isNotOpened = isNotOpened
-            self.isFirstOpened = isFirstOpened
+//            self.isFirstOpened = isFirstOpened
         }
     }
     
@@ -36,6 +36,7 @@ struct RewardStartStore {
         var subtitle: String = "오늘부터 기록하고 숨겨진 14개 선물을 받아 보세요!"
         var buttonTitle: String = "기록하러 가기"
         
+        var isFullReward = false
         var isEnabledButton = true
         var isPresentingGuideText: Bool = false
         var isPresentingGuideBottomSheet: Bool = false
@@ -59,7 +60,11 @@ struct RewardStartStore {
             self.recordCount = context.recordCount
             self.userName = DataStorage.getUserName()
             
-            if context.recordCount > 0 {
+            if (context.recordCount == 14) {
+                title = "준비한 선물을 모두 받았어요!\n이번 선물 어떠셨나요?"
+                subtitle = "다섯 분을 선정해 스타벅스 기프티콘을 드려요!"
+                isFullReward = true
+            } else if context.recordCount > 0 {
                 title = "기록하고 토비 선물받기 🎁\n지금까지 \(context.recordCount)번 기록 중"
                 subtitle = "14번 기록하면 특별한 선물을 받아요"
                 buttonTitle = "지금 선물받기"
@@ -68,6 +73,7 @@ struct RewardStartStore {
                     isEnabledButton = false
                 }
             }
+
         }
     }
     
@@ -76,6 +82,7 @@ struct RewardStartStore {
         case touchGuideBottomSheetButton
         
         case touchNextButton
+        case touchReviewButton
         
         case requestFeedbackCard
         case receivedFeedbackCard(FeedbackCard)
@@ -132,6 +139,15 @@ struct RewardStartStore {
                             await send(.delegate(.pushRewardReceiveView(count)))
                         }
                     }
+                }
+                
+            case .touchReviewButton:
+                return .run { send in
+                    let urlString = "__REDACTED_REWARD_FEEDBACK_URL__"
+                    guard let url = URL(string: urlString) else {
+                        return
+                    }
+                    await UIApplication.shared.open(url)
                 }
                 
             case .requestFeedbackCard:

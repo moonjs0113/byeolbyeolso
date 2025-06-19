@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "NoneSticker.png",
+      "filename" : "reward_decoration_space_vacance.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "NoneSticker 1.png",
+      "filename" : "reward_decoration_space_vacance 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "NoneSticker 2.png",
+      "filename" : "reward_decoration_space_vacance 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

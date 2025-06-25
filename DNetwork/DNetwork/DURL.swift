@@ -13,6 +13,7 @@ public enum DURL {
     case appStore
     case proposeFunction
     case notice
+    case rewardFeedback
     
     public var urlString: String {
         switch self {
@@ -30,6 +31,8 @@ public enum DURL {
             return "__REDACTED_PROPOSE_FUNCTION_URL__"
         case .notice:
             return "__REDACTED_NOTICE_URL__"
+        case .rewardFeedback:
+            return "__REDACTED_REWARD_FEEDBACK_URL__"
         }
     }
 }

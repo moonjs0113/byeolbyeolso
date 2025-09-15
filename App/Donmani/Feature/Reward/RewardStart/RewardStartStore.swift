@@ -171,13 +171,6 @@ struct RewardStartStore {
                 
             case .touchReviewButton:
                 state.isPresentingRewardFeedbackView = true
-//                return .run { send in
-//                    let urlString = "__REDACTED_REWARD_FEEDBACK_URL__"
-//                    guard let url = URL(string: urlString) else {
-//                        return
-//                    }
-//                    await UIApplication.shared.open(url)
-//                }
                 
             case .touchDecorationButton:
                 GA.Click(event: .customizeRewardButton).send()

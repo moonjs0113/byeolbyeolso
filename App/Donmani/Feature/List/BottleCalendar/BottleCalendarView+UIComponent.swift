@@ -52,7 +52,13 @@ extension BottleCalendarView {
                     )
                     .onTapGesture {
                         GA.Click(event: .list별통이Button).send(parameters: [.별통이ID: 2500 + month.0])
-                        store.send(month.1 == 0 ? .showEmptyBottleToast : .fetchMonthlyRecord(2025, month.0))
+                        if (month.1 == 0) {
+                            store.send(.showEmptyBottleToast)
+                        } else {
+                            store.send(.showLoading)
+                            store.send(.fetchMonthlyRecord(2025, month.0))
+                        }
+                        
                     }
                     Spacer()
                 }

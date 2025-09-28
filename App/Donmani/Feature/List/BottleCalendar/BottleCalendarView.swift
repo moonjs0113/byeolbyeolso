@@ -50,6 +50,18 @@ struct BottleCalendarView: View {
         .background {
             BackgroundView()
         }
+        .overlay {
+            if store.isPresentLoadingIndicator {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.gray)
+                        .scaleEffect(2.0)
+                }
+            }
+        }
     }
 }
 

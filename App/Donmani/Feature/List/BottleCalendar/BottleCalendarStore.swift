@@ -15,6 +15,7 @@ struct BottleCalendarStore {
     struct State {
         var isPresentingTopBanner: Bool = false
         var isPresentTextGuide: Bool = false
+        var isPresentLoadingIndicator: Bool = false
         
         var starCount: [Int: Int] = [:]
         var starCountSort: [(Int, Int)] = []
@@ -45,6 +46,9 @@ struct BottleCalendarStore {
         case showEmptyBottleToast
         case completeShowToast
         
+        case showLoading
+        case hideLoading
+        
         case fetchMonthlyRecord(Int, Int)
         case delegate(Delegate)
         enum Delegate {
@@ -55,6 +59,7 @@ struct BottleCalendarStore {
     // MARK: - Dependency
     @Dependency(\.settings) var settings
     @Dependency(\.recordRepository) var recordRepository
+    @Dependency(\.fileRepository) var fileRepository
     
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
@@ -77,10 +82,22 @@ struct BottleCalendarStore {
                 return .run { send in
                     let monthlyRecordState = try await recordRepository.getMonthlyRecordList(year: year, month: month)
                     let records = monthlyRecordState.records ?? []
+                    for reward in monthlyRecordState.decorationItem.values {
+                        do {
+                            try await fileRepository.saveRewardData(from: reward)
+                        } catch {
+                            print("failed to save reward data: \(reward)")
+                        }
+                    }
                     recordRepository.saveRecords(records)
+                    await send(.hideLoading)
                     await send(.delegate(.pushMonthlyBottleView(Day(year: year, month: month), records, monthlyRecordState.saveItems)))
                 }
                 
+            case .showLoading:
+                state.isPresentLoadingIndicator = true
+            case .hideLoading:
+                state.isPresentLoadingIndicator = false
             default:
                 break
             }

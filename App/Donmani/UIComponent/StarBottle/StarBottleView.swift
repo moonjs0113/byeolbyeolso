@@ -85,6 +85,7 @@ struct StarBottleView: View {
     @State var decorationRewardId: Int?
     @State var bottleRewardId: Int?
     @State var bottleShape: BottleShape
+    @State var bottleOffset: CGFloat = 0.0
     
     func fetchUI() {
         for i in 0..<records.count {
@@ -188,60 +189,6 @@ struct StarBottleView: View {
                         .onTapGesture {
                             onTapGesture?()
                         }
-                        .overlay {
-                            if let decorationRewardName, let decorationRewardId {
-                                if decorationRewardId == 20 { // 둥둥배
-                                    VStack {
-                                        Spacer()
-                                        HStack {
-                                            Spacer()
-                                            DLottieView(
-                                                name: decorationRewardName,
-                                                loopMode: .loop
-                                            )
-                                            .frame(width: 80, height: 80)
-                                        }
-                                    }
-                                    .allowsHitTesting(false)
-                                    .offset(
-                                        x: viewType == .decoration ? (Self.width/6) : 0,
-                                        y: viewType == .decoration ? (Self.width/8) : (Self.width/5)
-                                    )
-                                } else if decorationRewardId == 23 { // 우주바캉스 토비
-                                    VStack {
-                                        HStack {
-                                            DImage(.rewardDecorationSpaceVacance)
-                                                .image
-                                                .resizable()
-                                                .aspectRatio(0.67, contentMode: .fit)
-                                                .frame(height: .screenWidth * 0.27)
-                                                .offset(
-                                                    x: spaceVacanceItemOffset.x,
-                                                    y: spaceVacanceItemOffset.y
-                                                )
-                                        }
-                                        Spacer()
-                                    }
-                                } else { // 토비호, 몽글몽글 열기구, 달베개
-                                    VStack {
-                                        HStack {
-                                            DLottieView(
-                                                name: decorationRewardName,
-                                                loopMode: .loop
-                                            )
-                                            .frame(width: 80, height: 80)
-                                            Spacer()
-                                        }
-                                        Spacer()
-                                    }
-                                    .allowsHitTesting(false)
-                                    .offset(
-                                        x: viewType == .decoration ? -(Self.width/5) : -(Self.width/10),
-                                        y: viewType == .decoration ? -(Self.width/10) : -(Self.width/5)
-                                    )
-                                }
-                            }
-                        }
                     } else {
                         DImage(.starBottleLock).image
                             .resizable()
@@ -250,8 +197,65 @@ struct StarBottleView: View {
                     }
                     
                 }
+                .offset(y: bottleOffset)
+                .overlay {
+                    Group {
+                        if let decorationRewardName, let decorationRewardId {
+                            if decorationRewardId == 20 { // 둥둥배
+                                VStack {
+                                    Spacer()
+                                    HStack {
+                                        Spacer()
+                                        DLottieView(
+                                            name: decorationRewardName,
+                                            loopMode: .loop
+                                        )
+                                        .frame(width: 80, height: 80)
+                                    }
+                                }
+                                .allowsHitTesting(false)
+                                .offset(
+                                    x: viewType == .decoration ? (Self.width/6) : 0,
+                                    y: viewType == .decoration ? (Self.width/8) : (Self.width/5)
+                                )
+                            } else if decorationRewardId == 23 { // 우주바캉스 토비
+                                VStack {
+                                    HStack {
+                                        DImage(.rewardDecorationSpaceVacance)
+                                            .image
+                                            .resizable()
+                                            .aspectRatio(0.67, contentMode: .fit)
+                                            .frame(height: .screenWidth * 0.27)
+                                            .offset(
+                                                x: spaceVacanceItemOffset.x,
+                                                y: spaceVacanceItemOffset.y
+                                            )
+                                    }
+                                    Spacer()
+                                }
+                            } else { // 토비호, 몽글몽글 열기구, 달베개
+                                VStack {
+                                    HStack {
+                                        DLottieView(
+                                            name: decorationRewardName,
+                                            loopMode: .loop
+                                        )
+                                        .frame(width: 80, height: 80)
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                }
+                                .allowsHitTesting(false)
+                                .offset(
+                                    x: viewType == .decoration ? -(Self.width/5) : -(Self.width/10),
+                                    y: viewType == .decoration ? -(Self.width/10) : -(Self.width/5)
+                                )
+                            }
+                        }
+                    }
+                    .frame(width: width)
+                }
                 .padding(.bottom, viewType == .decoration ? 70 : (70 + 52 + .s5))
-                
             }
         }
         .onAppear {
@@ -259,9 +263,6 @@ struct StarBottleView: View {
             motionManager.startGyros { dx, dy in
                 starBottleScene.setGravity(dx: dx, dy: -dy)
             }
-        }
-        .onDisappear {
-            //            motionManager.stopGyros()
         }
         .onChange(of: starBottleAction) { (_, action) in
             switch action {
@@ -271,6 +272,13 @@ struct StarBottleView: View {
                     height: Self.height,
                     record: record
                 )
+                bottleOffset = -20
+                Task { @MainActor in
+                    try await Task.sleep(nanoseconds: 100_000)
+                    withAnimation(.spring(duration: 1, bounce: 0.7)) {
+                      bottleOffset = 0
+                    }
+                }
             case .changeBackgroundItem(let data):
                 backgroundRewardData = data
             case .changeEffectItem(let data):

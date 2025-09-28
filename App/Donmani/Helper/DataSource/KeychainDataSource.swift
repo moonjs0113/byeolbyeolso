@@ -30,19 +30,21 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     
     public init() { }
     
-    private let debugUUID = "__REDACTED_ADMIN_ID__"
+//#if DEBUG
+//    private let debugUUID = "__REDACTED_ADMIN_ID__"
+//#endif
     
     /// Keychain에서 UUID 가져오기 (없으면 새로 생성 후 저장)
     // TODO: - 배포 전 확인하기
     public func generateUUID() -> String {
-        save(to: .uuid, value: debugUUID)
-        if let uuid = load(from: .uuid) {
-            return uuid
-        }
-        return debugUUID
-//        let newUUID = load(from: .uuid) ?? UUID().uuidString
-//        save(to: .uuid, value: newUUID)
-//        return newUUID
+//        save(to: .uuid, value: debugUUID)
+//        if let uuid = load(from: .uuid) {
+//            return uuid
+//        }
+//        return debugUUID
+        let newUUID = load(from: .uuid) ?? UUID().uuidString
+        save(to: .uuid, value: newUUID)
+        return newUUID
     }
     
     /// 사용자 이름 가져오기

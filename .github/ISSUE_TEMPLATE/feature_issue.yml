@@ -21,8 +21,8 @@ body:
       label: 테스트 환경
       description: 테스트한 기기 환경 정보
       value: |
-        Device: 
-        iOS: 
+        Device: 모든 Device
+        iOS: 모든 iOS
       placeholder: |
         기기: 시뮬레이터 아이폰16 or 실제기기 아이폰16 프로
         iOS: iOS 17.0

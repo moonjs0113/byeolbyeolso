@@ -49,7 +49,7 @@ extension RewardStartView {
             HStack(alignment: .center, spacing: .s5 / 2.0) {
                 DText(store.dayTitle)
                     .style(.h2, .bold, .deepBlue99)
-                DText(feedbackCard.category?.title ?? "무소비")
+                DText(feedbackCard.category.title)
                     .style(.h2, .bold, .deepBlue99)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 12)
@@ -57,7 +57,8 @@ extension RewardStartView {
                         RoundedRectangle(cornerRadius: 8.0, style: .circular)
                             .fill(Color.white.opacity(0.1))
                     }
-                DText((feedbackCard.category == nil ? "" : "소비를 ") + "했네요!").style(.h2, .bold, .deepBlue99)
+                DText((feedbackCard.category == .none ? "" : "소비를 ") + "했네요!")
+                    .style(.h2, .bold, .deepBlue99)
                 Spacer()
             }
         }
@@ -69,7 +70,7 @@ extension RewardStartView {
     func FeedbackCardView(feedbackCard: FeedbackCard) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: .s1, style: .circular)
-                .fill((feedbackCard.category?.color ?? DColor.empty).opacity(0.5))
+                .fill((feedbackCard.category.color).opacity(0.5))
             RoundedRectangle(
                 cornerRadius: .s1,
                 style: .continuous
@@ -102,12 +103,10 @@ extension RewardStartView {
                 .frame(height: .s2)
                 .padding(.bottom, 40)
                 
-                if let categoryImage = feedbackCard.category?.image {
-                    categoryImage
-                        .resizable()
-                        .frame(width: 78, height: 78)
-                        .padding(.bottom, 20)
-                }
+                feedbackCard.category.image
+                    .resizable()
+                    .frame(width: 78, height: 78)
+                    .padding(.bottom, 20)
                 
                 DText(feedbackCard.title)
                     .style(.h2, .bold, .white)

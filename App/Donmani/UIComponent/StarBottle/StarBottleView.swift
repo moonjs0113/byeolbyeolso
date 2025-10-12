@@ -201,7 +201,6 @@ struct StarBottleView: View {
                             .aspectRatio(contentMode: .fit)
                             .padding(.horizontal, 38)
                     }
-                    
                 }
                 .offset(y: bottleOffset)
                 .overlay {

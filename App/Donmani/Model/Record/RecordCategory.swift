@@ -135,7 +135,7 @@ extension RecordCategory {
         case .overfrugality:    "과한절약"
         case .miss:             "선택미스"
             
-        case .none:             "없음"
+        case .none:             "무소비"
         }
     }
 }

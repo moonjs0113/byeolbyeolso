@@ -70,13 +70,15 @@ struct MainStore {
         
         case delegate(Delegate)
         
-        case update(Update)
-        enum Update {
-            case changeBackgroundItem(Data)
-            case changeEffectItem(Data)
-            case changeDecorationItem(Int, String)
-            case changeBottleShapeItem(Int, BottleShape)
-        }
+        case updateRewardUI(RewardItemData)
+        
+//        case update(Update)
+//        enum Update {
+//            case changeBackgroundItem(Data)
+//            case changeEffectItem(Data)
+//            case changeDecorationItem(Int, String)
+//            case changeBottleShapeItem(Int, BottleShape)
+//        }
         
         enum Delegate {
             case pushSettingView
@@ -122,29 +124,31 @@ struct MainStore {
                         bottleShape: bottleShape
                     )
                     await send(.fetchRewardItem(decorationData))
-                    
-                    for (category, item) in items {
-                        switch category {
-                        case .background:
-                            if let data = try? fileRepository.loadRewardData(from: item, resourceType: .image) {
-                                await send(.update(.changeBackgroundItem(data)))
-                            }
-                        case .effect:
-                            if let data = try? fileRepository.loadRewardData(from: item, resourceType: .json) {
-                                await send(.update(.changeEffectItem(data)))
-                            }
-                        case .decoration:
-                            let name = RewardResourceMapper(
-                                id: item.id,
-                                category: .decoration
-                            ).resource()
-                            await send(.update(.changeDecorationItem(item.id, name)))
-                        case .bottle:
-                            await send(.update(.changeBottleShapeItem(item.id, BottleShape(id: item.id))))
-                        case .sound:
-                            break
-                        }
-                    }
+                    let itemData = makeRewardItemDate(items: items)
+                    await send(.updateRewardUI(itemData))
+//                    for (category, item) in items {
+//                        switch category {
+//                        case .background:
+//                            if let data = try? fileRepository.loadRewardData(from: item, resourceType: .image) {
+//                                await send(.update(.changeBackgroundItem(data)))
+//                            }
+//                        case .effect:
+//                            if let data = try? fileRepository.loadRewardData(from: item, resourceType: .json) {
+//                                await send(.update(.changeEffectItem(data)))
+//                            }
+//                        case .decoration:
+//                            let name = RewardResourceMapper(
+//                                id: item.id,
+//                                category: .decoration
+//                            ).resource()
+//                            await send(.update(.changeDecorationItem(item.id, name)))
+//                        case .bottle:
+//                            await send(.update(.changeBottleShapeItem(item.id, BottleShape(id: item.id))))
+//                        case .sound:
+//                            break
+//                        }
+//                    }
+//                    await send(.update(.changeRewardItem(itemData)))
                     
                     let hasTodayRecord = recordRepository.load(date: .today).isSome
                     let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
@@ -197,23 +201,68 @@ struct MainStore {
                 }
                 
                 // 화면 업데이트 Action
-            case .update(let update):
-                switch update {
-                case .changeBackgroundItem(let data):
-                    state.starBottleAction = .changeBackgroundItem(data)
-                case .changeEffectItem(let data):
-                    state.starBottleAction = .changeEffectItem(data)
-                case .changeDecorationItem(let id, let name):
-                    state.starBottleAction = .changeDecorationItem(id, name)
-                case .changeBottleShapeItem(let id, let bottleShape):
-                    state.starBottleAction = .changeBottleItem(id, bottleShape)
-                }
-                
+//            case .update(let update):
+            case .updateRewardUI(let itemData):
+                state.starBottleAction = .changeRewardItem(itemData)
+//                switch update {
+//                case .changeRewardItem(let data):
+//                    state.star
+//                case .changeBackgroundItem(let data):
+//                    state.starBottleAction = .changeBackgroundItem(data)
+//                case .changeEffectItem(let data):
+//                    state.starBottleAction = .changeEffectItem(data)
+//                case .changeDecorationItem(let id, let name):
+//                    state.starBottleAction = .changeDecorationItem(id, name)
+//                case .changeBottleShapeItem(let id, let bottleShape):
+//                    state.starBottleAction = .changeBottleItem(id, bottleShape)
+//                }
+//                
             default:
                 break
             }
             
             return .none
         }
+    }
+}
+
+extension MainStore {
+    func makeRewardItemDate(items: [RewardItemCategory: Reward]) -> RewardItemData {
+        RewardItemData(
+            backgroundItem: items[.background].map { item in
+                try? fileRepository.loadRewardData(from: item, resourceType: .image)
+            },
+            effectItem: items[.effect].map { item in
+                try? fileRepository.loadRewardData(from: item, resourceType: .json)
+            },
+            decorationItemId: items[.decoration].map(\.id),
+            decorationItemName: items[.decoration].map { item in
+                    RewardResourceMapper(id: item.id, category: .decoration).resource()
+                },
+            bottleItemId: items[.bottle].map(\.id),
+            bottleShape: items[.bottle].map { item in
+                BottleShape(id: item.id)
+            }
+        )
+//        {
+//    case .background:
+//        if let data = try? fileRepository.loadRewardData(from: item, resourceType: .image) {
+//            await send(.update(.changeBackgroundItem(data)))
+//        }
+//    case .effect:
+//        if let data = try? fileRepository.loadRewardData(from: item, resourceType: .json) {
+//            await send(.update(.changeEffectItem(data)))
+//        }
+//    case .decoration:
+//        let name = RewardResourceMapper(
+//            id: item.id,
+//            category: .decoration
+//        ).resource()
+//        await send(.update(.changeDecorationItem(item.id, name)))
+//    case .bottle:
+//        await send(.update(.changeBottleShapeItem(item.id, BottleShape(id: item.id))))
+//    case .sound:
+//        break
+//    }
     }
 }

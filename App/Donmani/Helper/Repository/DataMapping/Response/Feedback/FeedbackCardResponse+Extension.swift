@@ -12,7 +12,7 @@ extension FeedbackCardResponse {
         let rawValue = self.category.lowercased()
         let category = RecordCategory(rawValue: rawValue)
         return FeedbackCard(
-            category: category,
+            category: category ?? .none,
             title: self.title,
             content: self.content,
             prefix: self.flagType ? "오늘은" : "요즘은"

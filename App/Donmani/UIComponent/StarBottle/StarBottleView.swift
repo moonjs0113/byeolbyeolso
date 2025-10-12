@@ -10,14 +10,20 @@ import SpriteKit
 import DesignSystem
 import ComposableArchitecture
 
+
+
 enum StarBottleAction: Equatable {
     case addNewStar(Record)
     
+    /// 전체 아이템 교체
+    case changeRewardItem(RewardItemData)
+    
+    /// 카테고리별 아이템 교체
     case changeBackgroundItem(Data)
     case changeEffectItem(Data)
     case changeDecorationItem(Int, String)
     case changeBottleItem(Int, BottleShape)
-    
+
     case none
 }
 
@@ -279,6 +285,25 @@ struct StarBottleView: View {
                       bottleOffset = 0
                     }
                 }
+                
+            case .changeRewardItem(let itemData):
+                if let backgroundItem = itemData.backgroundItem {
+                    backgroundRewardData = backgroundItem
+                }
+                if let effectItem = itemData.effectItem {
+                    effectRewardData = effectItem
+                }
+                if let decorationItemId = itemData.decorationItemId,
+                   let decorationItemName = itemData.decorationItemName {
+                    decorationRewardId = decorationItemId
+                    decorationRewardName = decorationItemName
+                }
+                if let bottleItemId = itemData.bottleItemId,
+                   let bottleShape = itemData.bottleShape {
+                    bottleRewardId = bottleItemId
+                    self.bottleShape = bottleShape
+                }
+                
             case .changeBackgroundItem(let data):
                 backgroundRewardData = data
             case .changeEffectItem(let data):

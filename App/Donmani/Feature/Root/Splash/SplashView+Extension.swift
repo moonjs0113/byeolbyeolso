@@ -10,21 +10,19 @@ import DNetwork
 
 extension SplashView {
     func loadData() {
-        Task {
+        Task(priority: .high) {
             defer {
                 checkAppVersion()
             }
-            async let userTask: () = fetchUserData()
-            async let recordTask: () = fetchRecordData()
-            async let rewardTask: () = fetchRewardData()
-            async let downloadTask: () = downloadRewardData()
             do {
-                try await userTask
-                try await recordTask
-                try await rewardTask
-                try await downloadTask
+                try await fetchUserData()
+                try await fetchRecordData()
+                try await fetchRewardData()
+                try await downloadRewardData()
             } catch(let e) {
+#if DEBUG
                 print(e.localizedDescription)
+#endif
             }
         }
     }
@@ -34,6 +32,9 @@ extension SplashView {
         if user.new {
             settings.shouldShowOnboarding = true
         }
+//        else {
+//            try await userRepository.putLastLogin()
+//        }
     }
     
     private func fetchRecordData() async throws {

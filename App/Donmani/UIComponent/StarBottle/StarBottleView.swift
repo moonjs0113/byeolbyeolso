@@ -20,8 +20,8 @@ enum StarBottleAction: Equatable {
     
     /// 카테고리별 아이템 교체
     case changeBackgroundItem(Data)
-    case changeEffectItem(Data)
-    case changeDecorationItem(Int, String)
+    case changeEffectItem(Data?)
+    case changeDecorationItem(Int?, String?)
     case changeBottleItem(Int, BottleShape)
 
     case none
@@ -221,7 +221,7 @@ struct StarBottleView: View {
                                 .allowsHitTesting(false)
                                 .offset(
                                     x: viewType == .decoration ? (Self.width/6) : 0,
-                                    y: viewType == .decoration ? (Self.width/8) : (Self.width/5)
+                                    y: viewType == .decoration ? -((.screenWidth / 3 - .defaultLayoutPadding) + (Self.width/10) ) : (Self.width/8)
                                 )
                             } else if decorationRewardId == 23 { // 우주바캉스 토비
                                 VStack {
@@ -272,13 +272,14 @@ struct StarBottleView: View {
         .onChange(of: starBottleAction) { (_, action) in
             switch action {
             case .addNewStar(let record):
-                starBottleScene.createNewStarNode(
-                    width: Self.width,
-                    height: Self.height,
-                    record: record
-                )
-                bottleOffset = -20
                 Task { @MainActor in
+                    try await Task.sleep(nanoseconds: .nanosecondsPerSecond / 10)
+                    starBottleScene.createNewStarNode(
+                        width: Self.width,
+                        height: Self.height,
+                        record: record
+                    )
+                    bottleOffset = -20
                     try await Task.sleep(nanoseconds: 100_000)
                     withAnimation(.spring(duration: 1, bounce: 0.7)) {
                       bottleOffset = 0
@@ -286,17 +287,10 @@ struct StarBottleView: View {
                 }
                 
             case .changeRewardItem(let itemData):
-                if let backgroundItem = itemData.backgroundItem {
-                    backgroundRewardData = backgroundItem
-                }
-                if let effectItem = itemData.effectItem {
-                    effectRewardData = effectItem
-                }
-                if let decorationItemId = itemData.decorationItemId,
-                   let decorationItemName = itemData.decorationItemName {
-                    decorationRewardId = decorationItemId
-                    decorationRewardName = decorationItemName
-                }
+                backgroundRewardData = itemData.backgroundItem
+                effectRewardData = itemData.effectItem
+                decorationRewardId = itemData.decorationItemId
+                decorationRewardName = itemData.decorationItemName
                 if let bottleItemId = itemData.bottleItemId,
                    let bottleShape = itemData.bottleShape {
                     bottleRewardId = bottleItemId

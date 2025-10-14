@@ -139,8 +139,8 @@ struct DecorationStore {
         
         case changeItem(RewardItemCategory, Reward)
         case changeBackgroundItem(Data)
-        case changeEffectItem(Data)
-        case changeDecorationItem(Int, String)
+        case changeEffectItem(Data?)
+        case changeDecorationItem(Int?, String?)
         case changeBottleShapeItem(Int, BottleShape)
         
         case binding(BindingAction<State>)
@@ -262,14 +262,18 @@ struct DecorationStore {
                         let data = try fileRepository.loadRewardData(from: item, resourceType: .image)
                         await send(.changeBackgroundItem(data))
                     case .effect:
-                        let data = try fileRepository.loadRewardData(from: item, resourceType: .json)
+                        let data = item.jsonUrl.isNil ? nil : try fileRepository.loadRewardData(from: item, resourceType: .json)
                         await send(.changeEffectItem(data))
                     case .decoration:
-                        let name = RewardResourceMapper(
-                            id: item.id,
-                            category: .decoration
-                        ).resource()
-                        await send(.changeDecorationItem(item.id, name))
+                        if item.id == 3 { // 기본 아이템
+                            await send(.changeDecorationItem(nil, nil))
+                        } else {
+                            let name = RewardResourceMapper(
+                                id: item.id,
+                                category: .decoration
+                            ).resource()
+                            await send(.changeDecorationItem(item.id, name))
+                        }
                     case .bottle:
                         await send(.changeBottleShapeItem(item.id, BottleShape(id: item.id)))
                     case .sound:

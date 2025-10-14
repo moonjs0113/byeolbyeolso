@@ -21,6 +21,7 @@ struct ToastView: View {
                 .opacity(toastManager.position == .top ? 1 : 0)
                 
                 Spacer()
+                
                 ToastElementView(
                     text: toastManager.title,
                     icon: toastManager.icon

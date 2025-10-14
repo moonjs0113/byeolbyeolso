@@ -100,13 +100,16 @@ public struct NetworkRequest {
         do {
             return try JSONDecoder().decode(R.self, from: data)
         } catch(let e) {
-            print("\(e): \(e.localizedDescription)")
+            print("\(e.localizedDescription)")
             throw NetworkError.decodingFailed
         }
     }
     
     /// Request with Empty Response
     func run(request: URLRequest) async throws {
+#if DEBUG
+        print(request)
+#endif
         guard let (_, response) = try? await URLSession.shared.data(for: request) else {
             throw NetworkError.requestFailed
         }
@@ -118,14 +121,20 @@ public struct NetworkRequest {
     
     /// Request with Raw URL String
     func run(dataRequest: URLRequest) async throws -> Data {
-        guard let (data, response) = try? await URLSession.shared.data(for: dataRequest) else {
-            throw NetworkError.requestFailed
+#if DEBUG
+        print(dataRequest)
+#endif
+        do {
+            let (data, response) = try await URLSession.shared.data(for: dataRequest)
+            let stateCode = (response as? HTTPURLResponse)?.statusCode ?? 500
+            if stateCode >= 400 {
+                throw NetworkError.serverError(statusCode: stateCode)
+            }
+            return data
+        } catch(let e) {
+            print(e)
+            throw e
         }
-        let stateCode = (response as? HTTPURLResponse)?.statusCode ?? 500
-        if stateCode >= 400 {
-            throw NetworkError.serverError(statusCode: stateCode)
-        }
-        return data
     }
 }
 

@@ -34,6 +34,9 @@ struct RootView: View {
                     )
                     .transition(.move(edge: .trailing))
                     .id(store.route.id)
+                    .overlay {
+                        ToastView()
+                    }
                     
                 case .splash:
                     SplashView {
@@ -51,7 +54,7 @@ struct RootView: View {
                 ])
             }
             
-            ToastView()
+            
         }
         
     }

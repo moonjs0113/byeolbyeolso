@@ -62,6 +62,7 @@ struct SettingView: View {
     
     @Dependency(\.rewardRepository) var rewardRepository
     @Dependency(\.userUseCase) var userUseCase
+    @Dependency(\.settings) var settings
     
     let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\\s]+$"
     var isSaveEnable: Bool {
@@ -147,6 +148,10 @@ struct SettingView: View {
                             }
                         }
                         Spacer()
+                        VStack {
+                            DText("v\(settings.appVersion)")
+                                .style(.b4, .regular, .white)
+                        }
                     }
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)

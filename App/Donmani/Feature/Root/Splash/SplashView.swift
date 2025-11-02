@@ -10,6 +10,7 @@ import DesignSystem
 import ComposableArchitecture
 
 struct SplashView: View {
+    @EnvironmentObject private var toastManager: ToastManager
     @Dependency(\.settings) var settings
     @Dependency(\.userRepository) var userRepository
     @Dependency(\.recordRepository) var recordRepository
@@ -18,6 +19,7 @@ struct SplashView: View {
     @Dependency(\.fileRepository) var fileRepository
     
     @State var isLatestVersion: Bool = true
+    @State var toastType: ToastType = .none
     let completeHandler: (() -> Void)?
     
     init(completeHandler: @escaping () -> Void) {
@@ -55,10 +57,15 @@ struct SplashView: View {
             loadData()
         }
         .background {
-            BackgroundView(colors: [
-                DColor.backgroundTop,
-                DColor.backgroundBottom,
-            ])
+            BackgroundView(
+                colors: [
+                    DColor.backgroundTop,
+                    DColor.backgroundBottom,
+                ]
+            )
+        }
+        .onChange(of: toastType) { _, type in
+            toastManager.show(type)
         }
     }
 }

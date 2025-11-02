@@ -12,6 +12,7 @@ enum ToastType {
     case specialCharactersNotAllowed
     case successSaveDecoration
     case emptyRecordMonth
+    case splashNetworkError
     case none
     
     var title: String {
@@ -24,6 +25,8 @@ enum ToastType {
             "꾸미기를 반영했어요"
         case .emptyRecordMonth:
             "앗! 이달은 기록이 없어요"
+        case .splashNetworkError:
+            "별통이 데이터를 불러오지 못했어요.\n잠시 후 다시 시도해 주세요."
         case .none:
             ""
         }
@@ -31,7 +34,7 @@ enum ToastType {
     
     var position: ToastPosition? {
         switch self {
-        case .maxNicknameLengthExceeded, .specialCharactersNotAllowed, .emptyRecordMonth:
+        case .maxNicknameLengthExceeded, .specialCharactersNotAllowed, .emptyRecordMonth, .splashNetworkError:
                 .bottom
         case .successSaveDecoration:
                 .top
@@ -42,7 +45,7 @@ enum ToastType {
     
     var icon: DImageAsset? {
         switch self {
-        case .maxNicknameLengthExceeded, .specialCharactersNotAllowed, .emptyRecordMonth:
+        case .maxNicknameLengthExceeded, .specialCharactersNotAllowed, .emptyRecordMonth, .splashNetworkError:
                 .warning
         case .successSaveDecoration:
                 .success

@@ -84,11 +84,13 @@ extension MainNavigationStore {
             state.path.append(.monthlyStarBottle(initialState))
             
             // Reward
-        case .rewardStart(let feedbackInfo):
+        case .rewardStart(let feedbackInfo, let hasTodayRecord, let hasYesterdayRecord):
             let context = RewardStartStore.Context(
                 recordCount: feedbackInfo.totalCount,
                 isNotOpened: feedbackInfo.isNotOpened,
-                userName: userRepository.getUserName()
+                userName: userRepository.getUserName(),
+                hasTodayRecord: hasTodayRecord,
+                hasYesterdayRecord: hasYesterdayRecord
             )
             let initialState = stateFactory.makeRewardStartState(context: context)
             state.path.append(.rewardStart(initialState))

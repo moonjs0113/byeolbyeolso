@@ -17,7 +17,7 @@ extension RewardStartView {
                     DText(store.title)
                         .style(.h2, .bold, .deepBlue99)
                         .lineSpacing(4)
-                    DText(store.subtitle)
+                    DText(store.subTitle)
                         .style(.b2, .regular, .deepBlue90)
                 }
                 Spacer()

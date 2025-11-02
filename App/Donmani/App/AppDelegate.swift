@@ -14,13 +14,17 @@ import ComposableArchitecture
 class AppDelegate: NSObject, UIApplicationDelegate {
     @Dependency(\.settings) var settings
     @Dependency(\.userRepository) var userRepository
+    @Dependency(\.keychainDataSource) var keychainDataSource
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         // Load DesignSystem Resource
         DFont.loadFonts()
         
-        // Set Notifiacation Center
+        // Set UserKey in Keychain
+        keychainDataSource.generateUUID()
+        
+        // Set Notification Center
         UNUserNotificationCenter.current().delegate = self
         
         // Firebase

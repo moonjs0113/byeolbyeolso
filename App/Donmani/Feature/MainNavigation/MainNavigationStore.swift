@@ -51,7 +51,7 @@ struct MainNavigationStore {
             case monthlyStarBottle(Day, [Record], [Reward])
             
             // Reward
-            case rewardStart(FeedbackInfo)
+            case rewardStart(FeedbackInfo, Bool, Bool) // Today, Yesterday
             case rewardReceive(Int)
             case decoration([Record], [RewardItemCategory : [Reward]], [Reward], RewardItemCategory, DecorationData)
         }
@@ -109,7 +109,9 @@ struct MainNavigationStore {
                 case .pushRewardStartView:
                     return .run { send in
                         let feedbackInfo = try await feedbackRepository.getFeedbackState()
-                        await send(.push(.rewardStart(feedbackInfo)))
+                        let hasTodayRecord = recordRepository.load(date: .today).isSome
+                        let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
+                        await send(.push(.rewardStart(feedbackInfo, hasTodayRecord, hasYesterdayRecord)))
                     }
                 }
                 

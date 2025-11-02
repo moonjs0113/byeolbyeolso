@@ -11,18 +11,15 @@ import DNetwork
 extension SplashView {
     func loadData() {
         Task(priority: .high) {
-            defer {
-                checkAppVersion()
-            }
             do {
                 try await fetchUserData()
                 try await fetchRecordData()
                 try await fetchRewardData()
                 try await downloadRewardData()
+                checkAppVersion()
             } catch(let e) {
-#if DEBUG
+                toastType = .splashNetworkError
                 print(e.localizedDescription)
-#endif
             }
         }
     }
@@ -32,9 +29,6 @@ extension SplashView {
         if user.new {
             settings.shouldShowOnboarding = true
         }
-//        else {
-//            try await userRepository.putLastLogin()
-//        }
     }
     
     private func fetchRecordData() async throws {
@@ -91,6 +85,7 @@ extension SplashView {
         Task {
             let infoDictionaryKey = "CFBundleShortVersionString"
             let appVersion = (Bundle.main.infoDictionary?[infoDictionaryKey] as? String) ?? "0.0"
+            settings.appVersion = appVersion
             let updateInfo = try await appVersionRepository.getAppVersion()
             let isLatestVersion = VersionManager().isLastestVersion(store: updateInfo.latestVersion, current: appVersion)
             self.isLatestVersion = isLatestVersion

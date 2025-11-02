@@ -17,7 +17,6 @@ extension RecordEntryPointView {
                 VStack(alignment: .leading, spacing: 8) {
                     DText("다음에 기록할까요?")
                         .style(.h2, .bold, .gray99)
-                    
                     DText("지금까지 기록한 내용은 저장되지 않아요")
                         .style(.b2, .regular, .deepBlue90)
                 }
@@ -73,7 +72,6 @@ extension RecordEntryPointView {
                     DText("무소비는 하루 동안 한 번도 소비하지 않았을 때 선택해요.\n지금까지 기록한 내용이 있다면 모두 사라져요!")
                         .style(.b2, .regular, .deepBlue90)
                         .lineSpacing(6)
-                    
                 }
                 HStack(spacing: 10) {
                     Button {

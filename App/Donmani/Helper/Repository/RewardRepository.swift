@@ -38,7 +38,7 @@ struct DefaultRewardRepository: RewardRepository {
     // KeychainDataSource
     /// 사용자 ID
     private var userKey: String {
-        keychainDataSource.generateUUID()
+        keychainDataSource.getUserKey()
     }
     
     // RewardDataSource

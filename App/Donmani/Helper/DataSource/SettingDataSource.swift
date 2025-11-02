@@ -81,6 +81,9 @@ struct SettingDataSource {
         // 메인 페이지 내 선물 받기 툴팁 표시 여부 -> 다른 객체로 위임
         // private let isPresentingRewardToolTipView = "PRESENTING_REWARD_TOOL_TIP_VIEW"
         
+        /// App Version
+        case appVersion
+        
         var value: String {
             self.rawValue
         }
@@ -145,6 +148,10 @@ struct SettingDataSource {
     /// 새 별통이 열림 안내 표시 날짜
     @UserDefault(key: .lastNewBottleGuideDay, defaultValue: "0000-00-00")
     static var lastNewBottleGuideDay: String
+    
+    /// App Version
+    @UserDefault(key: .appVersion, defaultValue: "0.0.0")
+    static var appVersion: String
 }
 
 extension DependencyValues {

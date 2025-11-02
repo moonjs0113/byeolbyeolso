@@ -23,7 +23,7 @@ struct DefaultFeedbackRepository: FeedbackRepository {
     
     /// 사용자 ID
     private var userKey: String {
-        keychainDataSource.generateUUID()
+        keychainDataSource.getUserKey()
     }
     
     /// 피드백 상태(미확인 리워드, 첫 오픈 여부, 리워드 개수)

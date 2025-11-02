@@ -34,9 +34,6 @@ struct RootView: View {
                     )
                     .transition(.move(edge: .trailing))
                     .id(store.route.id)
-                    .overlay {
-                        ToastView()
-                    }
                     
                 case .splash:
                     SplashView {
@@ -46,6 +43,9 @@ struct RootView: View {
                     .id(store.route.id)
                 }
             }
+            .overlay {
+                ToastView()
+            }
             .animation(.smooth, value: store.route)
             .background {
                 BackgroundView(colors: [
@@ -53,8 +53,6 @@ struct RootView: View {
                     DColor.backgroundBottom,
                 ])
             }
-            
-            
         }
         
     }

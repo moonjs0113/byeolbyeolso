@@ -35,7 +35,7 @@ struct DefaultUserRepository: UserRepository {
     
     /// 사용자 ID
     private var userKey: String {
-        keychainDataSource.generateUUID()
+        keychainDataSource.getUserKey()
     }
     
     /// 사용자 등록

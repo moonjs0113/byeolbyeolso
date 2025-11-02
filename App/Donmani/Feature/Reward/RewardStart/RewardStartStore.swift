@@ -15,15 +15,21 @@ struct RewardStartStore {
         let recordCount: Int
         let isNotOpened: Bool
         let userName: String
+        let hasTodayRecord: Bool
+        let hasYesterdayRecord: Bool
         
         init(
             recordCount: Int,
             isNotOpened: Bool,
-            userName: String
+            userName: String,
+            hasTodayRecord: Bool,
+            hasYesterdayRecord: Bool
         ) {
             self.recordCount = recordCount
             self.isNotOpened = isNotOpened
             self.userName = userName
+            self.hasTodayRecord = hasTodayRecord
+            self.hasYesterdayRecord = hasYesterdayRecord
         }
     }
     
@@ -33,7 +39,7 @@ struct RewardStartStore {
         let userName: String
         
         var title: String = "앗! 아직 기록을 작성하지 않았어요"
-        var subtitle: String = "오늘부터 기록하고 숨겨진 12개 선물을 받아 보세요!"
+        var subTitle: String = "오늘부터 기록하고 숨겨진 12개 선물을 받아 보세요!"
         var buttonTitle: String = "기록하러 가기"
         
         var isFullReward = false
@@ -65,26 +71,25 @@ struct RewardStartStore {
             if (context.recordCount >= 12) {
                 if (context.isNotOpened) {
                     title = "기록하고 토비 선물받기 🎁\n지금까지 \(context.recordCount)번 기록 중"
-                    subtitle = "12번 기록하면 특별한 선물을 받아요"
+                    subTitle = "12번 기록하면 특별한 선물을 받아요"
                     buttonTitle = "지금 선물받기"
                 } else {
                     title = "준비한 선물을 모두 받았어요!\n이번 선물 어떠셨나요?"
-                    subtitle = "다섯 분을 선정해 스타벅스 기프티콘을 드려요"
+                    subTitle = "다섯 분을 선정해 스타벅스 기프티콘을 드려요"
                     isFullReward = true
                     isEnabledButton = false
                 }
             } else if context.recordCount > 0 {
                 title = "기록하고 토비 선물받기 🎁\n지금까지 \(context.recordCount)번 기록 중"
-                subtitle = "12번 기록하면 특별한 선물을 받아요"
+                subTitle = "12번 기록하면 특별한 선물을 받아요"
                 buttonTitle = "지금 선물받기"
                 if (!context.isNotOpened) {
-                    let recordState = HistoryStateManager.shared.getState()
-                    if (recordState[.today, default: true] && recordState[.yesterday, default: true]) {
+                    if (context.hasTodayRecord && context.hasYesterdayRecord) {
                         title = "오늘까지 받을 수 있는 선물을\n모두 받았어요"
                         isEnabledButton = false
                     } else {
-                        title = "앗! 아직 기록을 작성하지 않았어요"
-                        subtitle = "오늘부터 기록하고 숨겨진 12개 선물을 받아 보세요!"
+//                        title = "앗! 아직 기록을 작성하지 않았어요"
+//                        subTitle = "오늘부터 기록하고 숨겨진 12개 선물을 받아 보세요!"
                         buttonTitle = "기록하러 가기"
                         enabledWriteRecord = true
                     }

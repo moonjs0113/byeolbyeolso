@@ -50,6 +50,11 @@ struct RecordListView: View {
                 } else {
                     RecordScrollView(store: store)
                 }
+                
+                BannerAdView(
+                    width: .screenWidth,
+                    cornerRadius: 0
+                )
             }
             
             if store.isPresentingBottleCalendarToolTipView {

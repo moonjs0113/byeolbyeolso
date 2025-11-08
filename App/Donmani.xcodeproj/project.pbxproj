@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = C7199C0F2EB786A200926C94 /* GoogleMobileAds */; };
 		C72CD4B02D92FCAC00274F37 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4AF2D92FCAC00274F37 /* FirebaseAnalytics */; };
 		C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B12D92FCAC00274F37 /* FirebaseCrashlytics */; };
 		C72CD4B42D92FCAC00274F37 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B32D92FCAC00274F37 /* FirebaseInAppMessaging-Beta */; };
@@ -106,6 +107,7 @@
 				C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */,
 				C7A5DA942D7D6ED200C3BC6D /* DNetwork.framework in Frameworks */,
 				C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */,
+				C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */,
 				C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */,
 				C72CD4B02D92FCAC00274F37 /* FirebaseAnalytics in Frameworks */,
 				C7A5DA922D7D6ED100C3BC6D /* DesignSystem.framework in Frameworks */,
@@ -188,6 +190,7 @@
 				C72CD4B32D92FCAC00274F37 /* FirebaseInAppMessaging-Beta */,
 				C72CD4B52D92FCAC00274F37 /* FirebaseMessaging */,
 				C77B86312DDA4C2B0052EA8B /* Lottie */,
+				C7199C0F2EB786A200926C94 /* GoogleMobileAds */,
 			);
 			productName = Donmani;
 			productReference = C7A6A24E2D4A826B00B4CF35 /* Donmani.app */;
@@ -275,6 +278,7 @@
 				C7A6A2942D4A89D500B4CF35 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				C72CD4AE2D92FCAC00274F37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C77B86302DDA4C2B0052EA8B /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				C7199C0E2EB786A200926C94 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C7A6A24F2D4A826B00B4CF35 /* Products */;
@@ -496,7 +500,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nexters.Donmani;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -534,7 +538,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nexters.Donmani;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -661,6 +665,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C7199C0E2EB786A200926C94 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
 		C72CD4AE2D92FCAC00274F37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -688,6 +700,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C7199C0F2EB786A200926C94 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7199C0E2EB786A200926C94 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
 		C72CD4AF2D92FCAC00274F37 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C72CD4AE2D92FCAC00274F37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

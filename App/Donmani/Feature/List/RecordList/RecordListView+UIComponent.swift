@@ -111,6 +111,7 @@ extension RecordListView {
                 .padding(.top, 40)
             }
             .padding(.top, 17)
+            .clipped()
         }
     }
     

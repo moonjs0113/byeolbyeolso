@@ -10,6 +10,7 @@ import DesignSystem
 import FirebaseCore
 import FirebaseMessaging
 import ComposableArchitecture
+import GoogleMobileAds
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     @Dependency(\.settings) var settings
@@ -39,6 +40,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
            let window = windowScene.windows.first {
             window.overrideUserInterfaceStyle = .light
         }
+        
+        // Google AdMob
+        MobileAds.shared.start()
+//        MobileAds.shared.requestConfiguration.testDeviceIdentifiers = [ "ec365e0096743d5ba2d70e77b9ec2b76"]
         
         return true
     }

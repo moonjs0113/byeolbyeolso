@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import DesignSystem
+import GoogleMobileAds
 
 struct BottleCalendarView: View {
     @EnvironmentObject private var toastManager: ToastManager
@@ -30,12 +31,15 @@ struct BottleCalendarView: View {
                 )
                 
                 ScrollView {
+                    BannerAdView(width: .adScreenWidth)
+                    
                     if store.isPresentingTopBanner {
                         TopBannerView()
                     }
                     MonthlyBottleGridView()
                         .padding(.top, 16)
                 }
+                .frame(width: .screenWidth)
                 .ignoresSafeArea(edges: .bottom)
             }
         }

@@ -75,7 +75,10 @@ struct SettingView: View {
         ZStack {
             ScrollView {
                 ZStack {
-                    VStack(alignment: .center, spacing: .defaultLayoutPadding) {
+                    VStack(
+                        alignment: .center,
+                        spacing: .defaultLayoutPadding / 2
+                    ) {
                         DNavigationBar(
                             leading: {
                                 DNavigationBarButton(.arrowLeft) {
@@ -110,8 +113,9 @@ struct SettingView: View {
                                 }
                             }
                         }
-                        .padding(.defaultLayoutPadding)
-                        .padding(.bottom, .defaultLayoutPadding)
+                        .padding(.vertical, .defaultLayoutPadding)
+                        
+                        BannerAdView(width: .adScreenWidth)
                         
                         VStack(alignment: .leading, spacing: 0) {
                             MenuButton(type: .decoration) {
@@ -148,10 +152,10 @@ struct SettingView: View {
                             }
                         }
                         Spacer()
-                        VStack {
-                            DText("v\(settings.appVersion)")
-                                .style(.b4, .regular, .white)
-                        }
+//                        VStack {
+//                            DText("v\(settings.appVersion)")
+//                                .style(.b4, .regular, .white)
+//                        }
                     }
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)

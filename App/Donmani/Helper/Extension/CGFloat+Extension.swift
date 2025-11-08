@@ -6,8 +6,19 @@
 //
 
 import UIKit
+import DesignSystem
+import GoogleMobileAds
 
 extension CGFloat {
-    public static let screenHeight = UIScreen.main.bounds.height
-    public static let screenWidth = UIScreen.main.bounds.width
+    public static var screenHeight: CGFloat {
+        UIScreen.main.bounds.height
+    }
+    
+    public static var screenWidth: CGFloat {
+        UIScreen.main.bounds.width
+    }
+    
+    public static var adScreenWidth: CGFloat {
+        screenWidth - (.defaultLayoutPadding * 2)
+    }
 }

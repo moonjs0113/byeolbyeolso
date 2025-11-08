@@ -30,6 +30,8 @@ struct StatisticsView: View {
                 )
                 
                 ScrollView {
+                    BannerAdView(width: .adScreenWidth)
+                    
                     VStack(spacing: .s3) {
                         TopBannerView()
                         CategoryStatisticsView(flag: .good)

@@ -8,12 +8,14 @@
 import GoogleMobileAds
 import SwiftUI
 
-struct BannerAdViewWrapper: UIViewRepresentable {
+struct BannerViewContainer: UIViewRepresentable {
     private let id = "ca-app-pub-3756871454805423/6560832665"
     let adSize: AdSize
+    let loadCompleteHandler: () -> Void
     
-    init() {
+    init(_ loadCompleteHandler: @escaping () -> Void) {
         self.adSize = currentOrientationAnchoredAdaptiveBanner(width: CGFloat.screenWidth)
+        self.loadCompleteHandler = loadCompleteHandler
     }
     
     func makeUIView(context: Context) -> BannerView {
@@ -21,17 +23,61 @@ struct BannerAdViewWrapper: UIViewRepresentable {
         let banner = BannerView(adSize: adSize)
         banner.adUnitID = id
         banner.load(Request())
+        banner.delegate = context.coordinator
         return banner
     }
     
     func updateUIView(_ uiView: BannerView, context: Context) {
         
     }
+    
+    func makeCoordinator() -> BannerCoordinator {
+        BannerCoordinator(self)
+    }
+    
+    class BannerCoordinator: NSObject, BannerViewDelegate {
+        
+        let parent: BannerViewContainer
+        
+        init(_ parent: BannerViewContainer) {
+            self.parent = parent
+        }
+        
+        // MARK: - GADBannerViewDelegate methods
+        func bannerViewDidReceiveAd(_ bannerView: BannerView) {
+            parent.loadCompleteHandler()
+        }
+        
+        func bannerView(_ bannerView: BannerView, didFailToReceiveAdWithError error: Error) {
+            print("FAILED TO RECEIVE AD: \(error.localizedDescription)")
+        }
+        
+        func bannerViewDidRecordClick(_ bannerView: BannerView) {
+            print(#function)
+        }
+        
+        func bannerViewDidRecordImpression(_ bannerView: BannerView) {
+            print(#function)
+        }
+        
+        func bannerViewWillPresentScreen(_ bannerView: BannerView) {
+            print(#function)
+        }
+        
+        func bannerViewWillDismissScreen(_ bannerView: BannerView) {
+            print(#function)
+        }
+        
+        func bannerViewDidDismissScreen(_ bannerView: BannerView) {
+            print(#function)
+        }
+    }
 }
 
 struct BannerAdView: View {
     let width: CGFloat
     let cornerRadius: CGFloat
+    @State var opacity = 0.4
     
     init(width: CGFloat, cornerRadius: CGFloat = 12) {
         self.width = width
@@ -39,13 +85,16 @@ struct BannerAdView: View {
     }
     
     var body: some View {
-        BannerAdViewWrapper()
-            .frame(
-                width: width,
-                height: currentOrientationAnchoredAdaptiveBanner(
-                    width: width
-                ).size.height
-            )
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        BannerViewContainer {
+            opacity = 0.0
+        }
+        .frame(
+            width: width,
+            height: currentOrientationAnchoredAdaptiveBanner(
+                width: width
+            ).size.height
+        )
+        .background(Color.white.opacity(opacity))
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
     }
 }

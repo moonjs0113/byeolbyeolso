@@ -32,7 +32,7 @@ struct MainStore {
         var isPresentingRecordYesterdayToolTip: Bool = false
         var isPresentingAlreadyWrite: Bool = false
         var isPresentingNewStarBottle: Bool = false
-        var isPresentingRewardToolTipView: Bool
+        var isPresentingRewardToolTipView: Bool = false
         var isRequestNotificationPermission: Bool = true
         var isLoading: Bool = false
         var starBottleOpacity = 1.0
@@ -48,9 +48,6 @@ struct MainStore {
             self.decorationData = context.decorationData
             self.canWriteRecord = !(context.hasRecord.today && context.hasRecord.yesterday)
             self.isPresentingNewStarBottle = context.isPresentingNewStarBottle
-            
-            // TODO: - 리워드 툴팁 표시
-            isPresentingRewardToolTipView = HistoryStateManager.shared.getIsPresentingRewardToolTipView()
         }
     }
     
@@ -96,6 +93,7 @@ struct MainStore {
     @Dependency(\.loadRewardUseCase) var loadRewardUseCase
     @Dependency(\.fileRepository) var fileRepository
     @Dependency(\.rewardRepository) var rewardRepository
+    @Dependency(\.settings) var settings
     
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
@@ -106,6 +104,7 @@ struct MainStore {
                 GA.View(event: .main).send()
                 state.userName = userUseCase.userName
                 state.canWriteRecord = writeRecordUseCase.canWriteRecord()
+                state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
                 return .run { send in
                     let day: Day = .today
                     let items = rewardRepository.loadEquippedItems(year: day.year, month: day.month)
@@ -140,7 +139,6 @@ struct MainStore {
                 
             case .closePopover:
                 state.isPresentingRecordYesterdayToolTip = false
-                HistoryStateManager.shared.setLastYesterdayToopTipDay()
                 
             case .checkToolTip:
                 state.isPresentingRecordYesterdayToolTip = true
@@ -172,7 +170,7 @@ struct MainStore {
                 GA.Click(event: .mainShopButton).send()
                 if (state.isPresentingRewardToolTipView) {
                     state.isPresentingRewardToolTipView = false
-                    HistoryStateManager.shared.setIsPresentingRewardToolTipView(true)
+                    settings.shouldShowRewardToolTip = false
                 }
                 return .run { send in
                     await send(.delegate(.pushRewardStartView))

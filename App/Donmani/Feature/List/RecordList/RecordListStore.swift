@@ -49,13 +49,13 @@ struct RecordListStore {
             } else {
                 self.progressPoint = -1
             }
-            self.isPresentingBottleCalendarToolTipView = (HistoryStateManager.shared.getIsShownBottleCalendarToopTip() == nil)
             self.dateSet = []
         }
     }
     
     // MARK: - Action
     enum Action {
+        case onAppear
         case closeBottleCalendarToolTip
         case touchStatisticsView(Bool)
         case pushStatisticsView
@@ -73,14 +73,18 @@ struct RecordListStore {
     
     // MARK: - Dependency
     @Dependency(\.recordRepository) var recordRepository
+    @Dependency(\.settings) var settings
     
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                state.isPresentingBottleCalendarToolTipView = settings.shouldShowBottleCalendarToolTip
+                
             case .closeBottleCalendarToolTip:
                 state.isPresentingBottleCalendarToolTipView = false
-                HistoryStateManager.shared.setIsShownBottleCalendarToopTip()
+                settings.shouldShowBottleCalendarToolTip = false
                 
             case .touchStatisticsView(let isEmpty):
                 let value = isEmpty ? "no_record" : "has_record"
@@ -120,7 +124,7 @@ struct RecordListStore {
 
             case .delegate(.pushBottleCalendarView(_)):
                 state.isPresentingBottleCalendarToolTipView = false
-                HistoryStateManager.shared.setIsShownBottleCalendarToopTip()
+                settings.shouldShowBottleCalendarToolTip = false
                 
             default:
                 break

@@ -11,36 +11,36 @@ import DNetwork
 
 @Reducer
 struct RecordEntryPointStore {
-    let scheduler = DispatchQueue.main.eraseToAnyScheduler()
-    
     struct Context {
-        let isCompleteToday: Bool
-        let isCompleteYesterday: Bool
-        init(today isCompleteToday: Bool, yesterday isCompleteYesterday: Bool) {
-            self.isCompleteToday = isCompleteToday
-            self.isCompleteYesterday = isCompleteYesterday
+        let dayTitle: String
+        let dayType: Day
+        let isDayToggleEnabled: Bool
+        init(
+            dayTitle: String,
+            dayType: Day,
+            isDayToggleEnabled: Bool
+        ) {
+            self.dayTitle = dayTitle
+            self.dayType = dayType
+            self.isDayToggleEnabled = isDayToggleEnabled
         }
     }
     
     // MARK: - State
     @ObservableState
     struct State {
-        var isCompleteToday: Bool
-        var isCompleteYesterday: Bool
-        
         var record: Record?
         var goodRecord: RecordContent?
         var badRecord: RecordContent?
         var isCheckedEmptyRecord: Bool = false
         
         var selectedDay: Day
-        var dayType: DayType = .today
+        var dayType: Day = .today
         var isChangingDayType = false
         
         var isPresentingCancel: Bool = false
         var isPresentingRecordEmpty: Bool = false
         var isPresentingRecordWritingView: Bool = false
-        var isPresentingRecordGuideView: Bool = false
         
         var isPresentingDayToggle: Bool
         var title: String
@@ -79,20 +79,11 @@ struct RecordEntryPointStore {
         var isError: Bool = false
         
         init(context: Context) {
-            self.isPresentingRecordGuideView = (HistoryStateManager.shared.getGuideState() == nil)
-            self.isCompleteToday = context.isCompleteToday
-            self.isCompleteYesterday = context.isCompleteYesterday
-            self.dayType = context.isCompleteToday ? .yesterday : .today
-            if !(context.isCompleteToday || context.isCompleteYesterday) {
-                self.dayTitle = "하루"
-            } else if context.isCompleteToday {
-                self.dayTitle = "어제"
-            } else {
-                self.dayTitle = "오늘"
-            }
+            self.dayType = context.dayType
+            self.dayTitle = context.dayTitle
             self.title = "\(self.dayTitle) 소비 정리해 볼까요?"
-            self.selectedDay = context.isCompleteToday ? .yesterday : .today
-            self.isPresentingDayToggle = !(context.isCompleteToday || context.isCompleteYesterday)
+            self.selectedDay = context.dayType
+            self.isPresentingDayToggle = context.isDayToggleEnabled
             self.remainingTime = TimeManager.getRemainingTime()
         }
         
@@ -113,8 +104,6 @@ struct RecordEntryPointStore {
         case dismissCancelRecordBottomSheet
         case cancelRecording
         case sendCancelGAEvent
-        
-        case dismissRecordGuideBottomSheet
         
         case touchDayTypeToggleButton
         case toggleDayType
@@ -183,10 +172,6 @@ struct RecordEntryPointStore {
                 }
                 GA.View(event: .recordmainBackBottomsheet).send(parameters: parameters)
                 
-            case .dismissRecordGuideBottomSheet:
-                state.isPresentingRecordGuideView = false
-                HistoryStateManager.shared.setGuideState()
-                
             case .touchDayTypeToggleButton:
                 if (state.isCheckedEmptyRecord || state.goodRecord != nil || state.badRecord != nil) {
                     state.isChangingDayType = true
@@ -208,6 +193,8 @@ struct RecordEntryPointStore {
                     GA.Click(event: .recordmainTodayButton).send(parameters: [.screenType: "하루"])
                     state.dayType = .today
                     state.selectedDay = .today
+                default:
+                    break;
                 }
                 state.isCheckedEmptyRecord = false
                 
@@ -282,8 +269,6 @@ struct RecordEntryPointStore {
                     buffer = [state.goodRecord, state.badRecord].compactMap{$0}
                 }
                 let records = buffer
-                let stateManager = HistoryStateManager.shared
-                stateManager.addRecord(for: state.dayType)
                 
                 var gaParameter:[GA.Parameter: Any] = [.screenType: state.dayType]
                 var recordValue: String = ""

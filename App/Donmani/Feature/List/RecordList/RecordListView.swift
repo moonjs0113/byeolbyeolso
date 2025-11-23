@@ -68,6 +68,7 @@ struct RecordListView: View {
         }
         .onAppear {
             GA.View(event: .recordhistory).send()
+            store.send(.onAppear)
         }
         .onDisappear {
             if store.records.count > 0 {

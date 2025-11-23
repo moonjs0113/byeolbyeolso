@@ -11,11 +11,11 @@ import UIKit
 
 extension MainNavigationStore {
     func requestAppStoreReview() async {
-        if HistoryStateManager.shared.isReadyToRequestAppReview() {
+        if settings.shouldShowAppStoreReviewRequest {
             let connectedScenes = await UIApplication.shared.connectedScenes
             if let windowScene = connectedScenes.map({$0}).first as? UIWindowScene {
                 await AppStore.requestReview(in: windowScene)
-                HistoryStateManager.shared.setCompleteRequestAppReview()
+                settings.shouldShowAppStoreReviewRequest = false
             }
         }
     }

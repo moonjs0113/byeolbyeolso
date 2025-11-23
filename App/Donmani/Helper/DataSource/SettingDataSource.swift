@@ -61,7 +61,7 @@ struct SettingDataSource {
         case shouldShowRequestNotificationPermission
         
         /// 기록 리스트 페이지 내 별통이 달력 툴팁 표시 여부: Bool
-        case shouldShowBottleCalendarToopTip
+        case shouldShowBottleCalendarToolTip
         
         /// 연속 기록 날짜 수: Int
         case streakSubmitCount
@@ -78,8 +78,8 @@ struct SettingDataSource {
         /// 새 별통이 오픈 안내 날짜(YYYY-MM-DD): String
         case lastNewBottleGuideDay
         
-        // 메인 페이지 내 선물 받기 툴팁 표시 여부 -> 다른 객체로 위임
-        // private let isPresentingRewardToolTipView = "PRESENTING_REWARD_TOOL_TIP_VIEW"
+        /// 메인 페이지 내 선물 받기 툴팁 표시 여부
+        case shouldShowRewardToolTip
         
         /// App Version
         case appVersion
@@ -93,9 +93,9 @@ struct SettingDataSource {
     @UserDefault(key: .shouldShowOnboarding, defaultValue: false)
     static var shouldShowOnboarding: Bool
     
-    /// APNs Token: String
-    @UserDefault(key: .APNsToken, defaultValue: "")
-    static var APNsToken: String
+    /// APNs Token: Data
+    @UserDefault(key: .APNsToken, defaultValue: Data())
+    static var APNsToken: Data
     
     /// Firebase Messaging Token: String
     @UserDefault(key: .firebaseToken, defaultValue: "")
@@ -126,8 +126,8 @@ struct SettingDataSource {
     static var shouldShowRequestNotificationPermission: Bool
     
     /// 기록 리스트 페이지 내 별통이 달력 툴팁 표시 여부: Bool
-    @UserDefault(key: .shouldShowBottleCalendarToopTip, defaultValue: true)
-    static var shouldShowBottleCalendarToopTip: Bool
+    @UserDefault(key: .shouldShowBottleCalendarToolTip, defaultValue: true)
+    static var shouldShowBottleCalendarToolTip: Bool
     
     /// 연속 기록 날짜 수: Int
     @UserDefault(key: .streakSubmitCount, defaultValue: 0)
@@ -148,6 +148,10 @@ struct SettingDataSource {
     /// 새 별통이 열림 안내 표시 날짜
     @UserDefault(key: .lastNewBottleGuideDay, defaultValue: "0000-00-00")
     static var lastNewBottleGuideDay: String
+    
+    /// 메인 페이지 내 선물 받기 툴팁 표시 여부
+    @UserDefault(key: .shouldShowRewardToolTip, defaultValue: false)
+    static var shouldShowRewardToolTip: Bool
     
     /// App Version
     @UserDefault(key: .appVersion, defaultValue: "0.0.0")

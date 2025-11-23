@@ -1,0 +1,30 @@
+name: Refactoring Issue
+description: 기능 개선 및 수정
+title: "[Feature] <제목>"
+labels: ["refactoring"]
+body:
+  - type: textarea
+    attributes:
+      label: 수정 설명
+      description: "추가 및 업데이트 된 기능에 대한 설명"
+      placeholder: ex. 레거시 코드 제거
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 스크린샷
+      description: "추가 및 업데이트 된 기능에 대한 스크린샷 또는 gif 파일을 추가"
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: 테스트 환경
+      description: 테스트한 기기 환경 정보
+      value: |
+        Device: 모든 Device
+        iOS: 모든 iOS
+      placeholder: |
+        기기: 시뮬레이터 아이폰16 or 실제기기 아이폰16 프로
+        iOS: iOS 17.0
+    validations:
+      required: true

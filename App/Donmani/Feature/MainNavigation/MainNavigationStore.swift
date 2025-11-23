@@ -41,7 +41,7 @@ struct MainNavigationStore {
             case setting(String)
             
             // Record
-            case record(Bool, Bool) // Today, Yesterday
+            case record(RecordEntryPointStore.Context)
             case recordWriting(RecordContentType, RecordContent?)
             
             // List
@@ -64,6 +64,7 @@ struct MainNavigationStore {
     @Dependency(\.feedbackRepository) var feedbackRepository
     @Dependency(\.fileRepository) var fileRepository
     @Dependency(\.settings) var settings
+    @Dependency(\.getRecordEntryContextUseCase) var getRecordEntryContextUseCase
     
     var body: some ReducerOf<Self> {
         Scope(
@@ -85,9 +86,8 @@ struct MainNavigationStore {
                     
                 case .pushRecordEntryPointView:
                     return .run { send in
-                        let hasTodayRecord = recordRepository.load(date: .today).isSome
-                        let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
-                        await send(.push(.record(hasTodayRecord, hasYesterdayRecord)))
+                        let context = getRecordEntryContextUseCase.context
+                        await send(.push(.record(context)))
                     }
                     
                 case .pushRecordListView:
@@ -134,9 +134,6 @@ struct MainNavigationStore {
                 }
                 
             case .completeWriteRecord(let record):
-                if HistoryStateManager.shared.getRequestAppReviewState() == nil {
-                    HistoryStateManager.shared.setReadyToRequestAppReview()
-                }
                 UINavigationController.isBlockSwipe = false
                 state.path.removeAll()
                 var mainState = state.mainState

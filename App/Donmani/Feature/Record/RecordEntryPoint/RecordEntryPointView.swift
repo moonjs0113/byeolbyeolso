@@ -130,7 +130,11 @@ struct RecordEntryPointView: View {
 
 #Preview {
     {
-        let context = RecordEntryPointStore.Context(today: false, yesterday: true)
+        let context = RecordEntryPointStore.Context(
+            dayTitle: "하루",
+            dayType: .today,
+            isDayToggleEnabled: true
+        )
         let state = MainStateFactory().makeRecordEntryPointState(context: context)
         let store = MainStoreFactory().makeRecordEntryPointStore(state: state)
         return RecordEntryPointView(store: store) { _ in }

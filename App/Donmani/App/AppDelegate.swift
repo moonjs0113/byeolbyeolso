@@ -56,8 +56,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenString = deviceToken.map { String(format: "%02x", $0) }.joined()
-        print("APNs Token:", tokenString)
-        HistoryStateManager.shared.setAPNsToken(token: deviceToken)
+        // print("APNs Token:", tokenString)
+        settings.APNsToken = deviceToken
         Messaging.messaging().apnsToken = deviceToken
     }
     

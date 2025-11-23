@@ -20,9 +20,8 @@ extension MainNavigationStore {
             }
         case .pushRecordEntryPointView:
             return .run { send in
-                let hasTodayRecord = recordRepository.load(date: .today).isSome
-                let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
-                await send(.push(.record(hasTodayRecord, hasYesterdayRecord)))
+                let context = getRecordEntryContextUseCase.context
+                await send(.push(.record(context)))
             }
         case .pushDecorationView(let records, let decorationItem, let currentDecorationItem, let category):
             return .run { send in

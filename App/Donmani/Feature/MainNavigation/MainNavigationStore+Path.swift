@@ -52,13 +52,15 @@ extension MainNavigationStore {
             state.path.append(.setting(initialState))
             
             // Record
-        case .record(let hasTodayRecord, let hasYesterdayRecord):
-            let context = RecordEntryPointStore.Context(today: hasTodayRecord, yesterday: hasYesterdayRecord)
+        case .record(let context):
             let initialState = stateFactory.makeRecordEntryPointState(context: context)
             state.path.append(.record(initialState))
             
         case .recordWriting(let type, let content):
-            let context = RecordWritingStore.Context(type: type, content: content)
+            let context = RecordWritingStore.Context(
+                type: type,
+                content: content
+            )
             let initialState = stateFactory.makeRecordWritingState(context: context)
             state.path.append(.recordWriting(initialState))
             

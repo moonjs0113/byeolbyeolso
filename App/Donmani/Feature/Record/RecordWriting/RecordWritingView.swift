@@ -181,5 +181,4 @@ struct RecordWritingView: View {
         return RecordWritingView(store: store) { _ in }
             .SelectCategoryView()
     }()
-    
 }

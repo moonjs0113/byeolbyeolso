@@ -9,9 +9,6 @@ import ComposableArchitecture
 
 protocol GetRecordEntryContextUseCase {
     var context: RecordEntryPointStore.Context { get }
-//    var dayTitle: String { get }
-//    var dayType: Day { get }
-//    var isDayToggleEnabled: Bool { get }
 }
 
 struct DefaultGetRecordEntryContextUseCase {

@@ -172,7 +172,6 @@ struct SettingView: View {
                     InnerWebView(urlString: DURL.notice.urlString)
                 }
                 .onChange(of: scenePhase) { oldPhase, newPhase  in
-                    //            print("OnAppear")
                     if newPhase == .active {
                         let notification = NotificationManager()
                         notification.getNotificationPermissionStatus { status in

@@ -91,9 +91,6 @@ extension RecordListView {
                                     goodRecord: record.records[.good],
                                     badRecord: record.records[.bad]
                                 )
-                                .onAppear {
-                                    print(record.day)
-                                }
                             }
                         }
                         .onAppear {

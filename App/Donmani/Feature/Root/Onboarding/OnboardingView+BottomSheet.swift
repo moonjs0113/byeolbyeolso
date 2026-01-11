@@ -23,8 +23,10 @@ extension OnboardingView {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     DButton(title: "확인했어요") {
-                        store.send(.touchEndOnboarding)
-                        completeHandler?(store.startViewType)
+                        Task {
+                            await store.send(.touchEndOnboarding).finish()
+                            completeHandler?(store.startViewType)
+                        }
                     }
                 }
             }

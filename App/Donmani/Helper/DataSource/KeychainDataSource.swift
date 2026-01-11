@@ -34,13 +34,17 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     /// Keychain에서 UUID 가져오기 (없으면 새로 생성 후 저장)
     // TODO: - 배포 전 확인하기
     public func generateUUID() {
-        let newUUID = load(from: .uuid) ?? UUID().uuidString
+//        let newUUID = "6B788207-4A6A-4B54-A44F-C23853918C09"
+        guard let newUUID = load(from: .uuid) else {
+            let newUUID = load(from: .uuid) ?? UUID().uuidString
+            save(to: .uuid, value: newUUID)
+            return
+        }
         save(to: .uuid, value: newUUID)
     }
     
     public func getUserKey() -> String {
-        let userKey = load(from: .uuid) ?? ""
-        return userKey
+        load(from: .uuid) ?? ""
     }
     
     /// 사용자 이름 가져오기

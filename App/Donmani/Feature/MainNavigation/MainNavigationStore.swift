@@ -46,7 +46,7 @@ struct MainNavigationStore {
             
             // List
             case monthlyRecordList(Day, [Record], Bool)
-            case bottleCalendar(RecordCountSummary)
+            case bottleCalendar([Int: RecordCountSummary])
             case statistics(Day, [Record])
             case monthlyStarBottle(Day, [Record], [Reward])
             

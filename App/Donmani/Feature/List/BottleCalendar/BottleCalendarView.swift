@@ -17,7 +17,10 @@ struct BottleCalendarView: View {
     
     var body: some View {
         ZStack {
-            VStack(alignment: .center,spacing: 0) {
+            VStack(
+                alignment: .center,
+                spacing: 0
+            ) {
                 DNavigationBar(
                     leading: {
                         DNavigationBarButton(.arrowLeft) {
@@ -25,22 +28,40 @@ struct BottleCalendarView: View {
                         }
                     },
                     title: {
-                        DText("별통이 모아보기")
-                            .style(.b1, .semibold, .white)
+                        Button {
+                            store.send(.touchTitle)
+                        } label: {
+                            HStack {
+                                DText("\(store.selectedYear)년 별통이")
+                                    .style(.b1, .semibold, .white)
+                                DImage(DImageAsset.downArrow)
+                                    .image
+                            }
+                        }
                     }
                 )
-                
-                ScrollView {
-                    BannerAdView(width: .adScreenWidth)
-                    
-                    if store.isPresentingTopBanner {
-                        TopBannerView()
-                    }
-                    MonthlyBottleGridView()
-                        .padding(.top, 16)
+                BannerAdView(width: .adScreenWidth)
+                if store.isPresentingTopBanner {
+                    TopBannerView()
                 }
-                .frame(width: .screenWidth)
-                .ignoresSafeArea(edges: .bottom)
+                TabView(selection: $store.selectedYear) {
+                    ForEach(store.years, id: \.self) { year in
+                        ScrollView {
+                            MonthlyBottleGridView(
+                                year: year,
+                                months: year == 2025 ? (3...12) : (1...12)
+                            )
+                                .padding(.top, 16)
+                        }
+                        .frame(width: .screenWidth)
+                        .ignoresSafeArea(edges: .bottom)
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+            }
+            
+            if store.isPresentYearSelectorBottomSheet {
+                YearSelectBottomSheet()
             }
         }
         .onAppear {
@@ -72,7 +93,7 @@ struct BottleCalendarView: View {
 #Preview {
     {
         let context = RecordCountSummary(year: 2025, monthlyRecords: [:])
-        let state = MainStateFactory().makeBottleCalendarState(context: context)
+        let state = MainStateFactory().makeBottleCalendarState(context: [2025: context])
         let store = MainStoreFactory().makeBottleCalendarStore(state: state)
         return BottleCalendarView(store: store)
     }()

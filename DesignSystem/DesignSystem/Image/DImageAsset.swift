@@ -15,6 +15,7 @@ public enum DImageAsset: String {
     case notice = "notice"
     case backgroundStar = "background_star"
     case close = "close"
+    case downArrow = "down_arrow"
     
     // Navigation Icon
     case calendar = "navigation_icon_calendar"

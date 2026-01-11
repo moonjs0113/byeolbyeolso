@@ -98,7 +98,11 @@ public struct NetworkRequest {
         }
 #endif
         do {
-            return try JSONDecoder().decode(R.self, from: data)
+            if (data.isEmpty) {
+                return try JSONDecoder().decode(R.self, from: "{}".data(using: .utf8)!)
+            } else {
+                return try JSONDecoder().decode(R.self, from: data)
+            }
         } catch(let e) {
             print("\(e.localizedDescription)")
             throw NetworkError.decodingFailed

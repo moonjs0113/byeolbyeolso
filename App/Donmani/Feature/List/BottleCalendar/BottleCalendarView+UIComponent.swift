@@ -38,25 +38,28 @@ extension BottleCalendarView {
         .padding(.top, .s5)
     }
     
-    func MonthlyBottleGridView() -> some View {
+    func MonthlyBottleGridView(
+        year: Int,
+        months: ClosedRange<Int>
+    ) -> some View {
         LazyVGrid(
             columns: Array(repeating: GridItem(.flexible(minimum: 0)), count: 3),
             spacing: .s3
         ) {
-            ForEach(store.starCountSort, id: \.0) { month in
+            ForEach(months, id: \.self) { month in
                 HStack {
                     Spacer()
                     MonthlyBottleView(
-                        month: month.0,
-                        count: month.1
+                        month: month,
+                        count: store.starCount[year]?[month] ?? 0
                     )
                     .onTapGesture {
-                        GA.Click(event: .list별통이Button).send(parameters: [.별통이ID: 2500 + month.0])
-                        if (month.1 == 0) {
+                        GA.Click(event: .list별통이Button).send(parameters: [.별통이ID: 2500 + month])
+                        if ((store.starCount[year]?[month] ?? 0) == 0) {
                             store.send(.showEmptyBottleToast)
                         } else {
                             store.send(.showLoading)
-                            store.send(.fetchMonthlyRecord(2025, month.0))
+                            store.send(.fetchMonthlyRecord(month))
                         }
                         
                     }

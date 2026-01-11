@@ -81,7 +81,7 @@ struct MainStore {
             case pushSettingView
             case pushRecordEntryPointView
             case pushRecordListView
-            case pushBottleCalendarView(RecordCountSummary)
+            case pushBottleCalendarView([Int: RecordCountSummary])
             case pushRewardStartView
         }
     }
@@ -147,7 +147,9 @@ struct MainStore {
                 state.isPresentingNewStarBottle = false
                 UINavigationController.isBlockSwipe = false
                 return .run { send in
-                    let result = try await recordRepository.getYearlyRecordSummary(year: 2025)
+                    let year2025 = try await recordRepository.getYearlyRecordSummary(year: 2025)
+                    let year2026 = try await recordRepository.getYearlyRecordSummary(year: 2026)
+                    let result = [2025: year2025, 2026: year2026]
                     await send(.delegate(.pushBottleCalendarView(result)))
                 }
                 

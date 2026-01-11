@@ -24,6 +24,7 @@ struct OnboardingView: View {
     
     var body: some View {
         ZStack {
+            skipButton
             switch store.step {
             case .cover:
                 coverStepView
@@ -38,10 +39,20 @@ struct OnboardingView: View {
             DColor(.deepBlue20).color
                 .ignoresSafeArea()
         }
+        .overlay {
+            if store.isPresentLoadingIndicator {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.gray)
+                        .scaleEffect(2.0)
+                }
+            }
+        }
     }
 }
-
-
 
 #Preview {
     OnboardingView() { _ in }

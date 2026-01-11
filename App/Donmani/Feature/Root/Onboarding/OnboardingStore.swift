@@ -24,6 +24,7 @@ struct OnboardingStore {
         var pageIndex = 0
         var isPresentingEndOnboardingView = false
         var startViewType: RootStore.MainRoute = .main
+        var isPresentLoadingIndicator = false
         
         let guidePageCount = 5
         
@@ -60,6 +61,7 @@ struct OnboardingStore {
     
     // MARK: - Action
     enum Action: BindableAction, Equatable {
+        case touchSkipButton
         case touchStartOnboarding
         case touchNextPage
         case touchEndOnboarding
@@ -82,6 +84,9 @@ struct OnboardingStore {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .touchSkipButton:
+                state.isPresentLoadingIndicator = true
+                
             case .touchStartOnboarding:
                 state.step = .page
                 
@@ -90,10 +95,17 @@ struct OnboardingStore {
                 state.step = state.pageIndex < 4 ? .page : .final
                 
             case .touchFinalButton(let type):
+                switch type {
+                case .main:
+                    GA.Click(event: .onboardingHomeButton).send()
+                case .record:
+                    GA.Click(event: .onboardingRecordButton).send()
+                }
                 state.startViewType = type
                 state.isPresentingEndOnboardingView = true
                 
             case .touchEndOnboarding:
+                state.isPresentLoadingIndicator = true
                 settings.shouldShowOnboarding = false
                 
             case .binding(\.pageIndex):

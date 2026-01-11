@@ -38,11 +38,11 @@ struct Day {
         self.year = (split[0] ?? 0) + 2000
     }
     
-    init(day: Int, month: Int) {
-        self.day = day
-        self.month = month
-        self.year = 2025
-    }
+//    init(day: Int, month: Int) {
+//        self.day = day
+//        self.month = month
+//        self.year = 2025
+//    }
     
     /// YYYY-MM-DD
     var yyyyMMdd: String {

@@ -87,7 +87,6 @@ extension OnboardingView {
                     } else {
                         HStack {
                             Button {
-                                GA.Click(event: .onboardingHomeButton).send()
                                 store.send(.touchFinalButton(.main))
                             } label: {
                                 ZStack {
@@ -102,7 +101,6 @@ extension OnboardingView {
                                 }
                             }
                             DButton(title: "기록해 보기") {
-                                GA.Click(event: .onboardingRecordButton).send()
                                 store.send(.touchFinalButton(.record))
                             }
                         }
@@ -114,6 +112,25 @@ extension OnboardingView {
             if store.isPresentingEndOnboardingView {
                 OnboardingEndView()
             }
+        }
+    }
+    
+    var skipButton: some View {
+        VStack {
+            HStack {
+                Spacer()
+                Button {
+                    Task {
+                        await store.send(.touchSkipButton).finish()
+                        completeHandler?(RootStore.MainRoute.main)
+                    }
+                } label: {
+                    DText("건너뛰기")
+                        .style(.b2, .semibold, DColor(.deepBlue80).color)
+                }
+                .padding(.defaultLayoutPadding)
+            }
+            Spacer()
         }
     }
     

@@ -17,7 +17,7 @@ protocol StateFactory {
     func makeRecordWritingState(context: RecordWritingStore.Context) -> RecordWritingStore.State
     
     // List
-    func makeBottleCalendarState(context: RecordCountSummary) -> BottleCalendarStore.State
+    func makeBottleCalendarState(context: [Int: RecordCountSummary]) -> BottleCalendarStore.State
     func makeMonthlyRecordListState(context:  RecordListStore.Context) -> RecordListStore.State
     func makeStatisticsState(context: StatisticsStore.Context) -> StatisticsStore.State
     func makeMonthlyStarBottleState(context: MonthlyStarBottleStore.Context) -> MonthlyStarBottleStore.State
@@ -51,7 +51,7 @@ struct MainStateFactory: StateFactory {
     }
     
     // List
-    func makeBottleCalendarState(context: RecordCountSummary) -> BottleCalendarStore.State {
+    func makeBottleCalendarState(context: [Int: RecordCountSummary]) -> BottleCalendarStore.State {
         BottleCalendarStore.State(context: context)
     }
     

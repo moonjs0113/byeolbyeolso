@@ -14,6 +14,7 @@ extension GA {
             case onboardingStartButton
             case onboardingRecordButton
             case onboardingHomeButton
+            case onboardingSkipButton
             
             // Main
             case mainRecordButton
@@ -77,6 +78,8 @@ extension GA {
                 value += "onboarding_record_button"
             case .onboardingHomeButton:
                 value += "onboarding_home_button"
+            case .onboardingSkipButton:
+                value += "onboarding_skip_button"
             case .mainRecordButton:
                 value += "mainR_record_button"
             case .mainRecordArchiveButton:
@@ -159,7 +162,8 @@ extension GA {
             switch event {
             case .onboardingStartButton,
                     .onboardingRecordButton,
-                    .onboardingHomeButton:
+                    .onboardingHomeButton,
+                    .onboardingSkipButton:
                 return .onboarding
                 
             case .mainRecordButton,

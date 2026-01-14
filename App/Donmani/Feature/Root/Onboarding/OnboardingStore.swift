@@ -85,6 +85,7 @@ struct OnboardingStore {
         Reduce { state, action in
             switch action {
             case .touchSkipButton:
+                GA.Click(event: .onboardingSkipButton).send()
                 state.isPresentLoadingIndicator = true
                 
             case .touchStartOnboarding:

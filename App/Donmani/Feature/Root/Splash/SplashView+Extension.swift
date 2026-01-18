@@ -26,9 +26,9 @@ extension SplashView {
     
     private func fetchUserData() async throws {
         let user = try await userRepository.registerUser()
-//        if user.new {
+        if user.new {
             settings.shouldShowOnboarding = true
-//        }
+        }
     }
     
     private func fetchRecordData() async throws {
@@ -73,7 +73,7 @@ extension SplashView {
             for item in items {
                 do {
                     try await fileRepository.saveRewardData(from: item)
-                    print("Download Success: \(item.name)")
+//                    print("Download Success: \(item.name)")
                 } catch(let e) {
                     print("Download Fail: \(item.name). with \(e)")
                 }

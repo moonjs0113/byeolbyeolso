@@ -10,9 +10,11 @@ import DesignSystem
 
 struct ModalModifier<ModalContent: View>: ViewModifier {
     @Binding private var isPresented: Bool
+    @State private var isModalPresented: Bool = false
     @State private var isFullScreenViewVisible = false
     private let config: ModalConfig
     private let content: () -> ModalContent
+    private let onDismiss: (() -> Void)?
     
     private let animation: Animation = .spring(
         response: 0.2,
@@ -22,16 +24,18 @@ struct ModalModifier<ModalContent: View>: ViewModifier {
     init(
         isPresented: Binding<Bool>,
         config: ModalConfig,
-        @ViewBuilder content: @escaping () -> ModalContent
+        @ViewBuilder content: @escaping () -> ModalContent,
+        onDismiss: (() -> Void)?
     ) {
         self._isPresented = isPresented
         self.config = config
         self.content = content
+        self.onDismiss = onDismiss
     }
     
     public func body(content: Content) -> some View {
         content
-            .fullScreenCover(isPresented: $isPresented) {
+            .fullScreenCover(isPresented: $isModalPresented) {
                 Group {
                     ZStack {
                         dimView()
@@ -52,9 +56,16 @@ struct ModalModifier<ModalContent: View>: ViewModifier {
                 }
             }
             .transaction{ transaction in
-                transaction.disablesAnimations = isPresented
+                transaction.disablesAnimations = isModalPresented
             }
             .animation(animation, value: isFullScreenViewVisible)
+            .onChange(of: isPresented) { _, isPresented in
+                if isPresented {
+                    isModalPresented = true
+                } else {
+                    dismiss()
+                }
+            }
     }
     
     @ViewBuilder
@@ -64,21 +75,21 @@ struct ModalModifier<ModalContent: View>: ViewModifier {
             .ignoresSafeArea()
             .onTapGesture {
                 guard config.isEnableDismiss else { return }
+                onDismiss?()
                 dismiss()
             }
     }
-
+    
     @ViewBuilder
     private func modalBody() -> some View {
         content()
-        .padding(.horizontal, 20)
-        .background(config.backgroundColor)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 24,
-                style: .circular
+            .background(config.backgroundColor)
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 24,
+                    style: .circular
+                )
             )
-        )
     }
     
     
@@ -86,7 +97,7 @@ struct ModalModifier<ModalContent: View>: ViewModifier {
         withAnimation(animation) {
             isFullScreenViewVisible = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                isPresented = false
+                isModalPresented = false
             }
         }
     }
@@ -96,13 +107,15 @@ extension View {
     func modal<Content: View>(
         isPresented: Binding<Bool>,
         config: ModalConfig,
-        @ViewBuilder content: @escaping () -> Content
+        @ViewBuilder content: @escaping () -> Content,
+        onDismiss: (() -> Void)? = nil
     ) -> some View {
         modifier(
             ModalModifier(
                 isPresented: isPresented,
                 config: config,
-                content: content
+                content: content,
+                onDismiss: onDismiss
             )
         )
     }

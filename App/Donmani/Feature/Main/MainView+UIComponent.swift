@@ -92,4 +92,9 @@ extension MainView {
         .padding(.top, 42)
         .padding(.horizontal, 13)
     }
+    
+    @ViewBuilder
+    func dailyFortune() -> some View {
+        
+    }
 }

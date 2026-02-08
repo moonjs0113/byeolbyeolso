@@ -91,6 +91,9 @@ struct MainView: View {
         .onAppear {
             store.send(.onAppear)
         }
+        .overlay {
+            
+        }
         .navigationBarBackButtonHidden()
     }
 }

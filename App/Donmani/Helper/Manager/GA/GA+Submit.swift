@@ -13,7 +13,7 @@ extension GA {
         
         let event: Event
         var eventName: String {
-            var value = "S_"
+            var value = "submit_"
             switch event {
             case .streakSubmit:
                 value += "streak_submit"

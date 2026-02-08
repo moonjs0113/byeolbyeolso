@@ -78,15 +78,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
         let title = response.notification.request.content.title
         let key = "destination"
-        var value = DayType.today.title
-        if title.contains(DayType.yesterday.title) {
-            value = DayType.yesterday.title
-        }
-        GA.Open(event: .notificationOpen).send(parameters: [.notificationType: value])
+        let gaValue = title.contains("운세") ? "운세" : DayType.today.title
+        GA.Open(event: .notificationOpen).send(parameters: [.notificationType: gaValue])
         NotificationCenter.default.post(
             name: .didReceivePushNavigation,
             object: nil,
-            userInfo: [key: value]
+            userInfo: [key: gaValue]
         )
         center.setBadgeCount(0, withCompletionHandler: nil)
     }

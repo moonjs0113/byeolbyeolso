@@ -25,6 +25,12 @@ struct MainStore {
         var day: Day
         var records: [Record]
         var decorationData: DecorationData
+        var dailyFortune: Fortune = Fortune(
+            day: .today,
+            content: "외출할 때 목도리를 꼭 챙겨서 체온을 유지해야 오늘 하루 컨디션을 끝까지 기분 좋게 유지할 수 있을 거예요. 밝고 화사한 색상의 소품을 하나 챙긴다면 주변 사람들까지 당신의 긍정적인 에너지에 전염될지도 몰라요.",
+            luckyCategory: .color,
+            luckyCategoryValue: "노란색"
+        )
         
         /// 기록 작성 가능 여부
         var canWriteRecord: Bool
@@ -34,6 +40,7 @@ struct MainStore {
         var isPresentingNewStarBottle: Bool = false
         var isPresentingRewardToolTipView: Bool = false
         var isRequestNotificationPermission: Bool = true
+        var isPresentDailyFortuneModal: Bool = false
         var isLoading: Bool = false
         var starBottleOpacity = 1.0
         var yOffset: CGFloat = 0
@@ -66,6 +73,8 @@ struct MainStore {
         case touchRewardButton
         
         case delegate(Delegate)
+        
+        case touchDailyFortuneConfirm
         
         case updateRewardUI(RewardItemData)
         
@@ -102,9 +111,11 @@ struct MainStore {
             switch action {
             case .onAppear:
                 GA.View(event: .main).send()
+                state.day = .today
                 state.userName = userUseCase.userName
                 state.canWriteRecord = writeRecordUseCase.canWriteRecord()
                 state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
+                state.isPresentDailyFortuneModal = true
                 return .run { send in
                     let day: Day = .today
                     let items = rewardRepository.loadEquippedItems(year: day.year, month: day.month)
@@ -181,6 +192,10 @@ struct MainStore {
                 // 화면 업데이트 Action
             case .updateRewardUI(let itemData):
                 state.starBottleAction = .changeRewardItem(itemData)
+                
+            case .touchDailyFortuneConfirm:
+                state.isPresentDailyFortuneModal = false
+                
             default:
                 break
             }

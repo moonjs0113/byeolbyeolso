@@ -86,6 +86,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             userInfo: [key: gaValue]
         )
         center.setBadgeCount(0, withCompletionHandler: nil)
+        // 운세 노티 받아서 userInfo에서 데이터 받아서 Fortune 모델 받아서 MainView로 넘기기
     }
     
 }

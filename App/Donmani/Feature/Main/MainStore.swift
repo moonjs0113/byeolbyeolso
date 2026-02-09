@@ -115,7 +115,6 @@ struct MainStore {
                 state.userName = userUseCase.userName
                 state.canWriteRecord = writeRecordUseCase.canWriteRecord()
                 state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
-                state.isPresentDailyFortuneModal = true
                 return .run { send in
                     let day: Day = .today
                     let items = rewardRepository.loadEquippedItems(year: day.year, month: day.month)

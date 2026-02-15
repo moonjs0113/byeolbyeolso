@@ -33,6 +33,7 @@ struct MainNavigationStore {
         case requestAppStoreReview
         case requestNotificationPermission
         case presentCancelBottom
+        case receiveFortuneNotification
         
         case changeStarBottleOpacity
         
@@ -183,6 +184,12 @@ struct MainNavigationStore {
                             break
                         }
                     }
+                }
+
+            case .receiveFortuneNotification:
+                state.path.removeAll()
+                return .run { send in
+                    await send(.mainAction(.presentDailyFortuneByNotification))
                 }
                 
             case .changeStarBottleOpacity:

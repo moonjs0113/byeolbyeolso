@@ -81,6 +81,12 @@ struct SettingDataSource {
         /// 메인 페이지 내 선물 받기 툴팁 표시 여부
         case shouldShowRewardToolTip
         
+        /// 마지막 운세 모달 표시 날짜(YYYYMMDD): String
+        case lastFortuneDay
+
+        /// 노티 탭으로 운세 표시가 필요한 상태인지 여부: Bool
+        case shouldShowFortuneByNotification
+
         /// App Version
         case appVersion
         
@@ -152,6 +158,14 @@ struct SettingDataSource {
     /// 메인 페이지 내 선물 받기 툴팁 표시 여부
     @UserDefault(key: .shouldShowRewardToolTip, defaultValue: false)
     static var shouldShowRewardToolTip: Bool
+
+    /// 마지막 운세 모달 표시 날짜(YYYYMMDD): String
+    @UserDefault(key: .lastFortuneDay, defaultValue: "00000000")
+    static var lastFortuneDay: String
+
+    /// 노티 탭으로 운세 표시가 필요한 상태인지 여부: Bool
+    @UserDefault(key: .shouldShowFortuneByNotification, defaultValue: false)
+    static var shouldShowFortuneByNotification: Bool
     
     /// App Version
     @UserDefault(key: .appVersion, defaultValue: "0.0.0")

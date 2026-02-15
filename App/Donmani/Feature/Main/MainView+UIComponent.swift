@@ -121,7 +121,7 @@ extension MainView {
                 .lineSpacing(8)
             // spacing 16
             HStack {
-                DText("⭐️ 행운의 \(store.dailyFortune.luckyCategory.title) : \(store.dailyFortune.luckyCategoryValue)")
+                DText("⭐️ \(store.dailyFortune.item)")
                     .style(.b3, .medium, .hex("#FFFFFF"))
                     .kerning(-0.5)
                     .padding(.vertical, 8)

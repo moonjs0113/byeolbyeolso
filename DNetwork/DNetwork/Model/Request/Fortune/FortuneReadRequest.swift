@@ -7,9 +7,9 @@
 
 public struct FortuneReadRequest: Encodable {
     private let userKey: String
-    private let readSource: FortuneReadSourceRequest
+    private let readSource: String
     
-    init(userKey: String, readSource: FortuneReadSourceRequest) {
+    init(userKey: String, readSource: String) {
         self.userKey = userKey
         self.readSource = readSource
     }

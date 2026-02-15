@@ -1,0 +1,20 @@
+//
+//  FortuneResponse+Extension.swift
+//  Donmani
+//
+//  Created by 문종식 on 2/15/26.
+//
+
+import DNetwork
+
+extension FortuneResponse {
+    func toDomain() -> Fortune {
+        Fortune(
+            day: Day(yyyymmdd: self.targetDate),
+            title: self.title,
+            subtitle: self.subtitle,
+            content: self.content,
+            item: self.item
+        )
+    }
+}

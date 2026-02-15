@@ -7,22 +7,25 @@
 
 struct Fortune {
     let day: Day
+    let title: String
+    let subtitle: String
     let content: String
-    let luckyCategory: LuckyCategory
-    let luckyCategoryValue: String
+    let item: String
     
-    init(day: Day = .today, content: String, luckyCategory: LuckyCategory, luckyCategoryValue: String) {
+    init(day: Day, title: String, subtitle: String, content: String, item: String) {
         self.day = day
+        self.title = title
+        self.subtitle = subtitle
         self.content = content
-        self.luckyCategory = luckyCategory
-        self.luckyCategoryValue = luckyCategoryValue
+        self.item = item
     }
     
-    init() {
-        self.day = .today
-        self.content = ""
-        self.luckyCategory = .item
-        self.luckyCategoryValue = ""
-    }
+    static let empty = Fortune(
+        day: .today,
+        title: "",
+        subtitle: "",
+        content: "",
+        item: ""
+    )
 }
 

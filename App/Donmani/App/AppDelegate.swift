@@ -79,9 +79,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let userInfo = response.notification.request.content.userInfo
         if let rawValue = userInfo["notificationType"] as? String,
            let notificationType = NotificationType(rawValue: rawValue) {
-            GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "운세"])
-        } else {
-            GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "오늘"])
+            switch notificationType {
+            case .default:
+                GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "오늘"])
+            case .fortune:
+                GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "운세"])
+            }
         }
 //        let title = response.notification.request.content.title
 //        let key = "destination"

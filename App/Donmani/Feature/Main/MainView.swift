@@ -100,6 +100,7 @@ struct MainView: View {
             dailyFortune()
         } onDismiss: {
             store.send(.touchDailyFortuneConfirm)
+            toastManager.show(.dailyFortuneNotice)
         }
         .navigationBarBackButtonHidden()
     }

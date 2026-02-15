@@ -74,6 +74,11 @@ extension Day {
     var yyyyMMdd: String {
         "\(year)-\(month.twoDigitString)-\(day.twoDigitString)"
     }
+
+    /// YYYYMMDD
+    var yyyyMMddCompact: String {
+        "\(year)\(month.twoDigitString)\(day.twoDigitString)"
+    }
     
     var toDate: Date? {
         let dateString = "\(year)-\(month)-\(day)"

@@ -84,7 +84,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "오늘"])
             case .fortune:
                 GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "운세"])
+                settings.shouldShowFortuneByNotification = true
             }
+            NotificationCenter.default.post(
+                name: .didReceivePushNavigation,
+                object: nil,
+                userInfo: ["notificationType": notificationType.rawValue]
+            )
         }
 //        let title = response.notification.request.content.title
 //        let key = "destination"

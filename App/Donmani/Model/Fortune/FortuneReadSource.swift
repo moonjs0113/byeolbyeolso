@@ -1,11 +1,11 @@
 //
-//  FortuneReadSourceRequest.swift
+//  FortuneReadSource.swift
 //  DNetwork
 //
 //  Created by 문종식 on 2/9/26.
 //
 
-public enum FortuneReadSourceRequest: String, Encodable {
+public enum FortuneReadSource: String, Encodable {
     case notification = "NOTIFICATION"
     case appDirection = "APP_DIRECTION"
 }

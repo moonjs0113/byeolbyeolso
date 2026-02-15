@@ -6,7 +6,7 @@
 //
 
 public struct FortuneResponse: Decodable {
-    public let targetDate: String
+    public let targetDate: String // YYYY-MM-DD
     public let title: String
     public let subtitle: String
     public let content: String

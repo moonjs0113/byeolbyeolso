@@ -99,8 +99,10 @@ struct MainView: View {
         ) {
             dailyFortune()
         } onDismiss: {
-            store.send(.touchDailyFortuneConfirm)
-            toastManager.show(.dailyFortuneNotice)
+            Task { @MainActor in
+                await store.send(.touchDailyFortuneConfirm).finish()
+                toastManager.show(.dailyFortuneNotice)
+            }
         }
         .navigationBarBackButtonHidden()
     }

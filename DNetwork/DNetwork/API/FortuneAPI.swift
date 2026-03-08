@@ -24,7 +24,7 @@ public struct FortuneAPI {
     
     /// 오늘의 운세 읽음 처리
     public func postFortuneRead(userKey: String, readSource: String) async throws {
-        let _: EmptyResponse = try await request.post(
+        let _: EmptyResponse = try await request.put(
             path: .fortune,
             additionalPaths: ["read"],
             bodyData: FortuneReadRequest(

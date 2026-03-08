@@ -37,9 +37,9 @@ enum ToastType {
     
     var position: ToastPosition? {
         switch self {
-        case .maxNicknameLengthExceeded, .specialCharactersNotAllowed, .emptyRecordMonth, .splashNetworkError, .dailyFortuneNotice:
+        case .maxNicknameLengthExceeded, .specialCharactersNotAllowed, .emptyRecordMonth, .splashNetworkError:
                 .bottom
-        case .successSaveDecoration:
+        case .successSaveDecoration, .dailyFortuneNotice:
                 .top
         case .none:
                 nil
@@ -52,9 +52,7 @@ enum ToastType {
                 .warning
         case .successSaveDecoration:
                 .success
-        case .dailyFortuneNotice:
-                nil
-        case .none:
+        case .none, .dailyFortuneNotice:
                 nil
         }
     }

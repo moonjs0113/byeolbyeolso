@@ -25,6 +25,7 @@ struct MainStore {
         var day: Day
         var records: [Record]
         var decorationData: DecorationData
+        var dailyFortune: Fortune = .empty
         
         /// 기록 작성 가능 여부
         var canWriteRecord: Bool
@@ -34,6 +35,7 @@ struct MainStore {
         var isPresentingNewStarBottle: Bool = false
         var isPresentingRewardToolTipView: Bool = false
         var isRequestNotificationPermission: Bool = true
+        var isPresentDailyFortuneModal: Bool = false
         var isLoading: Bool = false
         var starBottleOpacity = 1.0
         var yOffset: CGFloat = 0
@@ -56,6 +58,9 @@ struct MainStore {
         case binding(BindingAction<State>)
         
         case onAppear
+        case checkDailyFortuneModal
+        case presentDailyFortuneByNotification
+        case _updateDailyFortune(Fortune)
         case fetchRewardItem(DecorationData)
         
         case closePopover
@@ -66,6 +71,8 @@ struct MainStore {
         case touchRewardButton
         
         case delegate(Delegate)
+        
+        case touchDailyFortuneConfirm
         
         case updateRewardUI(RewardItemData)
         
@@ -93,6 +100,7 @@ struct MainStore {
     @Dependency(\.loadRewardUseCase) var loadRewardUseCase
     @Dependency(\.fileRepository) var fileRepository
     @Dependency(\.rewardRepository) var rewardRepository
+    @Dependency(\.fortuneRepository) var fortuneRepository
     @Dependency(\.settings) var settings
     
     // MARK: - Reducer
@@ -102,6 +110,7 @@ struct MainStore {
             switch action {
             case .onAppear:
                 GA.View(event: .main).send()
+                state.day = .today
                 state.userName = userUseCase.userName
                 state.canWriteRecord = writeRecordUseCase.canWriteRecord()
                 state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
@@ -132,7 +141,28 @@ struct MainStore {
                     if (hasTodayRecord && !hasYesterdayRecord) {
                         await send(.checkToolTip)
                     }
+                    await send(.checkDailyFortuneModal)
                 }
+
+            case .checkDailyFortuneModal:
+                let shouldShowByNotification = settings.shouldShowFortuneByNotification
+                let today = Day.today.yyyyMMddCompact
+                let shouldShowByDay = settings.lastFortuneDay != today
+                guard shouldShowByNotification || shouldShowByDay else {
+                    return .none
+                }
+                settings.shouldShowFortuneByNotification = false
+                let readSource: FortuneReadSource = shouldShowByNotification ? .notification : .appDirection
+                return requestDailyFortuneEffect(readSource: readSource)
+
+            case .presentDailyFortuneByNotification:
+                settings.shouldShowFortuneByNotification = false
+                return requestDailyFortuneEffect(readSource: .notification)
+
+            case ._updateDailyFortune(let fortune):
+                state.dailyFortune = fortune
+                state.isPresentDailyFortuneModal = true
+                settings.lastFortuneDay = Day.today.yyyyMMddCompact
                 
             case .fetchRewardItem(let decorationData):
                 state.decorationData = decorationData
@@ -181,6 +211,10 @@ struct MainStore {
                 // 화면 업데이트 Action
             case .updateRewardUI(let itemData):
                 state.starBottleAction = .changeRewardItem(itemData)
+                
+            case .touchDailyFortuneConfirm:
+                state.isPresentDailyFortuneModal = false
+                
             default:
                 break
             }
@@ -191,6 +225,18 @@ struct MainStore {
 }
 
 extension MainStore {
+    func requestDailyFortuneEffect(readSource: FortuneReadSource) -> Effect<MainStore.Action> {
+        .run { send in
+            do {
+                let fortune = try await fortuneRepository.getTodayFortune()
+                await send(._updateDailyFortune(fortune))
+                try? await fortuneRepository.postFortuneRead(readSource: readSource)
+            } catch {
+                return
+            }
+        }
+    }
+
     func makeRewardItemDate(items: [RewardItemCategory: Reward]) -> RewardItemData {
         var decorationItemId: Int? = nil
         var decorationItemName: String? = nil

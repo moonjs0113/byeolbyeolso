@@ -18,6 +18,8 @@ public struct DColor {
     
     public static let mainToolTipBackground = Color("mainToolTipBackground", bundle: .designSystem)
     
+    public static let dailyFortuneBackground = Color("daily_fortune_background", bundle: .designSystem)
+    
     public var type: DColorType = .deepBlue50
     public var name: String? = nil
     

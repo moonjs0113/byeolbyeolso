@@ -92,4 +92,63 @@ extension MainView {
         .padding(.top, 42)
         .padding(.horizontal, 13)
     }
+    
+    @ViewBuilder
+    func dailyFortune() -> some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 8) {
+                DImage(.dailyFortune)
+                    .image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 68, height: 68)
+                VStack(
+                    alignment: .leading,
+                    spacing: 4
+                ) {
+                    DText("토비 요정이 전해주는")
+                        .style(.b2, .medium, .hex("#806AEB"))
+                        .multilineTextAlignment(.leading)
+                    DText(store.dailyFortune.day.fortuneDate)
+                        .style(.h3, .bold, .hex("#04091E"))
+                        .multilineTextAlignment(.leading)
+                }
+                Spacer()
+            }
+            // spacing 16
+            DText(store.dailyFortune.content)
+                .style(.b1, .regular, .hex("#04091E"))
+                .lineSpacing(8)
+            // spacing 16
+            HStack {
+                DText("⭐️ \(store.dailyFortune.item)")
+                    .style(.b3, .medium, .hex("#FFFFFF"))
+                    .kerning(-0.5)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 8)
+                    .background {
+                        Capsule()
+                            .fill(Color.hex("6045E6"))
+                    }
+                Spacer()
+            }
+            // spacing 16
+            Button {
+                store.send(.touchDailyFortuneConfirm)
+            } label: {
+                ZStack {
+                    RoundedRectangle(
+                        cornerRadius: .s5,
+                        style: .continuous
+                    )
+                    .fill(Color.hex("#F8F9FA"))
+                    DText("행운 받아가기")
+                        .style(.b1, .bold, .hex("#04091E"))
+                }
+            }
+            .frame(height: 52)
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity)
+    }
 }

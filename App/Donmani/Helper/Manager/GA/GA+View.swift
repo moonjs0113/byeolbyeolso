@@ -40,7 +40,7 @@ extension GA {
         var eventName: String {
             switch event {
             case .recordmainBackBottomsheet:
-                return "V_recordmain_back_bottomsheet"
+                return "view_recordmain_back_bottomsheet"
             default:
                 return AnalyticsEventScreenView
             }

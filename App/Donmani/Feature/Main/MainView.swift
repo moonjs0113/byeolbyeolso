@@ -91,6 +91,17 @@ struct MainView: View {
         .onAppear {
             store.send(.onAppear)
         }
+        .modal(
+            isPresented: $store.isPresentDailyFortuneModal,
+            config: ModalConfig(
+                backgroundColor: DColor.dailyFortuneBackground
+            )
+        ) {
+            dailyFortune()
+        } onDismiss: {
+            store.send(.touchDailyFortuneConfirm)
+            toastManager.show(.dailyFortuneNotice)
+        }
         .navigationBarBackButtonHidden()
     }
 }

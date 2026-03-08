@@ -13,7 +13,7 @@ extension GA {
         
         let event: Event
         var eventName: String {
-            var value = "O_"
+            var value = "open_"
             switch event {
             case .notificationOpen:
                 value += "notification_open"

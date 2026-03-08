@@ -86,7 +86,10 @@ struct OnboardingStore {
             switch action {
             case .touchSkipButton:
                 GA.Click(event: .onboardingSkipButton).send()
-                state.isPresentLoadingIndicator = true
+                settings.shouldShowOnboarding = false
+                return .run { send in
+                    await send(.touchEndOnboarding)
+                }
                 
             case .touchStartOnboarding:
                 state.step = .page

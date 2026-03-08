@@ -38,16 +38,11 @@ struct Day {
         self.year = (split[0] ?? 0) + 2000
     }
     
-//    init(day: Int, month: Int) {
-//        self.day = day
-//        self.month = month
-//        self.year = 2025
-//    }
-    
-    /// YYYY-MM-DD
-    var yyyyMMdd: String {
-        "\(year)-\(month.twoDigitString)-\(day.twoDigitString)"
-    }
+    //    init(day: Int, month: Int) {
+    //        self.day = day
+    //        self.month = month
+    //        self.year = 2025
+    //    }
 }
 
 extension Day: Hashable {
@@ -75,22 +70,45 @@ extension Day: Equatable, Comparable {
 }
 
 extension Day {
-    var dateString: String {
+    /// YYYY-MM-DD
+    var yyyyMMdd: String {
+        "\(year)-\(month.twoDigitString)-\(day.twoDigitString)"
+    }
+
+    /// YYYYMMDD
+    var yyyyMMddCompact: String {
+        "\(year)\(month.twoDigitString)\(day.twoDigitString)"
+    }
+    
+    var toDate: Date? {
         let dateString = "\(year)-\(month)-\(day)"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.timeZone = TimeZone.current
         
-        guard let date = dateFormatter.date(from: dateString) else {
+        return dateFormatter.date(from: dateString)
+    }
+    
+    var dateString: String {
+        guard let date = self.toDate else {
             return ""
         }
-        
         let koreanFormatter = DateFormatter()
         koreanFormatter.dateFormat = "M월 d일 EEE요일"
         koreanFormatter.locale = Locale(identifier: "ko_KR")
-        
         return koreanFormatter.string(from: date)
+    }
+    
+    var fortuneDate: String {
+        guard let date = self.toDate else {
+            return ""
+        }
+        
+        let fortuneDateFormatter = DateFormatter()
+        fortuneDateFormatter.dateFormat = "YY년 M월 d일 운세"
+        fortuneDateFormatter.locale = Locale(identifier: "ko_KR")
+        return fortuneDateFormatter.string(from: date)
     }
 }
 

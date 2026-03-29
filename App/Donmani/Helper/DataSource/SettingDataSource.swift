@@ -78,6 +78,9 @@ struct SettingDataSource {
         /// 꾸미기 저장 완료 안내 Alert 표시 여부: Bool
         case shouldShowDecorationSaveAlert
         
+        /// 꾸미기 페이지 내 풀 리워드 바텀시트 표시 여부: Bool
+        case shouldShowFullRewardBottomSheet
+        
         /// 새 별통이 오픈 안내 날짜(YYYY-MM-DD): String
         case lastNewBottleGuideDay
         
@@ -157,6 +160,10 @@ struct SettingDataSource {
     /// 꾸미기 저장 완료 안내 Alert 표시 여부: Bool
     @UserDefault(key: .shouldShowDecorationSaveAlert, defaultValue: true)
     static var shouldShowDecorationSaveAlert: Bool
+    
+    /// 꾸미기 페이지 내 풀 리워드 바텀시트 표시 여부: Bool
+    @UserDefault(key: .shouldShowFullRewardBottomSheet, defaultValue: true)
+    static var shouldShowFullRewardBottomSheet: Bool
     
     /// 새 별통이 열림 안내 표시 날짜
     @UserDefault(key: .lastNewBottleGuideDay, defaultValue: "0000-00-00")

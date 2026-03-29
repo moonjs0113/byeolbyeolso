@@ -171,7 +171,7 @@ struct DecorationStore {
                 
             case .touchFinalBottomSheetButton:
                 state.isPresentingFinalBottomSheet = false
-                HistoryStateManager.shared.setIsShownFullRewardBottmeSheet()
+                settings.shouldShowFullRewardBottomSheet = false
                 UINavigationController.isBlockSwipe = false
                 return .run { send in
                     let day: Day = .today
@@ -209,8 +209,7 @@ struct DecorationStore {
                 }
             
             case .touchSaveButton:
-                let isFirstSave = HistoryStateManager.shared.getIsFirstDecorationSave()
-                if isFirstSave {
+                if settings.shouldShowDecorationSaveAlert {
                     state.isPresentingDecorationGuideAlert = true
                 } else {
                     return .run { send in
@@ -222,7 +221,7 @@ struct DecorationStore {
                 state.isPresentingDecorationGuideAlert = false
                 
             case .saveDecorationItem:
-                HistoryStateManager.shared.setIsFirstDecorationSave()
+                settings.shouldShowDecorationSaveAlert = false
                 GA.Click(event: .customizeSubmitButton).send(parameters: [
                     .reward_배경: state.selectedDecorationItem[.background]?.name ?? "",
                     .reward_효과: state.selectedDecorationItem[.effect]?.name ?? "",

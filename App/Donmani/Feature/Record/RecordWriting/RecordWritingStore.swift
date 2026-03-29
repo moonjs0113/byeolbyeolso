@@ -15,9 +15,15 @@ struct RecordWritingStore {
     struct Context {
         let type: RecordContentType
         let content: RecordContent?
-        init(type: RecordContentType, content: RecordContent? = nil) {
+        let dayTitle: String
+        init(
+            type: RecordContentType,
+            content: RecordContent? = nil,
+            dayTitle: String = "하루"
+        ) {
             self.type = type
             self.content = content
+            self.dayTitle = dayTitle
         }
     }
     
@@ -44,16 +50,7 @@ struct RecordWritingStore {
 
         init(context: Context) {
             self.type = context.type
-            let stateManager = HistoryStateManager.shared.getState()
-            let isCompleteToday = stateManager[.today, default: false]
-            let isCompleteYesterday = stateManager[.yesterday, default: false]
-            if !(isCompleteToday || isCompleteYesterday) {
-                self.dayTitle = "하루"
-            } else if isCompleteToday {
-                self.dayTitle = "어제"
-            } else {
-                self.dayTitle = "오늘"
-            }
+            self.dayTitle = context.dayTitle
             
             self.category = switch context.type {
             case .good: RecordCategory.goodCategory
@@ -201,5 +198,4 @@ struct RecordWritingStore {
     
     
 }
-
 

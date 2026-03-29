@@ -127,14 +127,15 @@ struct RewardStartStore {
     @Dependency(\.recordRepository) var recordRepository
     @Dependency(\.rewardRepository) var rewardRepository
     @Dependency(\.feedbackRepository) var feedbackRepository
+    @Dependency(\.settings) var settings
     
     var body: some ReducerOf<Self> {
         BindingReducer()
         Reduce { state, action in
             switch action {
             case .toggleGuideBottomSheet:
-                if HistoryStateManager.shared.getIsFirstRewardEnter() {
-                    HistoryStateManager.shared.setIsFirstRewardEnter()
+                if settings.shouldShowRewardEventBottomSheet {
+                    settings.shouldShowRewardEventBottomSheet = false
                     state.isPresentingGuideBottomSheet = !state.isPresentingGuideBottomSheet
                     if !state.isPresentingGuideBottomSheet {
                         UINavigationController.isBlockSwipe = false

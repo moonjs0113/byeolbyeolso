@@ -43,7 +43,7 @@ struct MainNavigationStore {
             
             // Record
             case record(RecordEntryPointStore.Context)
-            case recordWriting(RecordContentType, RecordContent?)
+            case recordWriting(RecordContentType, RecordContent?, String)
             
             // List
             case monthlyRecordList(Day, [Record], Bool)

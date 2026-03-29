@@ -289,9 +289,11 @@ struct RecordEntryPointStore {
                 GA.Click(event: .confirmSubmitButton).send(parameters: gaParameter)
                 
                 let yesterday = DateManager.shared.getFormattedDate(for: .yesterday, .yearMonthDay)
-                let lastDate = HistoryStateManager.shared.getLastWriteRecordDateKey()
+                let lastDate = settings.lastWriteRecordDate.isEmpty
+                ? yesterday
+                : settings.lastWriteRecordDate
                 if (yesterday == lastDate) {
-                    let streakCount = HistoryStateManager.shared.getStreakSubmitCountKey()
+                    let streakCount = settings.streakSubmitCount
                     gaParameter = [.screenType: state.dayType]
                     if let good = state.goodRecord {
                         gaParameter = [.good: good.category]
@@ -300,8 +302,8 @@ struct RecordEntryPointStore {
                         gaParameter = [.bad: bad.category]
                     }
                     gaParameter[.streakCount] = streakCount + 1
-                    HistoryStateManager.shared.setStreakSubmitCountKey(count: streakCount + 1)
-                    HistoryStateManager.shared.setLastWriteRecordDateKey()
+                    settings.streakSubmitCount = streakCount + 1
+                    settings.lastWriteRecordDate = DateManager.shared.getFormattedDate(for: .today)
                     GA.Submit(event: .streakSubmit).send(parameters: gaParameter)
                 }
                 let record = Record(

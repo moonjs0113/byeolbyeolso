@@ -106,7 +106,7 @@ struct DecorationStore {
                     return .rewardBottleDefaultShape
                 }
             }()
-            self.isPresentingGuideBottomSheet = HistoryStateManager.shared.getIsFirstDecorationEnter()
+            self.isPresentingGuideBottomSheet = SettingDataSource.shouldShowDecorationGuideBottomSheet
             self.decorationItem.forEach {
                 if ($0.key == .decoration) {
                     for item in $0.value {
@@ -156,8 +156,8 @@ struct DecorationStore {
             switch action {
             case .toggleGuideBottomSheet:
                 GA.View(event: .customize).send()
-                if HistoryStateManager.shared.getIsFirstDecorationEnter() {
-                    HistoryStateManager.shared.setIsFirstDecorationEnter()
+                if settings.shouldShowDecorationGuideBottomSheet {
+                    settings.shouldShowDecorationGuideBottomSheet = false
                     state.isPresentingGuideBottomSheet = !state.isPresentingGuideBottomSheet
                     if !state.isPresentingGuideBottomSheet {
                         UINavigationController.isBlockSwipe = false

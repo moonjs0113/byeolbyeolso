@@ -64,7 +64,10 @@ struct SettingDataSource {
         case shouldShowBottleCalendarToolTip
         
         /// 연속 기록 날짜 수: Int
-        case streakSubmitCount
+        case streakSubmitCount = "STREAK_SUBMIT_COUNT"
+        
+        /// 마지막 기록 작성 날짜(YYYY-MM-DD): String
+        case lastWriteRecordDate = "LAST_WRITE_RECORD_DATE"
         
         /// 리워드 진입 페이지 내 이벤트 바텀시트 표시 여부: Bool
         case shouldShowRewardEventBottomSheet
@@ -138,6 +141,10 @@ struct SettingDataSource {
     /// 연속 기록 날짜 수: Int
     @UserDefault(key: .streakSubmitCount, defaultValue: 0)
     static var streakSubmitCount: Int
+    
+    /// 마지막 기록 작성 날짜(YYYY-MM-DD): String
+    @UserDefault(key: .lastWriteRecordDate, defaultValue: "")
+    static var lastWriteRecordDate: String
     
     /// 리워드 진입 페이지 내 이벤트 바텀시트 표시 여부: Bool
     @UserDefault(key: .shouldShowRewardEventBottomSheet, defaultValue: true)

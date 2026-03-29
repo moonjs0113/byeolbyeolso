@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 protocol FortuneRepository {
     func getTodayFortune() async throws -> Fortune
-    func postFortuneRead(readSource: FortuneReadSource) async throws
+    func putFortuneRead(readSource: FortuneReadSource) async throws
 }
 
 struct DefaultFortuneRepository: FortuneRepository {
@@ -30,8 +30,8 @@ struct DefaultFortuneRepository: FortuneRepository {
         return response.toDomain()
     }
     
-    func postFortuneRead(readSource: FortuneReadSource) async throws {
-        try await dataSource.postFortuneRead(
+    func putFortuneRead(readSource: FortuneReadSource) async throws {
+        try await dataSource.putFortuneRead(
             userKey: userKey,
             readSource: readSource.rawValue
         )

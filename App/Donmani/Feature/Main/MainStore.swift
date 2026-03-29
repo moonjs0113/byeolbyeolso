@@ -230,7 +230,7 @@ extension MainStore {
             do {
                 let fortune = try await fortuneRepository.getTodayFortune()
                 await send(._updateDailyFortune(fortune))
-                try? await fortuneRepository.postFortuneRead(readSource: readSource)
+                try? await fortuneRepository.putFortuneRead(readSource: readSource)
             } catch {
                 return
             }

@@ -152,10 +152,6 @@ struct SettingView: View {
                             }
                         }
                         Spacer()
-//                        VStack {
-//                            DText("v\(settings.appVersion)")
-//                                .style(.b4, .regular, .white)
-//                        }
                     }
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)

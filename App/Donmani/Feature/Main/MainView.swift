@@ -15,6 +15,15 @@ struct MainView: View {
     
     var body: some View {
         ZStack {
+            StarBottleView(
+                records: store.records,
+                decorationData: store.decorationData,
+                starBottleAction: $store.starBottleAction
+            ) {
+                GA.Click(event: .mainRecordArchiveButton).send()
+                store.send(.delegate(.pushRecordListView))
+            }
+            .ignoresSafeArea(.container)
             VStack {
                 VStack(spacing: .s1) {
                     DNavigationBar(
@@ -77,17 +86,7 @@ struct MainView: View {
                     .ignoresSafeArea()
             }
         }
-        .background {
-            StarBottleView(
-                records: store.records,
-                decorationData: store.decorationData,
-                starBottleAction: $store.starBottleAction
-            ) {
-                GA.Click(event: .mainRecordArchiveButton).send()
-                store.send(.delegate(.pushRecordListView))
-            }
-            .ignoresSafeArea(.container)
-        }
+        .safeAreaPadding()
         .onAppear {
             store.send(.onAppear)
         }

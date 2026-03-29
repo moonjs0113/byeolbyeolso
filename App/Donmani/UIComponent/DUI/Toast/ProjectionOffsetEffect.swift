@@ -1,5 +1,5 @@
 //
-//  ProjectionOFfsetEffect.swift
+//  ProjectionOffsetEffect.swift
 //  Donmani
 //
 //  Created by 문종식 on 9/22/25.

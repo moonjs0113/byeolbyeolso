@@ -80,12 +80,12 @@ struct StarBottleView: View {
     @Binding private var starBottleAction: StarBottleAction
     
     @State private var starBottleScene: StarBottleScene
-    @State var opacity: CGFloat = 0.0
     @State private var records: [Record]
     
     @Dependency(\.rewardDataUseCase) var rewardDataUseCase
     
-    @State var backgroundRewardData: Data?
+    @State var backgroundRewardData: Data = Data()
+    @State private var backgroundImage: UIImage?
     @State var effectRewardData: Data?
     @State var decorationRewardName: String?
     @State var decorationRewardId: Int?
@@ -121,7 +121,9 @@ struct StarBottleView: View {
             ),
             bottleShape: decorationData.bottleShape
         )
-        self.backgroundRewardData = decorationData.backgroundRewardData
+        let backgroundRewardData = decorationData.backgroundRewardData ?? Data()
+        self.backgroundRewardData = backgroundRewardData
+        self.backgroundImage = UIImage(data: backgroundRewardData)
         self.effectRewardData = decorationData.effectRewardData
         self.decorationRewardName = decorationData.decorationRewardName
         self.decorationRewardId = decorationData.decorationRewardId
@@ -133,13 +135,15 @@ struct StarBottleView: View {
     
     var body: some View {
         ZStack {
-            if let backgroundRewardData,
-               let image = UIImage(data: backgroundRewardData) {
+            if let image = backgroundImage {
                 Image(uiImage: image)
                     .resizable()
                     .ignoresSafeArea()
                     .scaledToFill()
                     .padding(-5)
+                    .transaction { transaction in
+                        transaction.animation = nil
+                    }
             } else {
                 BackgroundView(colors: [
                     DColor.backgroundTop,
@@ -287,7 +291,7 @@ struct StarBottleView: View {
                 }
                 
             case .changeRewardItem(let itemData):
-                backgroundRewardData = itemData.backgroundItem
+                backgroundRewardData = itemData.backgroundItem ?? Data()
                 effectRewardData = itemData.effectItem
                 decorationRewardId = itemData.decorationItemId
                 decorationRewardName = itemData.decorationItemName
@@ -328,6 +332,9 @@ struct StarBottleView: View {
                     index: i
                 )
             }
+        }
+        .onChange(of: backgroundRewardData) { _, newValue in
+            backgroundImage = UIImage(data: newValue)
         }
     }
 }

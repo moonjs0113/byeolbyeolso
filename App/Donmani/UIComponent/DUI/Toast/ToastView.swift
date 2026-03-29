@@ -12,24 +12,30 @@ struct ToastView: View {
     @EnvironmentObject private var toastManager: ToastManager
     
     var body: some View {
-        ZStack {
-            VStack {
-                ToastElementView(
-                    text: toastManager.title,
-                    icon: toastManager.icon
-                )
-                .opacity(toastManager.position == .top ? 1 : 0)
-                
-                Spacer()
-                
-                ToastElementView(
-                    text: toastManager.title,
-                    icon: toastManager.icon
-                )
-                .opacity(toastManager.position == .bottom ? 1 : 0)
+        Group {
+            if let position = toastManager.position {
+                VStack {
+                    if position == .top {
+                        toastElement()
+                        Spacer()
+                    } else {
+                        Spacer()
+                        toastElement()
+                    }
+                }
+                .offset(y: toastManager.offset)
+                .transition(.opacity)
             }
-            .offset(y: toastManager.offset)
         }
+        .allowsHitTesting(false)
+    }
+    
+    @ViewBuilder
+    private func toastElement() -> some View {
+        ToastElementView(
+            text: toastManager.title,
+            icon: toastManager.icon
+        )
     }
     
     private struct ToastElementView: View {

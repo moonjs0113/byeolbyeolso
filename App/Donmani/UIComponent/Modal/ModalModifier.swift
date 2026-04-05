@@ -75,8 +75,7 @@ struct ModalModifier<ModalContent: View>: ViewModifier {
             .ignoresSafeArea()
             .onTapGesture {
                 guard config.isEnableDismiss else { return }
-                onDismiss?()
-                dismiss()
+                isPresented = false
             }
     }
     
@@ -98,6 +97,7 @@ struct ModalModifier<ModalContent: View>: ViewModifier {
             isFullScreenViewVisible = false
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 isModalPresented = false
+                onDismiss?()
             }
         }
     }

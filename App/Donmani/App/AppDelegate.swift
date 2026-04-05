@@ -92,17 +92,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                 userInfo: ["notificationType": notificationType.rawValue]
             )
         }
-//        let title = response.notification.request.content.title
-//        let key = "destination"
-//        let gaValue = title.contains("운세") ? "운세" : DayType.today.title
-//        GA.Open(event: .notificationOpen).send(parameters: [.notificationType: gaValue])
-//        NotificationCenter.default.post(
-//            name: .didReceivePushNavigation,
-//            object: nil,
-//            userInfo: [key: gaValue]
-//        )
         center.setBadgeCount(0, withCompletionHandler: nil)
-        // 운세 노티 받아서 userInfo에서 데이터 받아서 Fortune 모델 받아서 MainView로 넘기기
     }
     
 }

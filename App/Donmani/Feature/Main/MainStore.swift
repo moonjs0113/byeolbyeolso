@@ -133,7 +133,7 @@ struct MainStore {
                     )
                     await send(.fetchRewardItem(decorationData))
                     
-                    let itemData = makeRewardItemDate(items: items)
+                    let itemData = makeRewardItemData(items: items)
                     await send(.updateRewardUI(itemData))
                     
                     let hasTodayRecord = recordRepository.load(date: .today).isSome
@@ -237,7 +237,7 @@ extension MainStore {
         }
     }
 
-    func makeRewardItemDate(items: [RewardItemCategory: Reward]) -> RewardItemData {
+    func makeRewardItemData(items: [RewardItemCategory: Reward]) -> RewardItemData {
         var decorationItemId: Int? = nil
         var decorationItemName: String? = nil
         if items[.decoration]?.id != 3 {

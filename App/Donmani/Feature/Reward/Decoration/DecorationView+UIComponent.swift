@@ -21,36 +21,42 @@ extension DecorationView {
     }
     
     func ItemGridView(itemCategory: RewardItemCategory) -> some View {
-        let columns = [
-            GridItem(.flexible(), spacing: 5),
-            GridItem(.flexible(), spacing: 5),
-            GridItem(.flexible(), spacing: 5)
-        ]
-        let size: CGFloat = (.screenWidth / 3 - .defaultLayoutPadding)
-        return ScrollView(.vertical, showsIndicators: false) {
-            LazyVGrid(columns: columns, spacing: 10) {
-                ForEach(store.decorationItem[itemCategory, default: []], id: \.id) { reward in
-                    Button {
-                        store.send(.touchRewardItem(itemCategory, reward))
-                    } label: {
-                        ZStack {
-                            ItemGridImage(reward: reward)
-                                .frame(width: size, height: size)
-                            if let selectedItem = store.selectedDecorationItem[itemCategory] {
-                                if selectedItem.id == reward.id {
-                                    RoundedRectangle(
-                                        cornerRadius: .s5,
-                                        style: .continuous
-                                    )
-                                    .strokeBorder(.white, lineWidth: 2)
+        let horizontalPadding: CGFloat = .defaultLayoutPadding
+        let itemSpacing: CGFloat = 5
+        let rowSpacing: CGFloat = 10
+        return GeometryReader { proxy in
+            let availableWidth = max(proxy.size.width - horizontalPadding * 2, 0)
+            let itemSize = max((availableWidth - itemSpacing * 2) / 3, 0)
+            let columns = Array(
+                repeating: GridItem(.fixed(itemSize), spacing: itemSpacing),
+                count: 3
+            )
+            
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVGrid(columns: columns, spacing: rowSpacing) {
+                    ForEach(store.decorationItem[itemCategory, default: []], id: \.id) { reward in
+                        Button {
+                            store.send(.touchRewardItem(itemCategory, reward))
+                        } label: {
+                            ZStack {
+                                ItemGridImage(reward: reward)
+                                    .frame(width: itemSize, height: itemSize)
+                                if let selectedItem = store.selectedDecorationItem[itemCategory] {
+                                    if selectedItem.id == reward.id {
+                                        RoundedRectangle(
+                                            cornerRadius: .s5,
+                                            style: .continuous
+                                        )
+                                        .strokeBorder(.white, lineWidth: 2)
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                .padding(.top, .defaultLayoutPadding / 2.0)
+                .padding(.horizontal, horizontalPadding)
             }
-            .padding(.top, .defaultLayoutPadding / 2.0)
-            .padding(.horizontal, .defaultLayoutPadding)
         }
     }
     

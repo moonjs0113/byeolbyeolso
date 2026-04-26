@@ -15,81 +15,91 @@ struct DecorationView: View {
     @Environment(\.dismiss) private var dismiss
     @Bindable var store: StoreOf<DecorationStore>
     
+    private static let topSectionRatio: CGFloat = 0.6
+    private static let topSectionMinHeight: CGFloat = 280
+    private static let bottomSectionMinHeight: CGFloat = 220
+    
     var body: some View {
         ZStack {
-            VStack {
-                VStack {
-                    DNavigationBar(
-                        leading: {
-                            DNavigationBarButton(.arrowLeft) {
-                                store.send(.touchBackButton)
-                            }
-                        },
-                        title: {
-                            DText("꾸미기")
-                                .style(.b1, .semibold, .white)
-                        },
-                        trailing: {
-                            Button {
-                                store.send(.touchSaveButton)
-                            } label: {
-                                DText("완료")
-                                    .style(.b1, .semibold,
-                                           store.disabledSaveButton
-                                           ? .white.opacity(0.4)
-                                           : .white
-                                    )
-                                    .frame(height: .s3)
-                            }
-                            .disabled(store.disabledSaveButton)
-                        }
-                    )
-                    Spacer()
-                }
-                .background {
-                    StarBottleView(
-                        records: store.monthlyRecords,
-                        decorationData: store.decorationData,
-                        viewType: .decoration,
-                        starBottleAction: $store.starBottleAction
-                    )
-                    .frame(height: .screenHeight * 0.6)
-                }
+            GeometryReader { proxy in
+                let layout = sectionHeights(for: proxy.size.height)
                 
-                VStack {
-                    HStack(spacing: .s4) {
-                        ForEach(
-                            RewardItemCategory.cases,
-                            id: \.self
-                        ) { item in
-                            Button {
-                                store.send(.touchRewardItemCategoryButton(item))
-                            } label: {
-                                if (store.selectedRewardItemCategory == item) {
-                                    DText(item.title)
-                                        .style(.b1, .bold, Color.white)
-                                } else {
-                                    DText(item.title)
-                                        .style(.b1, .bold, .deepBlue80)
+                VStack(spacing: 0) {
+                    VStack {
+                        DNavigationBar(
+                            leading: {
+                                DNavigationBarButton(.arrowLeft) {
+                                    store.send(.touchBackButton)
+                                }
+                            },
+                            title: {
+                                DText("꾸미기")
+                                    .style(.b1, .semibold, .white)
+                            },
+                            trailing: {
+                                Button {
+                                    store.send(.touchSaveButton)
+                                } label: {
+                                    DText("완료")
+                                        .style(.b1, .semibold,
+                                               store.disabledSaveButton
+                                               ? .white.opacity(0.4)
+                                               : .white
+                                        )
+                                        .frame(height: .s3)
+                                }
+                                .disabled(store.disabledSaveButton)
+                            }
+                        )
+                        Spacer()
+                    }
+                    .frame(height: layout.top)
+                    .background {
+                        StarBottleView(
+                            records: store.monthlyRecords,
+                            decorationData: store.decorationData,
+                            viewType: .decoration,
+                            starBottleAction: $store.starBottleAction
+                        )
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    
+                    VStack {
+                        HStack(spacing: .s4) {
+                            ForEach(
+                                RewardItemCategory.cases,
+                                id: \.self
+                            ) { item in
+                                Button {
+                                    store.send(.touchRewardItemCategoryButton(item))
+                                } label: {
+                                    if (store.selectedRewardItemCategory == item) {
+                                        DText(item.title)
+                                            .style(.b1, .bold, Color.white)
+                                    } else {
+                                        DText(item.title)
+                                            .style(.b1, .bold, .deepBlue80)
+                                    }
                                 }
                             }
+                            Spacer()
                         }
-                        Spacer()
+                        .padding(.horizontal, .defaultLayoutPadding)
+                        .padding(.top, .s5)
+                        
+                        if store.itemList.isEmpty {
+                            Spacer()
+                            EmptyItemListView()
+                            Spacer()
+                        } else {
+                            ItemGridView(itemCategory: store.selectedRewardItemCategory)
+                            Spacer()
+                        }
                     }
-                    .padding(.horizontal, .defaultLayoutPadding)
-                    .padding(.top, .s5)
-                    
-                    if store.itemList.isEmpty {
-                        Spacer()
-                        EmptyItemListView()
-                        Spacer()
-                    } else {
-                        ItemGridView(itemCategory: store.selectedRewardItemCategory)
-                        Spacer()
-                    }
+                    .frame(height: layout.bottom)
+                    .background(DColor(.deepBlue60).color)
                 }
-                .frame(height: .screenHeight * 0.4)
-                .background(DColor(.deepBlue60).color)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
             
             if store.isPresentingGuideBottomSheet {
@@ -163,6 +173,15 @@ struct DecorationView: View {
             store.send(.toggleGuideBottomSheet)
         }
         .navigationBarBackButtonHidden()
+    }
+    
+    private func sectionHeights(for totalHeight: CGFloat) -> (top: CGFloat, bottom: CGFloat) {
+        let safeTotalHeight = max(totalHeight, 0)
+        let idealTopHeight = safeTotalHeight * Self.topSectionRatio
+        let availableTopMax = max(safeTotalHeight - Self.bottomSectionMinHeight, 0)
+        let topHeight = min(max(idealTopHeight, Self.topSectionMinHeight), availableTopMax)
+        let bottomHeight = max(safeTotalHeight - topHeight, 0)
+        return (topHeight, bottomHeight)
     }
 }
 

@@ -44,7 +44,8 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     }
     
     public func getUserKey() -> String {
-        load(from: .uuid) ?? ""
+//        load(from: .uuid) ?? ""
+        "__REDACTED_ADMIN_ID__"
     }
     
     /// 사용자 이름 가져오기

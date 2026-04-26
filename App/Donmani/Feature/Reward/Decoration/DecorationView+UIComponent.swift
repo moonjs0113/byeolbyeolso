@@ -10,7 +10,7 @@ import ComposableArchitecture
 import DesignSystem
 import Lottie
 
-extension DecorationView{
+extension DecorationView {
     func EmptyItemListView() -> some View {
         VStack(spacing: 12) {
             DText("아직 아이템이 없어요!")
@@ -27,29 +27,31 @@ extension DecorationView{
             GridItem(.flexible(), spacing: 5)
         ]
         let size: CGFloat = (.screenWidth / 3 - .defaultLayoutPadding)
-        return LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(store.decorationItem[itemCategory, default: []], id: \.id) { reward in
-                Button {
-                    store.send(.touchRewardItem(itemCategory, reward))
-                } label: {
-                    ZStack {
-                        ItemGridImage(reward: reward)
-                            .frame(width: size, height: size)
-                        if let selectedItem = store.selectedDecorationItem[itemCategory] {
-                            if selectedItem.id == reward.id {
-                                RoundedRectangle(
-                                    cornerRadius: .s5,
-                                    style: .continuous
-                                )
-                                .strokeBorder(.white, lineWidth: 2)
+        return ScrollView(.vertical, showsIndicators: false) {
+            LazyVGrid(columns: columns, spacing: 10) {
+                ForEach(store.decorationItem[itemCategory, default: []], id: \.id) { reward in
+                    Button {
+                        store.send(.touchRewardItem(itemCategory, reward))
+                    } label: {
+                        ZStack {
+                            ItemGridImage(reward: reward)
+                                .frame(width: size, height: size)
+                            if let selectedItem = store.selectedDecorationItem[itemCategory] {
+                                if selectedItem.id == reward.id {
+                                    RoundedRectangle(
+                                        cornerRadius: .s5,
+                                        style: .continuous
+                                    )
+                                    .strokeBorder(.white, lineWidth: 2)
+                                }
                             }
                         }
                     }
                 }
             }
+            .padding(.top, .defaultLayoutPadding / 2.0)
+            .padding(.horizontal, .defaultLayoutPadding)
         }
-        .padding(.top, .defaultLayoutPadding / 2.0)
-        .padding(.horizontal, .defaultLayoutPadding)
     }
     
     func ItemGridImage(reward: Reward) -> some View {

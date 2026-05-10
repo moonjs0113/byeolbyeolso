@@ -34,7 +34,6 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     /// Keychain에서 UUID 가져오기 (없으면 새로 생성 후 저장)
     // TODO: - 배포 전 확인하기
     public func generateUUID() {
-//        let newUUID = "__REDACTED_ADMIN_ID__"
         guard let newUUID = load(from: .uuid) else {
             let newUUID = load(from: .uuid) ?? UUID().uuidString
             save(to: .uuid, value: newUUID)
@@ -44,8 +43,8 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     }
     
     public func getUserKey() -> String {
-//        load(from: .uuid) ?? ""
-        "__REDACTED_ADMIN_ID__"
+        load(from: .uuid) ?? ""
+//        "__REDACTED_ADMIN_ID__"
     }
     
     /// 사용자 이름 가져오기

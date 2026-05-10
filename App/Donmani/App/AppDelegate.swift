@@ -85,6 +85,12 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             case .fortune:
                 GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "운세"])
                 settings.shouldShowFortuneByNotification = true
+                settings.shouldPushRecordAfterFortuneConfirm = false
+            case .fortuneRemind:
+                GA.Open(event: .notificationOpen).send(parameters: [.notificationType: "운세"])
+                let isTodayExpenseExist = (userInfo["isTodayExpenseExist"] as? String)?.uppercased() ?? "Y"
+                settings.shouldShowFortuneByNotification = true
+                settings.shouldPushRecordAfterFortuneConfirm = (isTodayExpenseExist == "N")
             }
             NotificationCenter.default.post(
                 name: .didReceivePushNavigation,

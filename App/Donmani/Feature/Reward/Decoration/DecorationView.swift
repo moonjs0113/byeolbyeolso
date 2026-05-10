@@ -170,6 +170,7 @@ struct DecorationView: View {
             toastManager.show(type)
         }
         .onAppear {
+            store.send(.onAppear)
             store.send(.toggleGuideBottomSheet)
         }
         .navigationBarBackButtonHidden()

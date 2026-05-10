@@ -101,8 +101,10 @@ struct MainView: View {
             dailyFortune()
         } onDismiss: {
             Task { @MainActor in
-                await store.send(.touchDailyFortuneConfirm).finish()
-                toastManager.show(.dailyFortuneNotice)
+                if !store.shouldPushRecordAfterFortuneConfirm {
+                    toastManager.show(.dailyFortuneNotice)
+                }
+                await store.send(.completeDailyFortuneDismiss).finish()
             }
         }
         .navigationBarBackButtonHidden()

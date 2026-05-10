@@ -142,7 +142,7 @@ extension MainView {
                         style: .continuous
                     )
                     .fill(Color.hex("#F8F9FA"))
-                    DText("행운 받아가기")
+                    DText(store.shouldPushRecordAfterFortuneConfirm ? "기록하기" : "행운 받아가기")
                         .style(.b1, .bold, .hex("#04091E"))
                 }
             }

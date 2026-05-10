@@ -92,6 +92,9 @@ struct SettingDataSource {
 
         /// 노티 탭으로 운세 표시가 필요한 상태인지 여부: Bool
         case shouldShowFortuneByNotification
+        
+        /// 운세 확인 후 기록하기 화면 이동 여부: Bool
+        case shouldPushRecordAfterFortuneConfirm
 
         /// App Version
         case appVersion
@@ -180,6 +183,10 @@ struct SettingDataSource {
     /// 노티 탭으로 운세 표시가 필요한 상태인지 여부: Bool
     @UserDefault(key: .shouldShowFortuneByNotification, defaultValue: false)
     static var shouldShowFortuneByNotification: Bool
+    
+    /// 운세 확인 후 기록하기 화면 이동 여부: Bool
+    @UserDefault(key: .shouldPushRecordAfterFortuneConfirm, defaultValue: false)
+    static var shouldPushRecordAfterFortuneConfirm: Bool
     
     /// App Version
     @UserDefault(key: .appVersion, defaultValue: "0.0.0")

@@ -36,6 +36,7 @@ struct MainStore {
         var isPresentingRewardToolTipView: Bool = false
         var isRequestNotificationPermission: Bool = true
         var isPresentDailyFortuneModal: Bool = false
+        var shouldPushRecordAfterFortuneConfirm: Bool = false
         var isLoading: Bool = false
         var starBottleOpacity = 1.0
         var yOffset: CGFloat = 0
@@ -73,6 +74,7 @@ struct MainStore {
         case delegate(Delegate)
         
         case touchDailyFortuneConfirm
+        case completeDailyFortuneDismiss
         
         case updateRewardUI(RewardItemData)
         
@@ -151,11 +153,15 @@ struct MainStore {
                 guard shouldShowByNotification || shouldShowByDay else {
                     return .none
                 }
+                state.shouldPushRecordAfterFortuneConfirm = shouldShowByNotification
+                    ? settings.shouldPushRecordAfterFortuneConfirm
+                    : false
                 settings.shouldShowFortuneByNotification = false
                 let readSource: FortuneReadSource = shouldShowByNotification ? .notification : .appDirection
                 return requestDailyFortuneEffect(readSource: readSource)
 
             case .presentDailyFortuneByNotification:
+                state.shouldPushRecordAfterFortuneConfirm = settings.shouldPushRecordAfterFortuneConfirm
                 settings.shouldShowFortuneByNotification = false
                 return requestDailyFortuneEffect(readSource: .notification)
 
@@ -214,6 +220,15 @@ struct MainStore {
                 
             case .touchDailyFortuneConfirm:
                 state.isPresentDailyFortuneModal = false
+                settings.shouldPushRecordAfterFortuneConfirm = false
+                if state.shouldPushRecordAfterFortuneConfirm {
+                    return .run { send in
+                        await send(.delegate(.pushRecordEntryPointView))
+                    }
+                }
+                
+            case .completeDailyFortuneDismiss:
+                state.shouldPushRecordAfterFortuneConfirm = false
                 
             default:
                 break

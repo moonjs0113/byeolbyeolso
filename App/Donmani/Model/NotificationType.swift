@@ -8,4 +8,5 @@
 enum NotificationType: String {
     case `default` = "DEFAULT"
     case fortune = "FORTUNE"
+    case fortuneRemind = "FORTUNE_REMIND"
 }

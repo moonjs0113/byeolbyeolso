@@ -107,15 +107,6 @@ struct DecorationStore {
                 }
             }()
             self.isPresentingGuideBottomSheet = SettingDataSource.shouldShowDecorationGuideBottomSheet
-            self.decorationItem.forEach {
-                if ($0.key == .decoration) {
-                    for item in $0.value {
-                        if (item.hidden && !item.hiddenRead) {
-                            self.isPresentingFinalBottomSheet = true
-                        }
-                    }
-                }
-            }
         }
     }
     
@@ -124,6 +115,7 @@ struct DecorationStore {
     @Dependency(\.settings) var settings
     
     enum Action: BindableAction {
+        case onAppear
         case toggleGuideBottomSheet
         case touchGuideBottomSheetButton
         case touchFinalBottomSheetButton
@@ -154,6 +146,18 @@ struct DecorationStore {
         BindingReducer()
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                if settings.shouldShowFullRewardBottomSheet {
+                    let shouldPresentFinalBottomSheet = state.decorationItem
+                        .filter { $0.key == .decoration }
+                        .flatMap { $0.value }
+                        .contains { $0.hidden && !$0.hiddenRead }
+                    if shouldPresentFinalBottomSheet {
+                        state.isPresentingFinalBottomSheet = true
+                        settings.shouldShowFullRewardBottomSheet = false
+                    }
+                }
+                
             case .toggleGuideBottomSheet:
                 GA.View(event: .customize).send()
                 if settings.shouldShowDecorationGuideBottomSheet {

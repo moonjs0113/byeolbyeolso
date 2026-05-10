@@ -69,7 +69,7 @@ struct MainNavigationView: View {
         .onReceive(NotificationCenter.default.publisher(for: .didReceivePushNavigation)) { notification in
             guard let rawType = notification.userInfo?["notificationType"] as? String,
                   let notificationType = NotificationType(rawValue: rawType),
-                  notificationType == .fortune else {
+                  notificationType == .fortune || notificationType == .fortuneRemind else {
                 return
             }
             navigationStore.send(.receiveFortuneNotification)

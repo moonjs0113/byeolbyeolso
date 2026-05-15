@@ -84,21 +84,19 @@ extension Day: Hashable {
 
 extension Day: Equatable, Comparable {
     static func < (lhs: Day, rhs: Day) -> Bool {
-        if lhs.year < rhs.year { return true }
-        if lhs.month < rhs.month { return true }
-        if lhs.day < rhs.day { return true }
-        return false
+        lhs.compareKey < rhs.compareKey
     }
     
     static func == (lhs: Day, rhs: Day) -> Bool {
-        if lhs.year != rhs.year { return false }
-        if lhs.month != rhs.month { return false }
-        if lhs.day != rhs.day { return false }
-        return true
+        lhs.compareKey == rhs.compareKey
     }
 }
 
 extension Day {
+    private var compareKey: Int {
+        (year * 10_000) + (month * 100) + day
+    }
+
     /// YYYY-MM-DD
     var yyyyMMdd: String {
         "\(year)-\(month.twoDigitString)-\(day.twoDigitString)"

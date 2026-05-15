@@ -78,7 +78,7 @@ struct RootStore {
                     let monthlyRecordState = try await recordRepository.getMonthlyRecordList(year: day.year, month: day.month)
                     let hasTodayRecord = recordRepository.load(date: .today).isSome
                     let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
-                    let lastNewBottleGuideDay = Day(yyyymmdd: settings.lastNewBottleGuideDay)
+                    let lastNewBottleGuideDay = Day(yyyymmdd: settings.lastNewBottleGuideDay) ?? .distantPast
                     var isPresentingNewStarBottle = false
                     if day > lastNewBottleGuideDay {
                         if (day.month != lastNewBottleGuideDay.month || day.year != lastNewBottleGuideDay.year) {
@@ -108,7 +108,7 @@ struct RootStore {
                     let monthlyRecordState = try await recordRepository.getMonthlyRecordList(year: day.year, month: day.month)
                     let hasTodayRecord = recordRepository.load(date: .today).isSome
                     let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
-                    let lastNewBottleGuideDay = Day(yyyymmdd: settings.lastNewBottleGuideDay)
+                    let lastNewBottleGuideDay = Day(yyyymmdd: settings.lastNewBottleGuideDay) ?? .distantPast
                     var isPresentingNewStarBottle = false
                     if day > lastNewBottleGuideDay {
                         if (day.month != lastNewBottleGuideDay.month || day.year != lastNewBottleGuideDay.year) {

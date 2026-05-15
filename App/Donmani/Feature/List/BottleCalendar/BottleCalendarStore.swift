@@ -44,7 +44,7 @@ struct BottleCalendarStore {
                 for month in ((year == 2025 ? 3 : 1)...12) {
                     self.starCount[year, default: [:]][month] = context[year]?.monthlyRecords[month]?.recordCount ?? 0
                     if self.starCount[year, default: [:]][month, default: -1] == 0 {
-                        let day = Day(year: year, month: month)
+                        let day = Day(year: year, month: month, day: 1)
                         if day > today {
                             self.starCount[year, default: [:]][month] = -1
                         }
@@ -134,7 +134,7 @@ struct BottleCalendarStore {
                     }
                     recordRepository.saveRecords(records)
                     await send(.hideLoading)
-                    await send(.delegate(.pushMonthlyBottleView(Day(year: year, month: month), records, monthlyRecordState.saveItems)))
+                    await send(.delegate(.pushMonthlyBottleView(Day(year: year, month: month, day: 1), records, monthlyRecordState.saveItems)))
                 }
             default:
                 break

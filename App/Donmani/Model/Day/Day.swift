@@ -12,37 +12,66 @@ struct Day {
     let month: Int
     let day: Int
     
-    init(
-        year: Int = 0,
-        month: Int = 0,
-        day: Int = 0
-    ) {
+    init(year: Int, month: Int, day: Int) {
         self.year = year
         self.month = month
         self.day = day
     }
     
     /// YYYY-MM-DD 형식의 문자열로 초기화
-    init(yyyymmdd: String) {
-        let split = yyyymmdd.components(separatedBy: "-").map(Int.init)
-        self.day = split[2] ?? 1
-        self.month = split[1] ?? 1
-        self.year = split[0] ?? 1
+    init?(yyyymmdd: String) {
+        let split = yyyymmdd.components(separatedBy: "-")
+        guard split.count == 3,
+              split[0].count == 4,
+              split[1].count == 2,
+              split[2].count == 2,
+              let year = Int(split[0]),
+              let month = Int(split[1]),
+              let day = Int(split[2]),
+              Day.isValid(year: year, month: month, day: day) else {
+            return nil
+        }
+        self.init(year: year, month: month, day: day)
     }
     
     /// YY-MM-DD 형식의 문자열로 초기화
-    init(yymmdd: String) {
-        let split = yymmdd.components(separatedBy: "-").map(Int.init)
-        self.day = split[2] ?? 1
-        self.month = split[1] ?? 1
-        self.year = (split[0] ?? 0) + 2000
+    init?(yymmdd: String) {
+        let split = yymmdd.components(separatedBy: "-")
+        guard split.count == 3,
+              split[0].count == 2,
+              split[1].count == 2,
+              split[2].count == 2,
+              let shortYear = Int(split[0]),
+              let month = Int(split[1]),
+              let day = Int(split[2]) else {
+            return nil
+        }
+        let year = shortYear + 2000
+        guard Day.isValid(year: year, month: month, day: day) else {
+            return nil
+        }
+        self.init(year: year, month: month, day: day)
     }
-    
-    //    init(day: Int, month: Int) {
-    //        self.day = day
-    //        self.month = month
-    //        self.year = 2025
-    //    }
+}
+
+private extension Day {
+    static func isValid(year: Int, month: Int, day: Int) -> Bool {
+        guard (1...9999).contains(year),
+              (1...12).contains(month),
+              (1...31).contains(day) else {
+            return false
+        }
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
+        let components = DateComponents(year: year, month: month, day: day)
+        guard let date = calendar.date(from: components) else {
+            return false
+        }
+        let normalized = calendar.dateComponents([.year, .month, .day], from: date)
+        return normalized.year == year
+            && normalized.month == month
+            && normalized.day == day
+    }
 }
 
 extension Day: Hashable {
@@ -114,6 +143,10 @@ extension Day {
 
 // Static
 extension Day {
+    static var distantPast: Day {
+        Day(year: 1970, month: 1, day: 1)
+    }
+
     static var today: Day {
         let components = todayComponents
         return Day(

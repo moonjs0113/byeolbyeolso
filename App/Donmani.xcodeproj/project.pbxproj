@@ -58,6 +58,8 @@
 		C7A6A25E2D4A826D00B4CF35 /* DonmaniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DonmaniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A2682D4A826D00B4CF35 /* DonmaniUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DonmaniUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DesignSystem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7E1A0012F0A000100000001 /* Config/Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config/Debug.xcconfig; sourceTree = "<group>"; };
+		C7E1A0022F0A000100000001 /* Config/Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config/Release.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -136,6 +138,8 @@
 		C7A6A2452D4A826B00B4CF35 = {
 			isa = PBXGroup;
 			children = (
+				C7E1A0012F0A000100000001 /* Config/Debug.xcconfig */,
+				C7E1A0022F0A000100000001 /* Config/Release.xcconfig */,
 				C7A6A2502D4A826B00B4CF35 /* Donmani */,
 				C7A6A2612D4A826D00B4CF35 /* DonmaniTests */,
 				C7A6A26B2D4A826D00B4CF35 /* DonmaniUITests */,
@@ -479,6 +483,7 @@
 		};
 		C7A6A2732D4A826D00B4CF35 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7E1A0012F0A000100000001 /* Config/Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -516,6 +521,7 @@
 		};
 		C7A6A2742D4A826D00B4CF35 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7E1A0022F0A000100000001 /* Config/Release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -85,10 +85,10 @@ Podfile.lock
 
 ### GoogleService-Info ###
 GoogleService-Info.plist
+App/Config/secret.xcconfig
 
 ###
 GEMINI.md
 
 ### End Line ###
-
 

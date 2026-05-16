@@ -43,8 +43,12 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     }
     
     public func getUserKey() -> String {
-        load(from: .uuid) ?? ""
-//        "__REDACTED_ADMIN_ID__"
+#if DEBUG
+        if let adminID = AppConfig.string(.adminID) {
+            return adminID
+        }
+#endif
+        return load(from: .uuid) ?? ""
     }
     
     /// 사용자 이름 가져오기

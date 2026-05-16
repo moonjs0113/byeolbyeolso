@@ -9,7 +9,6 @@ import GoogleMobileAds
 import SwiftUI
 
 struct BannerViewContainer: UIViewRepresentable {
-    private let id = "__REDACTED_ADMOB_BANNER_ID__"
     let adSize: AdSize
     let loadCompleteHandler: () -> Void
     
@@ -21,7 +20,11 @@ struct BannerViewContainer: UIViewRepresentable {
     func makeUIView(context: Context) -> BannerView {
         MobileAds.shared.start()
         let banner = BannerView(adSize: adSize)
-        banner.adUnitID = id
+        guard let adUnitID = AppConfig.string(.admobBannerAdUnitID) else {
+            assertionFailure("Missing ADMOB_BANNER_AD_UNIT_ID in Info.plist.")
+            return banner
+        }
+        banner.adUnitID = adUnitID
         banner.load(Request())
         banner.delegate = context.coordinator
         return banner

@@ -7,14 +7,17 @@
 
 import SwiftUI
 
-/// DesignSystem text factory with explicit style.
-public func DText(
-    _ text: String,
-    style: DFontStyle,
-    weight: DFontWeight,
-    color: Color
-) -> Text {
-    Text(text)
-        .font(DFont.font(style, weight: weight))
-        .foregroundColor(color)
+public typealias DText = Text
+
+public extension Text {
+    init(
+        _ text: String,
+        style: DFontStyle,
+        weight: DFontWeight,
+        color: Color
+    ) {
+        self = Text(text)
+            .font(DFont.font(style, weight: weight))
+            .foregroundColor(color)
+    }
 }

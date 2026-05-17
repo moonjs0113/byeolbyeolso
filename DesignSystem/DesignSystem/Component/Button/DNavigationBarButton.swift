@@ -30,7 +30,7 @@ public struct DNavigationBarButton: View {
         } label: {
             switch type {
             case let .image(icon):
-                DImage(icon).image
+                DImage(icon)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3)

@@ -28,7 +28,7 @@ extension OnboardingView {
                             )
                         )
                         .frame(width: 120, height: 120)
-                    DImage(.starShape).image
+                    DImage(.starShape)
                         .resizable()
                         .frame(width: .s4 * 3, height: .s4 * 3)
                 }
@@ -40,7 +40,7 @@ extension OnboardingView {
             
             Spacer()
             VStack(spacing: 0) {
-                DImage(.onboardingCover).image
+                DImage(.onboardingCover)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: .screenWidth * 0.4)
@@ -137,7 +137,7 @@ extension OnboardingView {
                 content: store.guideContents[index]
             )
             Spacer()
-            DImage(store.guideImageAssets[index]).image
+            DImage(store.guideImageAssets[index])
                 .resizable()
                 .aspectRatio(contentMode: .fit)
         }
@@ -159,7 +159,7 @@ extension OnboardingView {
     }
     
     func GuideImage(_ imageAsset: DImageAsset) -> some View {
-        DImage(imageAsset).image
+        DImage(imageAsset)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: .screenWidth)

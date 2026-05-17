@@ -76,11 +76,11 @@ extension RecordCategory {
     }
     
     var image: Image {
-        DImage(assetName).image
+        DImage(assetName: assetName)
     }
     
     var smallImage: Image {
-        DImage("\(assetName)_small").image
+        DImage(assetName: "\(assetName)_small")
     }
 }
 

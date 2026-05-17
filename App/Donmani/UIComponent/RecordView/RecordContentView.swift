@@ -32,7 +32,7 @@ struct RecordContentView: View {
                 DText(record.category.title, style: .h3, weight: .bold, color: .white)
                 Spacer()
                 if isEditable {
-                    DImage(.edit).image
+                    DImage(.edit)
                         .resizable()
                         .frame(width: .s4, height: .s4)
                 }
@@ -50,13 +50,13 @@ struct RecordContentView: View {
                             HStack {
                                 Spacer()
                                 ZStack {
-                                    DImage(.starSmall).image
+                                    DImage(.starSmall)
                                         .resizable()
                                         .renderingMode(.template)
                                         .foregroundStyle(record.category.color)
                                         .aspectRatio(1, contentMode: .fit)
                                         .overlay {
-                                            DImage(.starSingleHighlighter).image
+                                            DImage(.starSingleHighlighter)
                                                 .resizable()
                                                 .aspectRatio(1, contentMode: .fit)
                                         }

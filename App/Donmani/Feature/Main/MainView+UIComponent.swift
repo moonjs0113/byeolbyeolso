@@ -17,7 +17,7 @@ extension MainView {
             ZStack {
                 Circle()
                     .fill(ColorPalette.Secondary.purpleBlue70)
-                DImage(.plus).image
+                DImage(.plus)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s2)
@@ -46,7 +46,7 @@ extension MainView {
                     Button {
                         store.send(.closePopover)
                     } label: {
-                        DImage(.close).image
+                        DImage(.close)
                             .resizable()
                             .frame(width: .s5, height: .s5)
                     }
@@ -96,7 +96,6 @@ extension MainView {
         VStack(spacing: 16) {
             HStack(spacing: 8) {
                 DImage(.dailyFortune)
-                    .image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 68, height: 68)

@@ -61,7 +61,7 @@ extension RecordWritingView {
     
     func TextGuideView() -> some View {
         HStack(spacing: 8) {
-            DImage(.warning).image
+            DImage(.warning)
                 .resizable()
                 .frame(width: .s3, height: .s3)
             DText("최대로 작성했어요", style: .b2, weight: .bold, color: .white)

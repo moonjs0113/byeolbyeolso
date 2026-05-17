@@ -15,7 +15,7 @@ extension BottleCalendarView {
                 .fill(ColorPalette.Primary.deepBlue60)
                 .frame(height: 56)
             HStack(alignment: .center, spacing: 8) {
-                DImage(.notice).image
+                DImage(.notice)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3, height: .s3)
@@ -25,7 +25,7 @@ extension BottleCalendarView {
                 Button {
                     store.send(.closeTopBanner)
                 } label: {
-                    DImage(.close).image
+                    DImage(.close)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: .s4, height: .s4)
@@ -74,17 +74,17 @@ extension BottleCalendarView {
     ) -> some View {
         VStack(alignment: .center, spacing: 4) {
             if (count == -1) {
-                DImage(.calendarStarBottleLock).image
+                DImage(.calendarStarBottleLock)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 116)
             } else {
                 ZStack {
-                    DImage(.calendarStarBottleOpen).image
+                    DImage(.calendarStarBottleOpen)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     VStack(spacing: 4) {
-                        DImage(.starSmall).image
+                        DImage(.starSmall)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: .s4, height: .s4)

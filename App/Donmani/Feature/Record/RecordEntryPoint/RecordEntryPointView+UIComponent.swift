@@ -44,7 +44,7 @@ extension RecordEntryPointView {
                 HStack {
                     DText(type.title, style: .h3, weight: .bold, color: .white)
                     Spacer()
-                    DImage(.addRecord).image
+                    DImage(.addRecord)
                         .resizable()
                         .frame(width: .s1, height: .s1)
                 }
@@ -56,7 +56,7 @@ extension RecordEntryPointView {
     
     func RecordGuideText() -> some View {
             HStack(spacing: 0) {
-                DImage(.starShape).image
+                DImage(.starShape)
                     .resizable()
                     .renderingMode(.template)
                     .aspectRatio(contentMode: .fit)
@@ -70,7 +70,7 @@ extension RecordEntryPointView {
     func RecordIsNotFullText() -> some View {
         HStack(alignment: .top, spacing: .s5 / 2) {
             VStack {
-                DImage(.notice).image
+                DImage(.notice)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3, height: .s3)
@@ -107,7 +107,7 @@ extension RecordEntryPointView {
                             Button {
                                 store.send(.closePopover)
                             } label: {
-                                DImage(.close).image
+                                DImage(.close)
                                     .resizable()
                                     .frame(width: .s5, height: .s5)
                             }
@@ -132,7 +132,7 @@ extension RecordEntryPointView {
             action()
         } label: {
             HStack(spacing: 4) {
-                DImage(isChecked ? .check : .uncheck).image
+                DImage(isChecked ? .check : .uncheck)
                     .resizable()
                     .frame(width: .s4, height: .s4)
                 DText("무소비 했어요", style: .b2, weight: .semibold, color: isChecked ? ColorPalette.Neutral.gray95 : ColorPalette.Primary.deepBlue80)

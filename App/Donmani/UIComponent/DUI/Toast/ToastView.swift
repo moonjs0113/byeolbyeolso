@@ -47,7 +47,7 @@ struct ToastView: View {
                 Spacer()
                 HStack(spacing: 8) {
                     if let icon {
-                        DImage(icon).image
+                        DImage(icon)
                             .resizable()
                             .frame(width: .s3, height: .s3)
                     }

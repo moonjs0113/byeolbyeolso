@@ -30,7 +30,7 @@ extension RecordListView {
                         Button {
                             store.send(.closeBottleCalendarToolTip)
                         } label: {
-                            DImage(.close).image
+                            DImage(.close)
                                 .resizable()
                                 .frame(width: .s5, height: .s5)
                         }
@@ -121,7 +121,7 @@ extension RecordListView {
                         HStack {
                             DText("\(store.day.month)월 기록 통계", style: .b1, weight: .semibold, color: ColorPalette.Neutral.gray99)
                             if store.progressPoint > -1 {
-                                DImage(.arrowRight).image
+                                DImage(.arrowRight)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: .s5, height: .s5)

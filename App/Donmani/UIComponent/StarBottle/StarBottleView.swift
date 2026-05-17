@@ -149,7 +149,7 @@ struct StarBottleView: View {
                     ColorPalette.Semantic.backgroundTop,
                     ColorPalette.Semantic.backgroundBottom,
                 ])
-                DImage(.backgroundStar).image
+                DImage(.backgroundStar)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .screenWidth - 2 * .defaultLayoutPadding)
@@ -172,7 +172,7 @@ struct StarBottleView: View {
             VStack {
                 Spacer()
                 ZStack {
-                    DImage(.starBottleBackground).image
+                    DImage(.starBottleBackground)
                         .resizable()
                         .frame(width: width + 20)
                         .aspectRatio(0.8, contentMode: .fit)
@@ -192,7 +192,6 @@ struct StarBottleView: View {
                             category: .bottle
                         )
                         .image()
-                        .image
                         .resizable()
                         .aspectRatio(0.8, contentMode: .fit)
                         .frame(width: width)
@@ -200,7 +199,7 @@ struct StarBottleView: View {
                             onTapGesture?()
                         }
                     } else {
-                        DImage(.starBottleLock).image
+                        DImage(.starBottleLock)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .padding(.horizontal, 38)
@@ -231,7 +230,6 @@ struct StarBottleView: View {
                                 VStack {
                                     HStack {
                                         DImage(.rewardDecorationSpaceVacance)
-                                            .image
                                             .resizable()
                                             .aspectRatio(0.67, contentMode: .fit)
                                             .frame(height: .screenWidth * 0.27)

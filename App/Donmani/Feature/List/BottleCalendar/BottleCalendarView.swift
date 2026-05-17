@@ -34,7 +34,6 @@ struct BottleCalendarView: View {
                             HStack {
                                 DText("\(store.selectedYear)년 별통이", style: .b1, weight: .semibold, color: .white)
                                 DImage(DImageAsset.downArrow)
-                                    .image
                             }
                         }
                     }

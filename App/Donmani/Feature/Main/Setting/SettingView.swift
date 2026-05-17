@@ -91,7 +91,7 @@ struct SettingView: View {
                         )
                         
                         VStack(alignment: .center, spacing: 12) {
-                            DImage(.profile).image
+                            DImage(.profile)
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fit)
                                 .frame(width: 100, height: 100)
@@ -104,7 +104,7 @@ struct SettingView: View {
                                     UINavigationController.isBlockSwipe = true
                                 } label: {
                                     DText(store.userName, style: .b1, weight: .semibold, color: .white)
-                                    DImage(.edit).image
+                                    DImage(.edit)
                                         .resizable()
                                         .aspectRatio(1, contentMode: .fit)
                                         .frame(width: .s4, height: .s4)

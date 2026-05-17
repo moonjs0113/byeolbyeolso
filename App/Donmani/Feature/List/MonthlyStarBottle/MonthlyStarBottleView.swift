@@ -67,13 +67,11 @@ struct EmptyStarBottleView: View {
             ])
             
             DImage(.backgroundStar)
-                .image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: .screenWidth - 2 * .defaultLayoutPadding)
             
             DImage(.starBottleLock)
-                .image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.top, 10)

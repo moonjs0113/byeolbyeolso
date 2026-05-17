@@ -39,7 +39,7 @@ struct MainView: View {
                     RecordButton()
                 } else {
                     HStack(spacing: 4) {
-                        DImage(.starShape).image
+                        DImage(.starShape)
                             .resizable()
                             .renderingMode(.template)
                             .aspectRatio(contentMode: .fit)

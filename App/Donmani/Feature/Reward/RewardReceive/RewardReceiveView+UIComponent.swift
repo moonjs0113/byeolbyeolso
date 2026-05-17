@@ -13,7 +13,7 @@ extension RewardReceiveView {
     func MultiRewardGuideText() -> some View {
         HStack(alignment: .top, spacing: .s5 / 2) {
             VStack {
-                DImage(.notice).image
+                DImage(.notice)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3, height: .s3)
@@ -138,9 +138,9 @@ extension RewardReceiveView {
                     
     func RewardItemListCardView(item: Reward) -> some View {
         let mapper = RewardResourceMapper(id: item.id, category: item.category)
-        var image = mapper.image().image
+        var image = mapper.image()
         if item.category == .bottle {
-            image = mapper.image(isPreview: true).image
+            image = mapper.image(isPreview: true)
         }
         let size = CGFloat.screenWidth * (8/15)
         return VStack {

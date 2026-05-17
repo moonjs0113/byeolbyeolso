@@ -60,9 +60,9 @@ extension DecorationView {
     
     func ItemGridImage(reward: Reward) -> some View {
         let mapper = RewardResourceMapper(id: reward.id, category: reward.category)
-        var image = mapper.image().image
+        var image = mapper.image()
         if reward.category == .bottle {
-            image = mapper.image(isPreview: true).image
+            image = mapper.image(isPreview: true)
         }
         return Group {
             ZStack {
@@ -111,7 +111,6 @@ extension DecorationView {
         backgroundShapeImage: DImage
     ) -> some View {
         backgroundShapeImage
-            .image
             .resizable()
             .scaledToFit()
             .padding(.vertical, 50)

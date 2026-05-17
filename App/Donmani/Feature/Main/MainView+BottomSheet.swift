@@ -52,12 +52,12 @@ extension MainView {
                 }
                 
                 ZStack {
-                    DImage(.newStarBottleBackground).image
+                    DImage(.newStarBottleBackground)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 200)
                     
-                    DImage(.newStarBottle).image
+                    DImage(.newStarBottle)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 167)
@@ -71,7 +71,7 @@ extension MainView {
                     HStack(spacing: 4) {
                         DText("지난 달 별통이 보러가기", style: .b1, weight: .regular, color: ColorPalette.Primary.deepBlue90)
                         
-                        DImage(.arrowRight).image
+                        DImage(.arrowRight)
                             .renderingMode(.template)
                             .resizable()
                             .foregroundStyle(ColorPalette.Primary.deepBlue90)
@@ -98,7 +98,7 @@ extension MainView {
                 DText("앗! 어제 오늘 소비 모두 기록 했어요\n내일 또 기록 할 수 있어요!", style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                     .lineSpacing(.s5/2)
                 VStack(spacing: 0) {
-                    DImage(.onboardingEnd).image
+                    DImage(.onboardingEnd)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     DButton(title: "확인했어요") {

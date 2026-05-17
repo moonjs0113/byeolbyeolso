@@ -1,17 +1,20 @@
 //
 //  DToggle.swift
-//  Donmani
+//  DesignSystem
 //
 //  Created by 문종식 on 3/26/25.
 //
 
 import SwiftUI
-import DesignSystem
 
-struct DToggle: View {
+public struct DToggle: View {
     @Binding var isOn: Bool
     
-    var body: some View {
+    public init(isOn: Binding<Bool>) {
+        self._isOn = isOn
+    }
+    
+    public var body: some View {
         Capsule(style: .continuous)
             .fill(isOn ? ColorPalette.Primary.deepBlue99 : ColorPalette.Primary.deepBlue70)
             .frame(width: 48, height: 28)

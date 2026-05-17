@@ -146,8 +146,8 @@ struct StarBottleView: View {
                     }
             } else {
                 BackgroundView(colors: [
-                    DColor.backgroundTop,
-                    DColor.backgroundBottom,
+                    ColorPalette.Semantic.backgroundTop,
+                    ColorPalette.Semantic.backgroundBottom,
                 ])
                 DImage(.backgroundStar).image
                     .resizable()

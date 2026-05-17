@@ -23,14 +23,12 @@ extension RewardStartView {
                     오늘부터 12번 기록하면
                     특별한 선물을 받아요
                     """
-                )
-                .style(.h2, .bold, .deepBlue99)
+                , style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                 .multilineTextAlignment(.center)
                 .lineSpacing(4)
                 .padding(.top, -4)
                 
-                DText("기록할 때마다 하나씩, 모두 모으면 숨겨진 선물이?!")
-                    .style(.b2, .regular, .deepBlue90)
+                DText("기록할 때마다 하나씩, 모두 모으면 숨겨진 선물이?!", style: .b2, weight: .regular, color: ColorPalette.Primary.deepBlue90)
                     .multilineTextAlignment(.center)
                 
                 

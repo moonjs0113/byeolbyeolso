@@ -38,10 +38,8 @@ struct SplashView: View {
                 .frame(width: .screenWidth / 3)
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
-                    DText("나에게 의미있는\n소비를 발견하는")
-                        .style(.t0, .regular, .white)
-                    DText("별별소")
-                        .style(.t0, .bold, .white)
+                    DText("나에게 의미있는\n소비를 발견하는", style: .t0, weight: .regular, color: .white)
+                    DText("별별소", style: .t0, weight: .bold, color: .white)
                     Spacer()
                 }
                 Spacer()
@@ -59,8 +57,8 @@ struct SplashView: View {
         .background {
             BackgroundView(
                 colors: [
-                    DColor.backgroundTop,
-                    DColor.backgroundBottom,
+                    ColorPalette.Semantic.backgroundTop,
+                    ColorPalette.Semantic.backgroundBottom,
                 ]
             )
         }

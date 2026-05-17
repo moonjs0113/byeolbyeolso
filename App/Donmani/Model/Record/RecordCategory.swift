@@ -72,7 +72,7 @@ extension RecordCategory {
     }
     
     var color: Color {
-        DColor(assetName).color
+        ColorPalette.color(named: assetName)
     }
     
     var image: Image {

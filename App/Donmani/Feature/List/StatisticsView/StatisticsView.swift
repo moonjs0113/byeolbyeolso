@@ -24,8 +24,7 @@ struct StatisticsView: View {
                         }
                     },
                     title: {
-                        DText("\(store.day.year)년 \(store.day.month)월 기록 통계")
-                            .style(.b1, .semibold, .white)
+                        DText("\(store.day.year)년 \(store.day.month)월 기록 통계", style: .b1, weight: .semibold, color: .white)
                     }
                 )
                 

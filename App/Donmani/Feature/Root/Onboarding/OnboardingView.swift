@@ -36,7 +36,7 @@ struct OnboardingView: View {
             GA.View(event: .onboarding).send()
         }
         .background {
-            DColor(.deepBlue20).color
+            ColorPalette.Primary.deepBlue20
                 .ignoresSafeArea()
         }
         .overlay {

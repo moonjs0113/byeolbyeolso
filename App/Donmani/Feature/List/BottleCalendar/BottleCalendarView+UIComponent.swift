@@ -12,15 +12,14 @@ extension BottleCalendarView {
     func TopBannerView() -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: .s5, style: .circular)
-                .fill(DColor(.deepBlue60).color)
+                .fill(ColorPalette.Primary.deepBlue60)
                 .frame(height: 56)
             HStack(alignment: .center, spacing: 8) {
                 DImage(.notice).image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3, height: .s3)
-                DText("매 월 1일에 새로운 별통이가 열려요")
-                    .style(.b1, .regular, .gray95)
+                DText("매 월 1일에 새로운 별통이가 열려요", style: .b1, weight: .regular, color: ColorPalette.Neutral.gray95)
                 Spacer()
                 
                 Button {
@@ -90,10 +89,8 @@ extension BottleCalendarView {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: .s4, height: .s4)
                         HStack(alignment: .bottom,spacing: 0) {
-                            DText("\(count)")
-                                .style(.b2, .semibold, .gray80)
-                            DText("/\(store.lastDaysOfMonths[month, default: 0])")
-                                .style(.b3, .semibold, .deepBlue80)
+                            DText("\(count)", style: .b2, weight: .semibold, color: ColorPalette.Neutral.gray80)
+                            DText("/\(store.lastDaysOfMonths[month, default: 0])", style: .b3, weight: .semibold, color: ColorPalette.Primary.deepBlue80)
                         }
                     }
                     .padding(.top, 6)
@@ -101,8 +98,7 @@ extension BottleCalendarView {
                 .frame(height: 116)
             }
             
-            DText("\(month)월")
-                .style(.b2, .semibold, (count > -1) ? .gray99 : .deepBlue80)
+            DText("\(month)월", style: .b2, weight: .semibold, color: (count > -1) ? ColorPalette.Neutral.gray99 : ColorPalette.Primary.deepBlue80)
         }
     }
 }

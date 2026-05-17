@@ -45,11 +45,10 @@ struct DButton: View {
                 )
                 .fill(
                     isEnabled
-                    ? DColor(.gray95).color
-                    : DColor(.deepBlue20).color
+                    ? ColorPalette.Neutral.gray95
+                    : ColorPalette.Primary.deepBlue20
                 )
-                DText(title)
-                    .style(.h3, .bold, isEnabled ? .deepBlue20 : .deepBlue70)
+                DText(title, style: .h3, weight: .bold, color: isEnabled ? ColorPalette.Primary.deepBlue20 : ColorPalette.Primary.deepBlue70)
             }
         }
         .frame(height: 58)

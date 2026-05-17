@@ -13,7 +13,7 @@ struct DToggle: View {
     
     var body: some View {
         Capsule(style: .continuous)
-            .fill(DColor(isOn ? .deepBlue99 : .deepBlue70).color)
+            .fill(isOn ? ColorPalette.Primary.deepBlue99 : ColorPalette.Primary.deepBlue70)
             .frame(width: 48, height: 28)
             .overlay {
                 HStack(spacing: 0) {
@@ -21,7 +21,7 @@ struct DToggle: View {
                         Spacer()
                     }
                     Circle()
-                        .fill(DColor(.deepBlue30).color)
+                        .fill(ColorPalette.Primary.deepBlue30)
                         .frame(width: 20, height: 20)
                         .padding(4)
                     if !isOn {

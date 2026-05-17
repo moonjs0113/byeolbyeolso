@@ -12,8 +12,7 @@ extension OnboardingView {
     var coverStepView: some View {
         VStack(alignment: .center) {
             VStack(spacing: 20) {
-                DText("안녕! 별별소에 온 걸 환영해")
-                    .style(.h1, .bold, .white)
+                DText("안녕! 별별소에 온 걸 환영해", style: .h1, weight: .bold, color: .white)
                     .multilineTextAlignment(.center)
                 ZStack {
                     Circle()
@@ -21,7 +20,7 @@ extension OnboardingView {
                             RadialGradient(
                                 colors: [
                                     .white.opacity(0.5),
-                                    DColor(.deepBlue20).color
+                                    ColorPalette.Primary.deepBlue20
                                 ],
                                 center: .center,
                                 startRadius: 0,
@@ -34,8 +33,7 @@ extension OnboardingView {
                         .frame(width: .s4 * 3, height: .s4 * 3)
                 }
                 
-                DText("금액이 아닌 의미를 고민하며\n너의 소비가 남긴 감정을 돌아보러 가볼까?")
-                    .style(.h3, .regular, .gray60)
+                DText("금액이 아닌 의미를 고민하며\n너의 소비가 남긴 감정을 돌아보러 가볼까?", style: .h3, weight: .regular, color: ColorPalette.Neutral.gray60)
                     .multilineTextAlignment(.center)
                     .lineSpacing(6)
             }
@@ -94,10 +92,9 @@ extension OnboardingView {
                                         cornerRadius: 16.0,
                                         style: .continuous
                                     )
-                                    .fill(DColor(.deepBlue50).color)
+                                    .fill(ColorPalette.Primary.deepBlue50)
                                     .frame(height: 58)
-                                    DText("홈으로")
-                                        .style(.h3, .bold, .white)
+                                    DText("홈으로", style: .h3, weight: .bold, color: .white)
                                 }
                             }
                             DButton(title: "기록해 보기") {
@@ -125,8 +122,7 @@ extension OnboardingView {
                         completeHandler?(RootStore.MainRoute.main)
                     }
                 } label: {
-                    DText("건너뛰기")
-                        .style(.b2, .semibold, DColor(.deepBlue80).color)
+                    DText("건너뛰기", style: .b2, weight: .semibold, color: ColorPalette.Primary.deepBlue80)
                 }
                 .padding(.defaultLayoutPadding)
             }
@@ -153,12 +149,10 @@ extension OnboardingView {
         content: String
     ) -> some View {
         VStack(spacing: .s3) {
-            DText(title)
-                .style(.h1, .bold, .white)
+            DText(title, style: .h1, weight: .bold, color: .white)
                 .multilineTextAlignment(.center)
                 .lineSpacing(3)
-            DText(content)
-                .style(.h3, .regular, .gray60)
+            DText(content, style: .h3, weight: .regular, color: ColorPalette.Neutral.gray60)
                 .multilineTextAlignment(.center)
                 .lineSpacing(3)
         }

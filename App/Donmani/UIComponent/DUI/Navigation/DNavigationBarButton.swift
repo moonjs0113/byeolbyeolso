@@ -40,8 +40,7 @@ struct DNavigationBarButton: View {
                     .frame(width: .s3)
             }
             if let text {
-                DText(text)
-                    .style(.b1, .semibold, .deepBlue99)
+                DText(text, style: .b1, weight: .semibold, color: ColorPalette.Primary.deepBlue99)
                     .frame(width: .s3)
             }
         }

@@ -14,11 +14,9 @@ extension RewardStartView {
         VStack {
             HStack {
                 VStack(alignment: .leading, spacing: .s5) {
-                    DText(store.title)
-                        .style(.h2, .bold, .deepBlue99)
+                    DText(store.title, style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                         .lineSpacing(4)
-                    DText(store.subTitle)
-                        .style(.b2, .regular, .deepBlue90)
+                    DText(store.subTitle, style: .b2, weight: .regular, color: ColorPalette.Primary.deepBlue90)
                 }
                 Spacer()
             }
@@ -44,21 +42,17 @@ extension RewardStartView {
     
     func FeedbackTitleView(feedbackCard: FeedbackCard) -> some View {
         VStack(alignment: .leading, spacing: .s5 / 2.0) {
-            DText(store.userName + "님,")
-                .style(.h2, .bold, .deepBlue99)
+            DText(store.userName + "님,", style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
             HStack(alignment: .center, spacing: .s5 / 2.0) {
-                DText(store.dayTitle)
-                    .style(.h2, .bold, .deepBlue99)
-                DText(feedbackCard.category.title)
-                    .style(.h2, .bold, .deepBlue99)
+                DText(store.dayTitle, style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
+                DText(feedbackCard.category.title, style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 12)
                     .background {
                         RoundedRectangle(cornerRadius: 8.0, style: .circular)
                             .fill(Color.white.opacity(0.1))
                     }
-                DText((feedbackCard.category == .none ? "" : "소비를 ") + "했네요!")
-                    .style(.h2, .bold, .deepBlue99)
+                DText((feedbackCard.category == .none ? "" : "소비를 ") + "했네요!", style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                 Spacer()
             }
         }
@@ -85,8 +79,7 @@ extension RewardStartView {
                             .resizable()
                             .frame(width: 12, height: 12)
                             .opacity(0.2)
-                        DText("토비의 한마디")
-                            .style(.b3, .bold, .deepBlue99)
+                        DText("토비의 한마디", style: .b3, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                         DImage(.starSmall)
                             .image
                             .resizable()
@@ -108,12 +101,10 @@ extension RewardStartView {
                     .frame(width: 78, height: 78)
                     .padding(.bottom, 20)
                 
-                DText(feedbackCard.title)
-                    .style(.h2, .bold, .white)
+                DText(feedbackCard.title, style: .h2, weight: .bold, color: .white)
                     .padding(.bottom, 10)
                 
-                DText(feedbackCard.content+"\n")
-                    .style(.b2, .regular, .gray95)
+                DText(feedbackCard.content+"\n", style: .b2, weight: .regular, color: ColorPalette.Neutral.gray95)
                     .lineSpacing(4)
                     .multilineTextAlignment(.center)
             }

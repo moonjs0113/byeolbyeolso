@@ -23,8 +23,7 @@ struct MonthlyStarBottleView: View {
                         }
                     },
                     title: {
-                        DText("\(store.day.year % 100)년 \(store.day.month)월")
-                            .style(.b1, .semibold, .white)
+                        DText("\(store.day.year % 100)년 \(store.day.month)월", style: .b1, weight: .semibold, color: .white)
                     }
                 )
                 
@@ -63,8 +62,8 @@ struct EmptyStarBottleView: View {
     var body: some View {
         ZStack {
             BackgroundView(colors: [
-                DColor.backgroundTop,
-                DColor.backgroundBottom,
+                ColorPalette.Semantic.backgroundTop,
+                ColorPalette.Semantic.backgroundBottom,
             ])
             
             DImage(.backgroundStar)

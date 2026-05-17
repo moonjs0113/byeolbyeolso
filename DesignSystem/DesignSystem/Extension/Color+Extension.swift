@@ -8,7 +8,7 @@
 import SwiftUI
 
 public extension Color {
-    static func hex(_ hex: String) -> Self {
+    static func fromHex(_ hex: String) -> Self {
         var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
         let isValidLength = hexSanitized.count == 6 || hexSanitized.count == 8

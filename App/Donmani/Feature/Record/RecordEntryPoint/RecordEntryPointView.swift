@@ -52,8 +52,7 @@ struct RecordEntryPointView: View {
                     spacing: .defaultLayoutPadding
                 ) {
                     ScrollView {
-                        DText(store.isReadyToSave ? "저장하면 수정할 수 없어요!" : store.title)
-                            .style(.h1, .bold, .white)
+                        DText(store.isReadyToSave ? "저장하면 수정할 수 없어요!" : store.title, style: .h1, weight: .bold, color: .white)
                             .padding(.bottom, 40)
                         
                         // 기록 버튼

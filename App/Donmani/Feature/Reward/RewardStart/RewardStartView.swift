@@ -48,10 +48,9 @@ struct RewardStartView: View {
                                     .resizable()
                                     .renderingMode(.template)
                                     .aspectRatio(contentMode: .fit)
-                                    .foregroundStyle(DColor(.purpleBlue90).color)
+                                    .foregroundStyle(ColorPalette.Secondary.purpleBlue90)
                                     .frame(width: 22)
-                                DText("내일 다시 만나요!")
-                                    .style(.b2, .semibold, .purpleBlue90)
+                                DText("내일 다시 만나요!", style: .b2, weight: .semibold, color: ColorPalette.Secondary.purpleBlue90)
                             }
                         }
                     }
@@ -72,9 +71,8 @@ struct RewardStartView: View {
                                     cornerRadius: .s5,
                                     style: .continuous
                                 )
-                                .fill(DColor(.deepBlue50).color)
-                                DText("받은 선물 꾸며보기")
-                                    .style(.h3, .bold, .white)
+                                .fill(ColorPalette.Primary.deepBlue50)
+                                DText("받은 선물 꾸며보기", style: .h3, weight: .bold, color: .white)
                             }
                         }
                         .frame(height: 58)

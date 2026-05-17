@@ -26,9 +26,8 @@ struct DCompleteButton: View {
         } label: {
             ZStack {
                 Capsule(style: .circular)
-                    .fill(DColor(isActive ? .gray95 : .deepBlue20).color)
-                DText("완료")
-                    .style(.b1, .bold, isActive ? .deepBlue20 : .deepBlue70)
+                    .fill(isActive ? ColorPalette.Neutral.gray95 : ColorPalette.Primary.deepBlue20)
+                DText("완료", style: .b1, weight: .bold, color: isActive ? ColorPalette.Primary.deepBlue20 : ColorPalette.Primary.deepBlue70)
             }
         }
         .allowsHitTesting(isActive)

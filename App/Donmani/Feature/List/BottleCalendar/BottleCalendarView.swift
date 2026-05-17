@@ -32,8 +32,7 @@ struct BottleCalendarView: View {
                             store.send(.touchTitle)
                         } label: {
                             HStack {
-                                DText("\(store.selectedYear)년 별통이")
-                                    .style(.b1, .semibold, .white)
+                                DText("\(store.selectedYear)년 별통이", style: .b1, weight: .semibold, color: .white)
                                 DImage(DImageAsset.downArrow)
                                     .image
                             }

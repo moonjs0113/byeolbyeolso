@@ -15,18 +15,15 @@ extension RecordEntryPointView {
             Button {
                 store.send(.touchDayTypeToggleButton)
             } label: {
-                DText("어제")
-                    .style(.b2, .semibold, store.dayType == .today ? DColor(.deepBlue80).color : DColor.accessoryButton)
+                DText("어제", style: .b2, weight: .semibold, color: store.dayType == .today ? ColorPalette.Primary.deepBlue80 : ColorPalette.Semantic.accessoryButton)
             }
             
-            DText("|")
-                .style(.b2, .regular, .deepBlue80)
+            DText("|", style: .b2, weight: .regular, color: ColorPalette.Primary.deepBlue80)
             
             Button {
                 store.send(.touchDayTypeToggleButton)
             } label: {
-                DText("오늘")
-                    .style(.b2, .semibold, store.dayType == .today ? DColor.accessoryButton : DColor(.deepBlue80).color)
+                DText("오늘", style: .b2, weight: .semibold, color: store.dayType == .today ? ColorPalette.Semantic.accessoryButton : ColorPalette.Primary.deepBlue80)
             }
         }
         .padding(.vertical, 12)
@@ -45,8 +42,7 @@ extension RecordEntryPointView {
                 )
                 .fill(.white.opacity(0.1))
                 HStack {
-                    DText(type.title)
-                        .style(.h3, .bold, .white)
+                    DText(type.title, style: .h3, weight: .bold, color: .white)
                     Spacer()
                     DImage(.addRecord).image
                         .resizable()
@@ -64,10 +60,9 @@ extension RecordEntryPointView {
                     .resizable()
                     .renderingMode(.template)
                     .aspectRatio(contentMode: .fit)
-                    .foregroundStyle(DColor(.purpleBlue90).color)
+                    .foregroundStyle(ColorPalette.Secondary.purpleBlue90)
                     .frame(width: 22)
-                DText(store.guide)
-                    .style(.b2, .semibold, .purpleBlue90)
+                DText(store.guide, style: .b2, weight: .semibold, color: ColorPalette.Secondary.purpleBlue90)
                     .padding(8)
             }
     }
@@ -81,10 +76,8 @@ extension RecordEntryPointView {
                     .frame(width: .s3, height: .s3)
             }
             VStack(spacing: 4) {
-                DText("\(store.goodRecord == nil ? "행복" : "후회") 소비를 작성하지 않았어요!")
-                    .style(.b1, .semibold, .gray99)
-                DText("돌아가기를 누르면 기록할 수 있어요")
-                    .style(.b2, .regular, .gray99)
+                DText("\(store.goodRecord == nil ? "행복" : "후회") 소비를 작성하지 않았어요!", style: .b1, weight: .semibold, color: ColorPalette.Neutral.gray99)
+                DText("돌아가기를 누르면 기록할 수 있어요", style: .b2, weight: .regular, color: ColorPalette.Neutral.gray99)
             }
             Spacer()
         }
@@ -110,8 +103,7 @@ extension RecordEntryPointView {
                     }
                     HStack {
                         HStack {
-                            DText("선택하면 무소비 날도 기록할 수 있어요!")
-                                .style(.b3, .medium, .white)
+                            DText("선택하면 무소비 날도 기록할 수 있어요!", style: .b3, weight: .medium, color: .white)
                             Button {
                                 store.send(.closePopover)
                             } label: {
@@ -143,8 +135,7 @@ extension RecordEntryPointView {
                 DImage(isChecked ? .check : .uncheck).image
                     .resizable()
                     .frame(width: .s4, height: .s4)
-                DText("무소비 했어요")
-                    .style(.b2, .semibold, isChecked ? .gray95 : .deepBlue80)
+                DText("무소비 했어요", style: .b2, weight: .semibold, color: isChecked ? ColorPalette.Neutral.gray95 : ColorPalette.Primary.deepBlue80)
             }
         }
         .padding(.horizontal, 8)
@@ -205,10 +196,9 @@ extension RecordEntryPointView {
                         cornerRadius: 16.0,
                         style: .continuous
                     )
-                    .fill(DColor(.deepBlue50).color)
+                    .fill(ColorPalette.Primary.deepBlue50)
                     .frame(height: 58)
-                    DText("돌아가기")
-                        .style(.h3, .bold, .white)
+                    DText("돌아가기", style: .h3, weight: .bold, color: .white)
                 }
             }
             
@@ -225,10 +215,9 @@ extension RecordEntryPointView {
                         cornerRadius: 16.0,
                         style: .continuous
                     )
-                    .fill(DColor(.gray95).color)
+                    .fill(ColorPalette.Neutral.gray95)
                     .frame(height: 58)
-                    DText("확인 했어요")
-                        .style(.h3, .bold, .deepBlue20)
+                    DText("확인 했어요", style: .h3, weight: .bold, color: ColorPalette.Primary.deepBlue20)
                 }
             }
         }

@@ -86,8 +86,7 @@ struct SettingView: View {
                                 }
                             },
                             title: {
-                                DText("설정")
-                                    .style(.b1, .semibold, .white)
+                                DText("설정", style: .b1, weight: .semibold, color: .white)
                             }
                         )
                         
@@ -104,8 +103,7 @@ struct SettingView: View {
                                     isPresentingEditNameView = true
                                     UINavigationController.isBlockSwipe = true
                                 } label: {
-                                    DText(store.userName)
-                                        .style(.b1, .semibold, .white)
+                                    DText(store.userName, style: .b1, weight: .semibold, color: .white)
                                     DImage(.edit).image
                                         .resizable()
                                         .aspectRatio(1, contentMode: .fit)
@@ -225,12 +223,11 @@ struct SettingView: View {
         } label: {
             ZStack {
                 HStack(spacing: 4) {
-                    DText(type.title)
-                        .style(.b1, .bold, .white)
+                    DText(type.title, style: .b1, weight: .bold, color: .white)
                     if type == .notice {
                         HStack(alignment: .top) {
                             Circle()
-                                .fill(DColor.notice)
+                                .fill(ColorPalette.Semantic.noticeDot)
                                 .frame(width: 6, height: 6)
                                 .padding(.bottom, 18)
                         }
@@ -240,7 +237,7 @@ struct SettingView: View {
                     if type == .decoration {
                         HStack(alignment: .top) {
                             Circle()
-                                .fill(DColor.notice)
+                                .fill(ColorPalette.Semantic.noticeDot)
                                 .frame(width: 6, height: 6)
                                 .padding(.bottom, 18)
                         }

@@ -24,8 +24,8 @@ private struct DesignPreview: View {
                 DButton(title: "Button", isEnabled: true) { isDark.toggle()
                 }
                 DButton(title: "Button", isEnabled: false) { }
-                DText("Text").style(.h1, .bold, .black)
-                DText("Text").style(.b2, .semibold, .deepBlue40)
+                DText("Text", style: .h1, weight: .bold, color: .black)
+                DText("Text", style: .b2, weight: .semibold, color: ColorPalette.Primary.deepBlue40)
                 Picker(
                     selection: $age, label: Text ("Picker"),
                     content: {

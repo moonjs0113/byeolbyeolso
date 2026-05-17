@@ -15,10 +15,9 @@ struct EmptyRecordView: View {
                 cornerRadius: .s3,
                 style: .continuous
             )
-            .fill(DColor.empty)
+            .fill(ColorPalette.Semantic.empty)
             VStack(alignment: .center, spacing: .defaultLayoutPadding) {
-                DText("오늘은 무소비 데이!")
-                    .style(.h2, .bold, .gray95)
+                DText("오늘은 무소비 데이!", style: .h2, weight: .bold, color: ColorPalette.Neutral.gray95)
                 DImage(.emptyRecord).image
                     .resizable()
                     .aspectRatio(contentMode: .fit)

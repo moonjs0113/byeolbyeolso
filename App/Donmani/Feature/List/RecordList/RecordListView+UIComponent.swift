@@ -19,15 +19,14 @@ extension RecordListView {
                 HStack {
                     Spacer()
                     Triangle(direction: .up)
-                        .fill(DColor(.deepBlue80).color)
+                        .fill(ColorPalette.Primary.deepBlue80)
                         .frame(width: 14, height: 8)
                         .padding(.trailing, 12)
                 }
                 HStack {
                     Spacer()
                     HStack {
-                        DText("별통이만 모아볼 수 있어요!")
-                            .style(.b3, .semibold, .white)
+                        DText("별통이만 모아볼 수 있어요!", style: .b3, weight: .semibold, color: .white)
                         Button {
                             store.send(.closeBottleCalendarToolTip)
                         } label: {
@@ -38,7 +37,7 @@ extension RecordListView {
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
-                    .background(DColor(.deepBlue80).color)
+                    .background(ColorPalette.Primary.deepBlue80)
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                 }
                 Spacer()
@@ -55,8 +54,7 @@ extension RecordListView {
             ZStack {
                 VStack(spacing: .s5) {
                     Spacer()
-                    DText("아직 기록이 없어요")
-                        .style(.h2, .semibold, .gray95)
+                    DText("아직 기록이 없어요", style: .h2, weight: .semibold, color: ColorPalette.Neutral.gray95)
                     DButton(title: "기록하기", isEnabled: true) {
                         store.send(.delegate(.pushRecordEntryPointView))
                     }
@@ -80,8 +78,7 @@ extension RecordListView {
                     ForEach(store.records, id: \.day.day) { record in
                         VStack {
                             HStack {
-                                DText(record.day.dateString)
-                                    .style(.b2, .medium, .gray95)
+                                DText(record.day.dateString, style: .b2, weight: .medium, color: ColorPalette.Neutral.gray95)
                                 Spacer()
                             }
                             if record.records.isEmpty {
@@ -117,13 +114,12 @@ extension RecordListView {
         
         var body: some View {
             RoundedRectangle(cornerRadius: .s5, style: .circular)
-                .fill(DColor(.deepBlue60).color)
+                .fill(ColorPalette.Primary.deepBlue60)
                 .frame(height: 156)
                 .overlay {
                     VStack(alignment: .leading, spacing: .s5)  {
                         HStack {
-                            DText("\(store.day.month)월 기록 통계")
-                                .style(.b1, .semibold, .gray99)
+                            DText("\(store.day.month)월 기록 통계", style: .b1, weight: .semibold, color: ColorPalette.Neutral.gray99)
                             if store.progressPoint > -1 {
                                 DImage(.arrowRight).image
                                     .resizable()
@@ -134,7 +130,7 @@ extension RecordListView {
                         
                         if store.progressPoint == -1 {
                             Capsule()
-                                .fill(DColor(.deepBlue80).color)
+                                .fill(ColorPalette.Primary.deepBlue80)
                                 .frame(height: .s4)
                         } else {
                             
@@ -142,8 +138,8 @@ extension RecordListView {
                                 .fill(
                                     LinearGradient(
                                         stops: [
-                                            .init(color: DColor(.purpleBlue70).color, location: store.progressPoint),
-                                            .init(color: DColor(.purpleBlue99).color, location: store.progressPoint)
+                                            .init(color: ColorPalette.Secondary.purpleBlue70, location: store.progressPoint),
+                                            .init(color: ColorPalette.Secondary.purpleBlue99, location: store.progressPoint)
                                         ],
                                         startPoint: .leading,
                                         endPoint: .trailing
@@ -156,17 +152,15 @@ extension RecordListView {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack(spacing: 8) {
                                 Circle()
-                                    .fill(DColor(.purpleBlue70).color)
+                                    .fill(ColorPalette.Secondary.purpleBlue70)
                                     .frame(width: 6, height: 6)
-                                DText("행복 \(store.goodCount)개")
-                                    .style(.b2, .medium, .deepBlue99)
+                                DText("행복 \(store.goodCount)개", style: .b2, weight: .medium, color: ColorPalette.Primary.deepBlue99)
                             }
                             HStack(spacing: 8) {
                                 Circle()
-                                    .fill(DColor(.purpleBlue99).color)
+                                    .fill(ColorPalette.Secondary.purpleBlue99)
                                     .frame(width: 6, height: 6)
-                                DText("후회 \(store.badCount)개")
-                                    .style(.b2, .medium, .deepBlue99)
+                                DText("후회 \(store.badCount)개", style: .b2, weight: .medium, color: ColorPalette.Primary.deepBlue99)
                             }
                         }
                         .padding(.horizontal, 4)

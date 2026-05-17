@@ -19,10 +19,8 @@ extension RewardReceiveView {
                     .frame(width: .s3, height: .s3)
             }
             VStack(alignment: .leading, spacing: .s5 / 2.0) {
-                DText("열지 않은 선물 \(store.rewardCount - 1)개 함께 열게요")
-                    .style(.b1, .semibold, .gray99)
-                DText("이벤트 기간동안 기록 할 때마다 선물 받아요")
-                    .style(.b2, .regular, .gray99)
+                DText("열지 않은 선물 \(store.rewardCount - 1)개 함께 열게요", style: .b1, weight: .semibold, color: ColorPalette.Neutral.gray99)
+                DText("이벤트 기간동안 기록 할 때마다 선물 받아요", style: .b2, weight: .regular, color: ColorPalette.Neutral.gray99)
             }
             .padding(.top, 2)
             Spacer()
@@ -36,8 +34,7 @@ extension RewardReceiveView {
             ZStack {
                 VStack(alignment: .center, spacing: 0) {
                     HStack {
-                        DText(store.title)
-                            .style(.h2, .bold, .deepBlue99)
+                        DText(store.title, style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                         Spacer()
                     }
                     .padding(.defaultLayoutPadding)
@@ -112,8 +109,7 @@ extension RewardReceiveView {
                                 {
                                     let name = store.rewardItems[i].name
                                     let particle = name.hasFinalConsonant ? "을" : "를"
-                                    return DText( "\(name)\(particle) 받았어요!")
-                                        .style(.h2, .bold, .deepBlue99)
+                                    return DText( "\(name)\(particle) 받았어요!", style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                                 }()
                                 Spacer()
                             }
@@ -156,7 +152,7 @@ extension RewardReceiveView {
                     .clipShape(RoundedRectangle(cornerRadius: 60, style: .continuous))
             } else {
                 RoundedRectangle(cornerRadius: 60, style: .continuous)
-                    .fill(DColor(.deepBlue60).color)
+                    .fill(ColorPalette.Primary.deepBlue60)
                     .frame(width: size, height: size)
                     .overlay {
                         image

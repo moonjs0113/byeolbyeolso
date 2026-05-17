@@ -19,7 +19,7 @@ struct RewardStartView: View {
             VStack(alignment: .leading, spacing: 0) {
                 DNavigationBar(
                     leading: {
-                        DNavigationBarButton(.arrowLeft) {
+                        DNavigationBarButton(.image(.arrowLeft)) {
                             dismiss()
                         }
                     }

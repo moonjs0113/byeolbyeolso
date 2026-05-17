@@ -19,7 +19,7 @@ struct StatisticsView: View {
             VStack(alignment: .center,spacing: 0) {
                 DNavigationBar(
                     leading: {
-                        DNavigationBarButton(.arrowLeft) {
+                        DNavigationBarButton(.image(.arrowLeft)) {
                             dismiss()
                         }
                     },

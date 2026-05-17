@@ -81,7 +81,7 @@ struct SettingView: View {
                     ) {
                         DNavigationBar(
                             leading: {
-                                DNavigationBarButton(.arrowLeft) {
+                                DNavigationBarButton(.image(.arrowLeft)) {
                                     dismiss()
                                 }
                             },

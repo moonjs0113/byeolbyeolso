@@ -1,45 +1,40 @@
 //
 //  DNavigationBarButton.swift
-//  Donmani
+//  DesignSystem
 //
 //  Created by 문종식 on 2/9/25.
 //
 
 import SwiftUI
-import DesignSystem
 
-struct DNavigationBarButton: View {
-    var icon: DImageAsset? = nil
-    var text: String? = nil
-    let action: (() -> Void)
+public enum DNavigationBarButtonType {
+    case image(DImageAsset)
+    case text(String)
+}
+
+public struct DNavigationBarButton: View {
+    private let type: DNavigationBarButtonType
+    private let action: (() -> Void)
     
-    init(
-        _ icon: DImageAsset,
+    public init(
+        _ type: DNavigationBarButtonType,
         _ action: @escaping () -> Void
     ) {
-        self.icon = icon
+        self.type = type
         self.action = action
     }
     
-    init(
-        _ text: String,
-        _ action: @escaping () -> Void
-    ) {
-        self.text = text
-        self.action = action
-    }
-    
-    var body: some View {
+    public var body: some View {
         Button {
             action()
         } label: {
-            if let icon {
+            switch type {
+            case let .image(icon):
                 DImage(icon).image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3)
-            }
-            if let text {
+            case let .text(text):
                 DText(text, style: .b1, weight: .semibold, color: ColorPalette.Primary.deepBlue99)
                     .frame(width: .s3)
             }

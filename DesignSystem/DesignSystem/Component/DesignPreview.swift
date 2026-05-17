@@ -1,12 +1,11 @@
 //
 //  DesignPreview.swift
-//  Donmani
+//  DesignSystem
 //
 //  Created by 문종식 on 4/5/25.
 //
 
 import SwiftUI
-import DesignSystem
 
 private struct DesignPreview: View {
     @State var age = 19
@@ -18,7 +17,7 @@ private struct DesignPreview: View {
                 Spacer()
                 DToggle(isOn: .constant(true))
                 DToggle(isOn: .constant(false))
-                DNavigationBarButton(.calendar) { }
+                DNavigationBarButton(.image(.calendar)) { }
                 DCompleteButton(isActive: true) { }
                 DCompleteButton(isActive: false) { }
                 DButton(title: "Button", isEnabled: true) { isDark.toggle()

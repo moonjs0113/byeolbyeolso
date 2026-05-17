@@ -1,18 +1,17 @@
 //
 //  DCompleteButton.swift
-//  Donmani
+//  DesignSystem
 //
 //  Created by 문종식 on 2/18/25.
 //
 
 import SwiftUI
-import DesignSystem
 
-struct DCompleteButton: View {
-    let isActive: Bool
-    let action: (() -> Void)
+public struct DCompleteButton: View {
+    private let isActive: Bool
+    private let action: (() -> Void)
     
-    init(
+    public init(
         isActive: Bool,
         action: @escaping () -> Void
     ) {
@@ -20,7 +19,7 @@ struct DCompleteButton: View {
         self.action = action
     }
     
-    var body: some View {
+    public var body: some View {
         Button {
             action()
         } label: {

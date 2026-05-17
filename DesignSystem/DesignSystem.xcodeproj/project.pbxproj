@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D42F10000100AAA001 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D62F10000100AAA001 /* Lottie */; };
 		C7BF899E2D50F28500ACE68D /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF89932D50F28500ACE68D /* DesignSystem.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D42F10000100AAA001 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +124,7 @@
 			);
 			name = DesignSystem;
 			packageProductDependencies = (
+				A1B2C3D62F10000100AAA001 /* Lottie */,
 			);
 			productName = DesignSystem;
 			productReference = C7BF89932D50F28500ACE68D /* DesignSystem.framework */;
@@ -177,6 +180,9 @@
 			);
 			mainGroup = C7BF89892D50F28500ACE68D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A1B2C3D52F10000100AAA001 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C7BF89942D50F28500ACE68D /* Products */;
 			projectDirPath = "";
@@ -491,6 +497,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1B2C3D52F10000100AAA001 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1B2C3D62F10000100AAA001 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C3D52F10000100AAA001 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C7BF898A2D50F28500ACE68D /* Project object */;
 }

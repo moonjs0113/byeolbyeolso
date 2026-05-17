@@ -19,13 +19,13 @@ struct MainView: View {
                 VStack(spacing: .s1) {
                     DNavigationBar(
                         leading: {
-                            DNavigationBarButton(.setting) {
+                            DNavigationBarButton(.image(.setting)) {
                                 GA.Click(event: .mainSettingButton).send()
                                 store.send(.delegate(.pushSettingView))
                             }
                         },
                         trailing: {
-                            DNavigationBarButton(.reward) {
+                            DNavigationBarButton(.image(.reward)) {
                                 store.send(.touchRewardButton)
                             }
                         }

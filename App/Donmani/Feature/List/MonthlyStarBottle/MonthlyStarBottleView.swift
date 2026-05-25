@@ -66,12 +66,12 @@ struct EmptyStarBottleView: View {
                 ColorPalette.Semantic.backgroundBottom,
             ])
             
-            DImage(.backgroundStar)
+            DImage(DImageAsset.backgroundStar)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: .screenWidth - 2 * .defaultLayoutPadding)
             
-            DImage(.starBottleLock)
+            DImage(DImageAsset.starBottleLock)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.top, 10)

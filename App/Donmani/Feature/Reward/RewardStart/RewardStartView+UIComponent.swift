@@ -25,12 +25,12 @@ extension RewardStartView {
             Spacer()
             
             if store.isFullReward {
-                DImage(.fullRewardCharacter)
+                DImage(DImageAsset.fullRewardCharacter)
                     .resizable()
                     .scaledToFit()
                     .padding(.horizontal, -.s5 / 2.0)
             } else {
-                DImage(.rewardCharacter)
+                DImage(DImageAsset.rewardCharacter)
                     .resizable()
                     .scaledToFit()
                     .padding(.horizontal, -.s5 / 2.0)
@@ -74,12 +74,12 @@ extension RewardStartView {
                 HStack {
                     Spacer()
                     HStack(alignment: .center, spacing: 10) {
-                        DImage(.starSmall)
+                        DImage(DImageAsset.starSmall)
                             .resizable()
                             .frame(width: 12, height: 12)
                             .opacity(0.2)
                         DText("토비의 한마디", style: .b3, weight: .bold, color: ColorPalette.Primary.deepBlue99)
-                        DImage(.starSmall)
+                        DImage(DImageAsset.starSmall)
                             .resizable()
                             .frame(width: 12, height: 12)
                             .opacity(0.2)

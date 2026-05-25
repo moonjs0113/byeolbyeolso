@@ -12,7 +12,7 @@ extension StatisticsView {
     func TopBannerView() -> some View {
         HStack(alignment: .top, spacing: .s5 / 2) {
             VStack {
-                DImage(.notice)
+                DImage(DImageAsset.notice)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3, height: .s3)
@@ -28,7 +28,7 @@ extension StatisticsView {
                     HStack(spacing: 4) {
                         DText("기능 요청하기", style: .b2, weight: .medium, color: ColorPalette.Primary.deepBlue99)
                         
-                        DImage(.arrowRight)
+                        DImage(DImageAsset.arrowRight)
                             .renderingMode(.template)
                             .resizable()
                             .foregroundStyle(ColorPalette.Primary.deepBlue99)

@@ -28,11 +28,11 @@ struct SplashView: View {
     
     var body: some View {
         ZStack {
-            DImage(.splashBackgroundStar)
+            DImage(DImageAsset.splashBackgroundStar)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: .screenWidth - 4 * .defaultLayoutPadding)
-            DImage(.splashLogo)
+            DImage(DImageAsset.splashLogo)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: .screenWidth / 3)

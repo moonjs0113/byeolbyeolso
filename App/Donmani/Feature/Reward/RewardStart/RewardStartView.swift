@@ -44,7 +44,7 @@ struct RewardStartView: View {
                         VStack {
                             Spacer()
                             HStack(spacing: 4) {
-                                DImage(.starShape)
+                                DImage(DImageAsset.starShape)
                                     .resizable()
                                     .renderingMode(.template)
                                     .aspectRatio(contentMode: .fit)
@@ -117,7 +117,7 @@ struct RewardStartView: View {
     func RewardBackground() -> some View {
         ZStack {
             VStack {
-                DImage(.rewardBackground)
+                DImage(DImageAsset.rewardBackground)
                     .resizable()
                     .scaledToFill()
                 Spacer()

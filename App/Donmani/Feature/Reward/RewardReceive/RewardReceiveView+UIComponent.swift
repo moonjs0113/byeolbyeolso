@@ -13,7 +13,7 @@ extension RewardReceiveView {
     func MultiRewardGuideText() -> some View {
         HStack(alignment: .top, spacing: .s5 / 2) {
             VStack {
-                DImage(.notice)
+                DImage(DImageAsset.notice)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3, height: .s3)

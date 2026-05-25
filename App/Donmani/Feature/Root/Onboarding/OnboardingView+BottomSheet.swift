@@ -18,7 +18,7 @@ extension OnboardingView {
                 DText("규칙은 설정 페이지에서\n언제든지 다시 볼 수 있어!", style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                     .lineSpacing(.s5/2)
                 VStack(spacing: 0) {
-                    DImage(.onboardingEnd)
+                    DImage(DImageAsset.onboardingEnd)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     DButton(title: "확인했어요") {

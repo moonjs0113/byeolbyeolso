@@ -16,7 +16,7 @@ extension MonthlyStarBottleView {
                     .fill(ColorPalette.Primary.deepBlue60)
                     .frame(height: 56)
                 HStack(alignment: .center, spacing: 8) {
-                    DImage(.notice)
+                    DImage(DImageAsset.notice)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: .s3, height: .s3)

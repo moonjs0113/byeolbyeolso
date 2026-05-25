@@ -149,7 +149,7 @@ struct StarBottleView: View {
                     ColorPalette.Semantic.backgroundTop,
                     ColorPalette.Semantic.backgroundBottom,
                 ])
-                DImage(.backgroundStar)
+                DImage(DImageAsset.backgroundStar)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .screenWidth - 2 * .defaultLayoutPadding)
@@ -172,7 +172,7 @@ struct StarBottleView: View {
             VStack {
                 Spacer()
                 ZStack {
-                    DImage(.starBottleBackground)
+                    DImage(DImageAsset.starBottleBackground)
                         .resizable()
                         .frame(width: width + 20)
                         .aspectRatio(0.8, contentMode: .fit)
@@ -199,7 +199,7 @@ struct StarBottleView: View {
                             onTapGesture?()
                         }
                     } else {
-                        DImage(.starBottleLock)
+                        DImage(DImageAsset.starBottleLock)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .padding(.horizontal, 38)
@@ -229,7 +229,7 @@ struct StarBottleView: View {
                             } else if decorationRewardId == 23 { // 우주바캉스 토비
                                 VStack {
                                     HStack {
-                                        DImage(.rewardDecorationSpaceVacance)
+                                        DImage(DImageAsset.rewardDecorationSpaceVacance)
                                             .resizable()
                                             .aspectRatio(0.67, contentMode: .fit)
                                             .frame(height: .screenWidth * 0.27)

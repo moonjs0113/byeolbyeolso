@@ -65,7 +65,7 @@ struct RecordWritingStore {
                 self.text = content.memo
                 self.isSaveEnabled = true
             } else {
-                self.sticker = DImage(context.type == .good ? .goodPlaceholder : .badPlaceholder)
+                self.sticker = DImage(context.type == .good ? DImageAsset.goodPlaceholder : DImageAsset.badPlaceholder)
             }
             UINavigationController.isBlockSwipe = false
         }

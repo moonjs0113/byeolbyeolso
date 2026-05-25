@@ -28,7 +28,7 @@ extension OnboardingView {
                             )
                         )
                         .frame(width: 120, height: 120)
-                    DImage(.starShape)
+                    DImage(DImageAsset.starShape)
                         .resizable()
                         .frame(width: .s4 * 3, height: .s4 * 3)
                 }
@@ -40,7 +40,7 @@ extension OnboardingView {
             
             Spacer()
             VStack(spacing: 0) {
-                DImage(.onboardingCover)
+                DImage(DImageAsset.onboardingCover)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: .screenWidth * 0.4)

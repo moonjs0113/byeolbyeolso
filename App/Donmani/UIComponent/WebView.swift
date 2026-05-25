@@ -12,12 +12,38 @@ struct InnerWebView: UIViewRepresentable {
     let urlString: String
 
     func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
+        WKWebView()
     }
 
     func updateUIView(_ uiView: WKWebView, context: Context) {
         guard let url = URL(string: urlString) else { return }
-        let request = URLRequest(url: url)
-        uiView.load(request)
+        uiView.load(URLRequest(url: url))
+    }
+}
+
+private struct WebSheetModifier: ViewModifier {
+    @Binding var urlString: String?
+
+    func body(content: Content) -> some View {
+        content.sheet(
+            isPresented: Binding(
+                get: { urlString != nil },
+                set: { isPresented in
+                    if !isPresented {
+                        urlString = nil
+                    }
+                }
+            )
+        ) {
+            if let urlString {
+                InnerWebView(urlString: urlString)
+            }
+        }
+    }
+}
+
+extension View {
+    func webSheet(url: Binding<String?>) -> some View {
+        modifier(WebSheetModifier(urlString: url))
     }
 }

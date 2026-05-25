@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import DNetwork
 
 @Reducer
 struct StatisticsStore {
@@ -29,7 +30,7 @@ struct StatisticsStore {
         var recordRatio: [RecordCategory: CGFloat] = [:]
         var goodTotalCount: Int = 0
         var badTotalCount: Int = 0
-        var isPresentingProposeFunctionView = false
+        var webURLString: String?
         
         init(context: Context) {
             self.day = context.day
@@ -72,7 +73,7 @@ struct StatisticsStore {
         Reduce { state, action in
             switch action {
             case .touchProposeFunction:
-                state.isPresentingProposeFunctionView.toggle()
+                state.webURLString = DURL.proposeFunction.urlString
                 return .none
             case .binding:
                 return .none

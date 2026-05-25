@@ -8,6 +8,7 @@
 import UIKit
 import ComposableArchitecture
 import Lottie
+import DNetwork
 
 @Reducer
 struct RewardStartStore {
@@ -57,7 +58,7 @@ struct RewardStartStore {
         var isPresentingFeedbackTitle: Bool = false
         var isPresentingFeedbackCard: Bool = false
         var isPresentingButton: Bool = true
-        var isPresentingRewardFeedbackView: Bool = false
+        var webURLString: String?
         
         let lottieAnimation = LottieAnimation.named(
             "lottie_reward_start_bottom_sheet",
@@ -176,7 +177,7 @@ struct RewardStartStore {
                 }
                 
             case .touchReviewButton:
-                state.isPresentingRewardFeedbackView = true
+                state.webURLString = DURL.rewardFeedback.urlString
                 
             case .touchDecorationButton:
                 GA.Click(event: .customizeRewardButton).send()

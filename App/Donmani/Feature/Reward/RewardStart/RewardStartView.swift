@@ -99,9 +99,7 @@ struct RewardStartView: View {
                 RewardGuideBottomSheet()
             }
         }
-        .sheet(isPresented: $store.isPresentingRewardFeedbackView) {
-            InnerWebView(urlString: DURL.rewardFeedback.urlString)
-        }
+        .webSheet(url: $store.webURLString)
         .onAppear {
             store.send(.toggleGuideBottomSheet)
             GA.View(event: .received).send()
@@ -152,6 +150,5 @@ struct RewardStartView: View {
         return RewardStartView(store: store)
     }()
 }
-
 
 

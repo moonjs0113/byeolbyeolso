@@ -52,9 +52,7 @@ struct StatisticsView: View {
         .background {
             BackgroundView()
         }
-        .sheet(isPresented: $store.isPresentingProposeFunctionView) {
-            InnerWebView(urlString: DURL.proposeFunction.urlString)
-        }
+        .webSheet(url: $store.webURLString)
         .onAppear {
             GA.View(event: .insight).send()
         }

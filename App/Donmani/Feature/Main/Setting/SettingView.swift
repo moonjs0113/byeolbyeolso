@@ -48,9 +48,6 @@ struct SettingView: View {
     
     let width = UIScreen.main.bounds.width
     @State var isPresentingRecordGuideView = false
-    @State var isPresentingFeedbackView = false
-    @State var isPresentingPrivacyPolicyView = false
-    @State var isPresentingNoticeView = false
     @State var isPresentingEditNameView = false
     @State var isSaveEnabled = true
     @State var editUserName: String = ""
@@ -132,7 +129,7 @@ struct SettingView: View {
                                 Task {
                                     try await userUseCase.updateNoticeReadStatus()
                                     isNoticeNotRead = false
-                                    isPresentingNoticeView.toggle()
+                                    store.send(.touchNoticeButton)
                                 }
                             }
                             MenuButton(type: .recordGuide) {
@@ -142,29 +139,18 @@ struct SettingView: View {
                             }
                             
                             MenuButton(type: .feedback) {
-                                isPresentingFeedbackView.toggle()
+                                store.send(.touchFeedbackButton)
                             }
                             
                             MenuButton(type: .privacyPolicy) {
-                                isPresentingPrivacyPolicyView.toggle()
+                                store.send(.touchPrivacyPolicyButton)
                             }
                         }
                         Spacer()
                     }
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
-                .sheet(isPresented: $isPresentingPrivacyPolicyView) {
-                    // Privacy Policy WebView
-                    InnerWebView(urlString: DURL.privacyPolicy.urlString)
-                }
-                .sheet(isPresented: $isPresentingFeedbackView) {
-                    // Feeback WebView
-                    InnerWebView(urlString: DURL.feedback.urlString)
-                }
-                .sheet(isPresented: $isPresentingNoticeView) {
-                    // Notice WebView
-                    InnerWebView(urlString: DURL.notice.urlString)
-                }
+                .webSheet(url: $store.webURLString)
                 .onChange(of: scenePhase) { oldPhase, newPhase  in
                     if newPhase == .active {
                         let notification = NotificationManager()

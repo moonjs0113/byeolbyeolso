@@ -9,11 +9,6 @@ import DNetwork
 import ComposableArchitecture
 import Domain
 
-protocol FortuneRepository {
-    func getTodayFortune() async throws -> Fortune
-    func putFortuneRead(readSource: FortuneReadSource) async throws
-}
-
 struct DefaultFortuneRepository: FortuneRepository {
     private let dataSource = FortuneAPI()
     private var keychainDataSource: KeychainDataSource

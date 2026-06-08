@@ -9,11 +9,6 @@ import DNetwork
 import ComposableArchitecture
 import Domain
 
-protocol FileRepository {
-    func saveRewardData(from item: Reward) async throws
-    func loadRewardData(from item: Reward, resourceType: Reward.ResourceType) throws -> Data
-}
-
 struct DefaultFileRepository: FileRepository {
     private let downloader = DownloadAPI()
     private var fileDataSource: FileDataSource

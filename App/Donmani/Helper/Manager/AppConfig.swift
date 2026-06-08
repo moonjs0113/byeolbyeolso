@@ -2,7 +2,7 @@
 //  AppConfig.swift
 //  Donmani
 //
-//  Created by Codex on 5/15/26.
+//  Created by 문종식 on 5/15/26.
 //
 
 import Foundation

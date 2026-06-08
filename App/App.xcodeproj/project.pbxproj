@@ -12,6 +12,8 @@
 		C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B12D92FCAC00274F37 /* FirebaseCrashlytics */; };
 		C72CD4B42D92FCAC00274F37 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B32D92FCAC00274F37 /* FirebaseInAppMessaging-Beta */; };
 		C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B52D92FCAC00274F37 /* FirebaseMessaging */; };
+		C77E58162FD6ABD100F12122 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77E58152FD6ABD100F12122 /* Domain.framework */; };
+		C77E58172FD6ABD100F12122 /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C77E58152FD6ABD100F12122 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7A5DA922D7D6ED100C3BC6D /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; };
 		C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7A5DA942D7D6ED200C3BC6D /* DNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* DNetwork.framework */; };
@@ -43,6 +45,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				C77E58172FD6ABD100F12122 /* Domain.framework in Embed Frameworks */,
 				C7A5DA952D7D6ED200C3BC6D /* DNetwork.framework in Embed Frameworks */,
 				C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */,
 			);
@@ -52,6 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C77E58152FD6ABD100F12122 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C781510D2D60E10C00026BC1 /* DNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A24E2D4A826B00B4CF35 /* Donmani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Donmani.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A25E2D4A826D00B4CF35 /* DonmaniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DonmaniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +112,7 @@
 				C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */,
 				C7A5DA942D7D6ED200C3BC6D /* DNetwork.framework in Frameworks */,
 				C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */,
+				C77E58162FD6ABD100F12122 /* Domain.framework in Frameworks */,
 				C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */,
 				C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */,
 				C72CD4B02D92FCAC00274F37 /* FirebaseAnalytics in Frameworks */,
@@ -159,6 +164,7 @@
 		C7BF8A332D50F4F600ACE68D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C77E58152FD6ABD100F12122 /* Domain.framework */,
 				C781510D2D60E10C00026BC1 /* DNetwork.framework */,
 				C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */,
 			);
@@ -266,7 +272,7 @@
 					};
 				};
 			};
-			buildConfigurationList = C7A6A2492D4A826B00B4CF35 /* Build configuration list for PBXProject "Donmani" */;
+			buildConfigurationList = C7A6A2492D4A826B00B4CF35 /* Build configuration list for PBXProject "App" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -626,7 +632,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C7A6A2492D4A826B00B4CF35 /* Build configuration list for PBXProject "Donmani" */ = {
+		C7A6A2492D4A826B00B4CF35 /* Build configuration list for PBXProject "App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C7A6A2702D4A826D00B4CF35 /* Debug */,

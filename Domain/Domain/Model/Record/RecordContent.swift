@@ -5,12 +5,12 @@
 //  Created by 문종식 on 2/1/25.
 //
 
-struct RecordContent {
-    var flag: RecordContentType
-    var category: RecordCategory
-    var memo: String
+public struct RecordContent {
+    public var flag: RecordContentType
+    public var category: RecordCategory
+    public var memo: String
     
-    init(
+    public init(
         flag: RecordContentType,
         category: RecordCategory,
         memo: String

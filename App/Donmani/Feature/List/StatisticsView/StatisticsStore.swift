@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 import DNetwork
+import Domain
 
 @Reducer
 struct StatisticsStore {

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Domain
 
 extension RecordEntryPointView {
     /// `어제 | 오늘` 토글

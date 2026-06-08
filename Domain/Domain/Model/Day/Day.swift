@@ -7,19 +7,19 @@
 
 import Foundation
 
-struct Day {
-    let year: Int
-    let month: Int
-    let day: Int
+public struct Day {
+    public let year: Int
+    public let month: Int
+    public let day: Int
     
-    init(year: Int, month: Int, day: Int) {
+    public init(year: Int, month: Int, day: Int) {
         self.year = year
         self.month = month
         self.day = day
     }
     
     /// YYYY-MM-DD 형식의 문자열로 초기화
-    init?(yyyymmdd: String) {
+    public init?(yyyymmdd: String) {
         let split = yyyymmdd.components(separatedBy: "-")
         guard split.count == 3,
               split[0].count == 4,
@@ -35,7 +35,7 @@ struct Day {
     }
     
     /// YY-MM-DD 형식의 문자열로 초기화
-    init?(yymmdd: String) {
+    public init?(yymmdd: String) {
         let split = yymmdd.components(separatedBy: "-")
         guard split.count == 3,
               split[0].count == 2,
@@ -75,7 +75,7 @@ private extension Day {
 }
 
 extension Day: Hashable {
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(year)
         hasher.combine(month)
         hasher.combine(day)
@@ -83,11 +83,11 @@ extension Day: Hashable {
 }
 
 extension Day: Equatable, Comparable {
-    static func < (lhs: Day, rhs: Day) -> Bool {
+    public static func < (lhs: Day, rhs: Day) -> Bool {
         lhs.compareKey < rhs.compareKey
     }
     
-    static func == (lhs: Day, rhs: Day) -> Bool {
+    public static func == (lhs: Day, rhs: Day) -> Bool {
         lhs.compareKey == rhs.compareKey
     }
 }
@@ -98,16 +98,16 @@ extension Day {
     }
 
     /// YYYY-MM-DD
-    var yyyyMMdd: String {
-        "\(year)-\(month.twoDigitString)-\(day.twoDigitString)"
+    public var yyyyMMdd: String {
+        "\(year)-\(Self.twoDigitString(month))-\(Self.twoDigitString(day))"
     }
 
     /// YYYYMMDD
-    var yyyyMMddCompact: String {
-        "\(year)\(month.twoDigitString)\(day.twoDigitString)"
+    public var yyyyMMddCompact: String {
+        "\(year)\(Self.twoDigitString(month))\(Self.twoDigitString(day))"
     }
     
-    var toDate: Date? {
+    public var toDate: Date? {
         let dateString = "\(year)-\(month)-\(day)"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -117,7 +117,7 @@ extension Day {
         return dateFormatter.date(from: dateString)
     }
     
-    var dateString: String {
+    public var dateString: String {
         guard let date = self.toDate else {
             return ""
         }
@@ -127,7 +127,7 @@ extension Day {
         return koreanFormatter.string(from: date)
     }
     
-    var fortuneDate: String {
+    public var fortuneDate: String {
         guard let date = self.toDate else {
             return ""
         }
@@ -141,11 +141,11 @@ extension Day {
 
 // Static
 extension Day {
-    static var distantPast: Day {
+    public static var distantPast: Day {
         Day(year: 1970, month: 1, day: 1)
     }
 
-    static var today: Day {
+    public static var today: Day {
         let components = todayComponents
         return Day(
             year: components.year ?? 0,
@@ -154,7 +154,7 @@ extension Day {
         )
     }
     
-    static var yesterday: Day {
+    public static var yesterday: Day {
         let components = yesterdayComponents
         return Day(
             year: components.year ?? 0,
@@ -184,5 +184,9 @@ extension Day {
             result[month] = days
         }
         return result
+    }
+    
+    private static func twoDigitString(_ value: Int) -> String {
+        String(format: "%02d", value)
     }
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Domain
 
 struct EmptyRecordView: View {
     var body: some View {

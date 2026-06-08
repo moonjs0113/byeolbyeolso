@@ -8,6 +8,7 @@
 import UIKit
 import DNetwork
 import ComposableArchitecture
+import Domain
 
 @Reducer
 struct MainNavigationStore {

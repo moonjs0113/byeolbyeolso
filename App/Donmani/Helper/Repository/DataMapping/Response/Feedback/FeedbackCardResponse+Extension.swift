@@ -6,6 +6,7 @@
 //
 
 import DNetwork
+import Domain
 
 extension FeedbackCardResponse {
     func toDomain() -> FeedbackCard {

@@ -7,6 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
+import Domain
 
 protocol FileRepository {
     func saveRewardData(from item: Reward) async throws

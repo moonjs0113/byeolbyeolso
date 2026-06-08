@@ -8,6 +8,7 @@
 import SpriteKit
 import SwiftUI
 import DesignSystem
+import Domain
 
 extension StarBottleScene {
     public static let starShapeTexture = SKTexture(image: UIImage(dAsset: .starShape))

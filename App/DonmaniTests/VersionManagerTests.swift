@@ -6,6 +6,7 @@
 //
 
 import Testing
+import Domain
 
 struct VersionManagerTests {
     let versionManager = VersionManager()

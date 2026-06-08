@@ -9,6 +9,7 @@ import SwiftUI
 import DesignSystem
 import ComposableArchitecture
 import DNetwork
+import Domain
 
 struct StatisticsView: View {
     @Environment(\.dismiss) private var dismiss

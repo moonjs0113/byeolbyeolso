@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Domain
 
 extension RecordEntryPointView {
     func CancelRecordConfirmView() -> some View {

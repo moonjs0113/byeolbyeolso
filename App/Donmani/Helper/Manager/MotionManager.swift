@@ -6,6 +6,7 @@
 //
 
 import CoreMotion
+import Domain
 
 final class MotionManager {
     let motion: CMMotionManager = CMMotionManager()

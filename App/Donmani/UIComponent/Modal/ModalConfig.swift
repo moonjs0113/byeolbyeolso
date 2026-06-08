@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Domain
 
 struct ModalConfig {
     let backgroundColor: Color

@@ -5,18 +5,18 @@
 //  Created by 문종식 on 5/18/25.
 //
 
-enum RewardItemCategory: String, CaseIterable {
+public enum RewardItemCategory: String, CaseIterable {
     case background
     case effect
     case decoration
     case bottle
     case sound
     
-    static var cases: [RewardItemCategory] {
+    public static var cases: [RewardItemCategory] {
         Self.allCases.dropLast()
     }
     
-    var title: String {
+    public var title: String {
         switch self {
         case .background:
             return "배경"
@@ -31,7 +31,7 @@ enum RewardItemCategory: String, CaseIterable {
         }
     }
     
-    init(rawValue: String) {
+    public init(rawValue: String) {
         switch rawValue {
         case "EFFECT":
             self = .effect
@@ -48,4 +48,3 @@ enum RewardItemCategory: String, CaseIterable {
         }
     }
 }
-

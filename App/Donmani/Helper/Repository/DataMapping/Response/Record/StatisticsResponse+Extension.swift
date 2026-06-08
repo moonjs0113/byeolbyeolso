@@ -6,6 +6,7 @@
 //
 
 import DNetwork
+import Domain
 
 extension StatisticsResponse {
     func toDomain() -> RecordStatistics {

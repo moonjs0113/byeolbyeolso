@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Domain
 
 enum FileType {
     case thumbnail

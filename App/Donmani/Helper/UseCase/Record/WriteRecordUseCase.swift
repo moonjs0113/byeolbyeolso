@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 protocol WriteRecordUseCase {
     func canWriteRecord() -> Bool

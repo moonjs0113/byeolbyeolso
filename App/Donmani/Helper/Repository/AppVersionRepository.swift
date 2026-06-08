@@ -7,6 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
+import Domain
 
 protocol AppVersionRepository {
     func getAppVersion() async throws -> Version

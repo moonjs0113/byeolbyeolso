@@ -9,6 +9,7 @@ import ComposableArchitecture
 import DesignSystem
 import Lottie
 import SwiftUI
+import Domain
 
 @Reducer
 struct DecorationStore {

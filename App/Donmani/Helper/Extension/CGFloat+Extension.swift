@@ -8,6 +8,7 @@
 import UIKit
 import DesignSystem
 import GoogleMobileAds
+import Domain
 
 extension CGFloat {
     public static var screenHeight: CGFloat {

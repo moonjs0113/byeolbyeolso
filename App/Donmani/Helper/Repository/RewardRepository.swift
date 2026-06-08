@@ -7,6 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
+import Domain
 
 protocol RewardRepository {
     func saveEquippedItems(year: Int, month: Int, items: [Reward])

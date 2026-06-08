@@ -6,10 +6,8 @@
 //
 
 import Foundation
-import SwiftUI
-import DesignSystem
 
-enum RecordCategory: String {
+public enum RecordCategory: String {
     // 행복 소비
     /// 활력
     case energy
@@ -55,37 +53,17 @@ enum RecordCategory: String {
 }
 
 extension RecordCategory {
-    var uppercaseValue: String {
+    public var uppercaseValue: String {
         rawValue.uppercased()
     }
     
-    var assetName: String {
+    public var assetName: String {
         rawValue
-    }
-    
-    public var hashValue: Int {
-        title.hashValue
-    }
-    
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.title == rhs.title
-    }
-    
-    var color: Color {
-        ColorPalette.color(named: assetName)
-    }
-    
-    var image: Image {
-        DImage(assetName: assetName)
-    }
-    
-    var smallImage: Image {
-        DImage(assetName: "\(assetName)_small")
     }
 }
 
 extension RecordCategory {
-    static var badCategory: [RecordCategory] {
+    public static var badCategory: [RecordCategory] {
         [
             .greed, .addiction, .laziness,
             .impulse, .meaninglessness, .boastfulness,
@@ -93,7 +71,7 @@ extension RecordCategory {
         ]
     }
     
-    static var goodCategory: [RecordCategory] {
+    public static var goodCategory: [RecordCategory] {
         [
             .energy, .growth, .healing,
             .happiness, .flex, .dignity,
@@ -101,7 +79,7 @@ extension RecordCategory {
         ]
     }
     
-    static func cases(type: RecordContentType) -> [RecordCategory] {
+    public static func cases(type: RecordContentType) -> [RecordCategory] {
         switch type {
         case .good:
             RecordCategory.goodCategory
@@ -113,7 +91,7 @@ extension RecordCategory {
 
 // Title
 extension RecordCategory {
-    var title: String {
+    public var title: String {
         switch self {
         case .energy:           "활력"
         case .growth:           "성장"

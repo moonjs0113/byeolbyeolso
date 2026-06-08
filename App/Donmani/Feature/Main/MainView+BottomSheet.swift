@@ -8,6 +8,7 @@
 import SwiftUI
 import DNetwork
 import DesignSystem
+import Domain
 
 extension MainView {
     func AppStoreView() -> some View {

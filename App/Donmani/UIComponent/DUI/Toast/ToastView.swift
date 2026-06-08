@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Domain
 
 struct ToastView: View {
     @EnvironmentObject private var toastManager: ToastManager

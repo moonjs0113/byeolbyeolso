@@ -7,6 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
+import Domain
 
 protocol FeedbackRepository {
     func getFeedbackState() async throws -> FeedbackInfo

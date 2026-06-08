@@ -9,6 +9,7 @@ import ComposableArchitecture
 import SwiftUI
 import DesignSystem
 import Lottie
+import Domain
 
 extension DecorationView {
     func DecorationGuideBottomSheet() -> some View {

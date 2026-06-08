@@ -8,6 +8,7 @@
 import UIKit
 import DesignSystem
 import ComposableArchitecture
+import Domain
 
 @Reducer
 struct MainStore {

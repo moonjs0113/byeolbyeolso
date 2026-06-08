@@ -6,6 +6,7 @@
 //
 
 import FirebaseAnalytics
+import Domain
 
 extension GA {
     struct Click: GAProtocol {

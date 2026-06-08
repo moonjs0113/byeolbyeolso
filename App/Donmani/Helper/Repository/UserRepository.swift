@@ -7,6 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
+import Domain
 
 protocol UserRepository {
     func registerUser() async throws -> User

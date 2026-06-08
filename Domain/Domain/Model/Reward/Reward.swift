@@ -5,31 +5,57 @@
 //  Created by 문종식 on 5/18/25.
 //
 
-struct Reward: Hashable {
-    enum ResourceType {
+public struct Reward: Hashable {
+    public enum ResourceType {
         case thumbnail
         case image
         case json
         case mp3
     }
     
-    let id: Int
-    let name: String
-    let imageUrl: String?
-    let jsonUrl: String?
-    let soundUrl: String?
-    let thumbnailUrl: String?
-    let category: RewardItemCategory
-    let newAcquiredFlag: Bool
-    let hidden: Bool
-    var hiddenRead: Bool = false
-    let resourceType: ResourceType
+    public let id: Int
+    public let name: String
+    public let imageUrl: String?
+    public let jsonUrl: String?
+    public let soundUrl: String?
+    public let thumbnailUrl: String?
+    public let category: RewardItemCategory
+    public let newAcquiredFlag: Bool
+    public let hidden: Bool
+    public var hiddenRead: Bool = false
+    public let resourceType: ResourceType
     
-    var key: String {
+    public init(
+        id: Int,
+        name: String,
+        imageUrl: String?,
+        jsonUrl: String?,
+        soundUrl: String?,
+        thumbnailUrl: String?,
+        category: RewardItemCategory,
+        newAcquiredFlag: Bool,
+        hidden: Bool,
+        hiddenRead: Bool = false,
+        resourceType: ResourceType
+    ) {
+        self.id = id
+        self.name = name
+        self.imageUrl = imageUrl
+        self.jsonUrl = jsonUrl
+        self.soundUrl = soundUrl
+        self.thumbnailUrl = thumbnailUrl
+        self.category = category
+        self.newAcquiredFlag = newAcquiredFlag
+        self.hidden = hidden
+        self.hiddenRead = hiddenRead
+        self.resourceType = resourceType
+    }
+    
+    public var key: String {
         "\(id)-\(category)"
     }
     
-    static let previewData: [Reward] = [
+    public static let previewData: [Reward] = [
         Reward(id: 11, name: "하늘위 산책로 배경", imageUrl: nil,
                jsonUrl: nil, soundUrl: nil, thumbnailUrl: nil, category: .background,
                newAcquiredFlag: false, hidden: false, resourceType: .image),
@@ -47,7 +73,7 @@ struct Reward: Hashable {
                newAcquiredFlag: false, hidden: false, resourceType: .json),
     ]
     
-    static let previewAllData: [Reward] = [
+    public static let previewAllData: [Reward] = [
         Reward(id: 1, name: "기본 배경", imageUrl: nil,
                jsonUrl: nil, soundUrl: nil, thumbnailUrl: nil, category: .background,
                newAcquiredFlag: false, hidden: false, resourceType: .image),

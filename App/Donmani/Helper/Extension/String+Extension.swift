@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Domain
 
 extension String {
     var convertUppercaseFirstChar: String {

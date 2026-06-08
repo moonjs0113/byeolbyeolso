@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import DesignSystem
 import Lottie
+import Domain
 
 extension DecorationView {
     func EmptyItemListView() -> some View {

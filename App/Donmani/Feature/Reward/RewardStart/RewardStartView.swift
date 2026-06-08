@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import DesignSystem
 import DNetwork
+import Domain
 
 struct RewardStartView: View {
     @Environment(\.dismiss) private var dismiss

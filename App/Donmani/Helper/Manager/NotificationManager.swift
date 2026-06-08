@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Domain
 
 class NotificationManager {
     public func checkNotificationPermission() async {

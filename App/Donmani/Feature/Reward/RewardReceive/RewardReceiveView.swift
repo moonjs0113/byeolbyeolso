@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import DesignSystem
 import Lottie
+import Domain
 
 struct RewardReceiveView: View {
     @Environment(\.dismiss) private var dismiss

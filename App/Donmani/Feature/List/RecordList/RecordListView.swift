@@ -8,6 +8,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Domain
 
 struct RecordListView: View {
     @Environment(\.dismiss) var dismiss

@@ -8,6 +8,7 @@
 import UIKit
 import SpriteKit
 import DesignSystem
+import Domain
 
 final class StarBottleScene: SKScene {
     

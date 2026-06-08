@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 import DesignSystem
+import Domain
 
 struct OnboardingView: View {
     @Bindable var store: StoreOf<OnboardingStore>

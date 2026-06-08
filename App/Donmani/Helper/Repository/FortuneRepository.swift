@@ -7,6 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
+import Domain
 
 protocol FortuneRepository {
     func getTodayFortune() async throws -> Fortune

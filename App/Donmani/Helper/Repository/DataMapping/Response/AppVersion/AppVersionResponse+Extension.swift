@@ -6,6 +6,7 @@
 //
 
 import DNetwork
+import Domain
 
 extension AppVersionResponse {
     func toDomain() -> Version {

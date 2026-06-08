@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Domain
 
 struct BackgroundView: View {
     let colors: [Color]

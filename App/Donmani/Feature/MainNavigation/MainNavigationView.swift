@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Domain
 
 struct MainNavigationView: View {
     @Bindable var navigationStore: StoreOf<MainNavigationStore>

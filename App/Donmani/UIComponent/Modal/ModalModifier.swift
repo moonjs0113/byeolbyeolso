@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Domain
 
 struct ModalModifier<ModalContent: View>: ViewModifier {
     @Binding private var isPresented: Bool

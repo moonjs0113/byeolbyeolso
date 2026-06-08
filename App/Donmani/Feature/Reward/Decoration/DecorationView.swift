@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import DesignSystem
 import Lottie
+import Domain
 
 struct DecorationView: View {
     @EnvironmentObject private var toastManager: ToastManager

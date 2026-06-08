@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseMessaging
+import Domain
 
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {

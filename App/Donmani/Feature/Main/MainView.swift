@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import DesignSystem
+import Domain
 
 struct MainView: View {
     @EnvironmentObject private var toastManager: ToastManager

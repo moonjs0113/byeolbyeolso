@@ -29,11 +29,10 @@ struct RecordContentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                DText(record.category.title)
-                    .style(.h3, .bold, .white)
+                DText(record.category.title, style: .h3, weight: .bold, color: .white)
                 Spacer()
                 if isEditable {
-                    DImage(.edit).image
+                    DImage(DImageAsset.edit)
                         .resizable()
                         .frame(width: .s4, height: .s4)
                 }
@@ -51,13 +50,13 @@ struct RecordContentView: View {
                             HStack {
                                 Spacer()
                                 ZStack {
-                                    DImage(.starSmall).image
+                                    DImage(DImageAsset.starSmall)
                                         .resizable()
                                         .renderingMode(.template)
                                         .foregroundStyle(record.category.color)
                                         .aspectRatio(1, contentMode: .fit)
                                         .overlay {
-                                            DImage(.starSingleHighlighter).image
+                                            DImage(DImageAsset.starSingleHighlighter)
                                                 .resizable()
                                                 .aspectRatio(1, contentMode: .fit)
                                         }
@@ -72,8 +71,7 @@ struct RecordContentView: View {
                     Spacer()
                 }
                 VStack(spacing: 0) {
-                    DText(record.memo)
-                        .style(.b1, .medium, .gray95)
+                    DText(record.memo, style: .b1, weight: .medium, color: ColorPalette.Neutral.gray95)
                         .lineLimit(10)
                         .multilineTextAlignment(.leading)
                         .padding(.top, 3)

@@ -16,8 +16,8 @@ extension MainView {
         } label: {
             ZStack {
                 Circle()
-                    .fill(DColor(.purpleBlue70).color)
-                DImage(.plus).image
+                    .fill(ColorPalette.Secondary.purpleBlue70)
+                DImage(DImageAsset.plus)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s2)
@@ -42,12 +42,11 @@ extension MainView {
             HStack {
                 Spacer()
                 HStack {
-                    DText("어제 소비도 정리해 보아요")
-                        .style(.b3, .medium, .white)
+                    DText("어제 소비도 정리해 보아요", style: .b3, weight: .medium, color: .white)
                     Button {
                         store.send(.closePopover)
                     } label: {
-                        DImage(.close).image
+                        DImage(DImageAsset.close)
                             .resizable()
                             .frame(width: .s5, height: .s5)
                     }
@@ -74,17 +73,16 @@ extension MainView {
             HStack {
                 Spacer()
                 Triangle(direction: .up)
-                    .fill(DColor(.deepBlue70).color)
+                    .fill(ColorPalette.Primary.deepBlue70)
                     .frame(width: 14, height: 8)
                     .padding(.trailing, 12)
             }
             HStack {
                 Spacer()
-                DText("선물 도착!✨")
-                    .style(.b3, .semibold, .white)
+                DText("선물 도착!✨", style: .b3, weight: .semibold, color: .white)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 8)
-                    .background(DColor(.deepBlue70).color)
+                    .background(ColorPalette.Primary.deepBlue70)
                     .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
             Spacer()
@@ -97,8 +95,7 @@ extension MainView {
     func dailyFortune() -> some View {
         VStack(spacing: 16) {
             HStack(spacing: 8) {
-                DImage(.dailyFortune)
-                    .image
+                DImage(DImageAsset.dailyFortune)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 68, height: 68)
@@ -106,29 +103,25 @@ extension MainView {
                     alignment: .leading,
                     spacing: 4
                 ) {
-                    DText("토비 요정이 전해주는")
-                        .style(.b2, .medium, .hex("#806AEB"))
+                    DText("토비 요정이 전해주는", style: .b2, weight: .medium, color: .fromHex("#806AEB"))
                         .multilineTextAlignment(.leading)
-                    DText(store.dailyFortune.day.fortuneDate)
-                        .style(.h3, .bold, .hex("#04091E"))
+                    DText(store.dailyFortune.day.fortuneDate, style: .h3, weight: .bold, color: .fromHex("#04091E"))
                         .multilineTextAlignment(.leading)
                 }
                 Spacer()
             }
             // spacing 16
-            DText(store.dailyFortune.content)
-                .style(.b1, .regular, .hex("#04091E"))
+            DText(store.dailyFortune.content, style: .b1, weight: .regular, color: .fromHex("#04091E"))
                 .lineSpacing(8)
             // spacing 16
             HStack {
-                DText("⭐️ \(store.dailyFortune.item)")
-                    .style(.b3, .medium, .hex("#FFFFFF"))
+                DText("⭐️ \(store.dailyFortune.item)", style: .b3, weight: .medium, color: .fromHex("#FFFFFF"))
                     .kerning(-0.5)
                     .padding(.vertical, 8)
                     .padding(.horizontal, 8)
                     .background {
                         Capsule()
-                            .fill(Color.hex("6045E6"))
+                            .fill(Color.fromHex("6045E6"))
                     }
                 Spacer()
             }
@@ -141,9 +134,8 @@ extension MainView {
                         cornerRadius: .s5,
                         style: .continuous
                     )
-                    .fill(Color.hex("#F8F9FA"))
-                    DText(store.shouldPushRecordAfterFortuneConfirm ? "기록하기" : "행운 받아가기")
-                        .style(.b1, .bold, .hex("#04091E"))
+                    .fill(Color.fromHex("#F8F9FA"))
+                    DText(store.shouldPushRecordAfterFortuneConfirm ? "기록하기" : "행운 받아가기", style: .b1, weight: .bold, color: .fromHex("#04091E"))
                 }
             }
             .frame(height: 52)

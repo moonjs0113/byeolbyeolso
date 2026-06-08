@@ -29,7 +29,7 @@ struct RecordWritingView: View {
             VStack(spacing: 0) {
                 DNavigationBar(
                     leading: {
-                        DNavigationBarButton(.arrowLeft) {
+                        DNavigationBarButton(.image(.arrowLeft)) {
                             if (editingText.count > 0) {
                                 isFocusToTextField = false
                                 store.send(.showCancelRecordBottomSheet)
@@ -39,8 +39,7 @@ struct RecordWritingView: View {
                         }
                     },
                     title: {
-                        DText("\(store.type.title) 소비")
-                            .style(.b1, .bold, .white)
+                        DText("\(store.type.title) 소비", style: .b1, weight: .bold, color: .white)
                     }
                 )
                 VStack(spacing: 0) {
@@ -57,7 +56,7 @@ struct RecordWritingView: View {
                                         VStack(spacing: 0) {
                                             HStack(spacing: 0) {
                                                 Spacer()
-                                                DImage(.editCategory).image
+                                                DImage(DImageAsset.editCategory)
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
                                                     .frame(
@@ -71,8 +70,7 @@ struct RecordWritingView: View {
                                     }
                             }
                         }
-                        DText(store.savedCategory?.title ?? " ")
-                            .style(.h3, .bold, .white)
+                        DText(store.savedCategory?.title ?? " ", style: .h3, weight: .bold, color: .white)
                             .opacity((store.savedCategory == nil) ? 0 : 1)
                         
                         VStack(spacing: 4) {
@@ -80,8 +78,7 @@ struct RecordWritingView: View {
                                 text: $editingText,
                                 axis: .vertical
                             ) {
-                                DText("소비가 \(store.type.selectTitle)던 이유는?")
-                                    .style(.b1, .medium, .deepBlue80)
+                                DText("소비가 \(store.type.selectTitle)던 이유는?", style: .b1, weight: .medium, color: ColorPalette.Primary.deepBlue80)
                             }
                             .focused($isFocusToTextField)
                             .font(DFont.font(.b1, weight: .medium))
@@ -106,8 +103,7 @@ struct RecordWritingView: View {
                             
                             HStack {
                                 Spacer()
-                                DText("\(editingText.count)/100")
-                                    .style(.b2, .regular, .deepBlue80)
+                                DText("\(editingText.count)/100", style: .b2, weight: .regular, color: ColorPalette.Primary.deepBlue80)
                             }
                         }
                         .padding(8)

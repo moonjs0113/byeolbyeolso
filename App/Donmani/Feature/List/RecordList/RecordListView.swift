@@ -18,17 +18,16 @@ struct RecordListView: View {
             VStack(alignment: .center, spacing: 0) {
                 DNavigationBar(
                     leading: {
-                        DNavigationBarButton(.arrowLeft) {
+                        DNavigationBarButton(.image(.arrowLeft)) {
                             dismiss()
                         }
                     },
                     title: {
-                        DText("\(store.day.year)년 \(store.day.month)월 기록")
-                            .style(.b1, .semibold, .white)
+                        DText("\(store.day.year)년 \(store.day.month)월 기록", style: .b1, weight: .semibold, color: .white)
                     },
                     trailing: {
                         if store.isShowBottleCalendarNavigationButton {
-                            DNavigationBarButton(.bottle) {
+                            DNavigationBarButton(.image(.bottle)) {
                                 store.send(.pushBottleCalendarView)
                             }
                         }

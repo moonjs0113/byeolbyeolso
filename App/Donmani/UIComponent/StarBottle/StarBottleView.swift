@@ -146,10 +146,10 @@ struct StarBottleView: View {
                     }
             } else {
                 BackgroundView(colors: [
-                    DColor.backgroundTop,
-                    DColor.backgroundBottom,
+                    ColorPalette.Semantic.backgroundTop,
+                    ColorPalette.Semantic.backgroundBottom,
                 ])
-                DImage(.backgroundStar).image
+                DImage(DImageAsset.backgroundStar)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .screenWidth - 2 * .defaultLayoutPadding)
@@ -172,7 +172,7 @@ struct StarBottleView: View {
             VStack {
                 Spacer()
                 ZStack {
-                    DImage(.starBottleBackground).image
+                    DImage(DImageAsset.starBottleBackground)
                         .resizable()
                         .frame(width: width + 20)
                         .aspectRatio(0.8, contentMode: .fit)
@@ -192,7 +192,6 @@ struct StarBottleView: View {
                             category: .bottle
                         )
                         .image()
-                        .image
                         .resizable()
                         .aspectRatio(0.8, contentMode: .fit)
                         .frame(width: width)
@@ -200,7 +199,7 @@ struct StarBottleView: View {
                             onTapGesture?()
                         }
                     } else {
-                        DImage(.starBottleLock).image
+                        DImage(DImageAsset.starBottleLock)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .padding(.horizontal, 38)
@@ -230,8 +229,7 @@ struct StarBottleView: View {
                             } else if decorationRewardId == 23 { // 우주바캉스 토비
                                 VStack {
                                     HStack {
-                                        DImage(.rewardDecorationSpaceVacance)
-                                            .image
+                                        DImage(DImageAsset.rewardDecorationSpaceVacance)
                                             .resizable()
                                             .aspectRatio(0.67, contentMode: .fit)
                                             .frame(height: .screenWidth * 0.27)

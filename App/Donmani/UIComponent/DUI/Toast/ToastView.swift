@@ -47,17 +47,16 @@ struct ToastView: View {
                 Spacer()
                 HStack(spacing: 8) {
                     if let icon {
-                        DImage(icon).image
+                        DImage(icon)
                             .resizable()
                             .frame(width: .s3, height: .s3)
                     }
-                    DText(text)
-                        .style(.b2, .bold, .white)
+                    DText(text, style: .b2, weight: .bold, color: .white)
                 }
                 .padding(.s5)
                 .background {
                     Capsule(style: .continuous)
-                        .fill(DColor.textGuide.opacity(0.9))
+                        .fill(ColorPalette.Semantic.textGuide.opacity(0.9))
                 }
                 Spacer()
             }

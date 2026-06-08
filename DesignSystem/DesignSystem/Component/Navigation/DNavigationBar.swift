@@ -1,19 +1,18 @@
 //
 //  DNavigationBar.swift
-//  Donmani
+//  DesignSystem
 //
 //  Created by 문종식 on 8/28/25.
 //
 
 import SwiftUI
-import DesignSystem
 
-struct DNavigationBar<Leading: View, Title: View, Trailing: View>: View {
+public struct DNavigationBar<Leading: View, Title: View, Trailing: View>: View {
     private let leading: () -> Leading
     private let title: () -> Title
     private let trailing: () -> Trailing
     
-    init(
+    public init(
         @ViewBuilder leading: @escaping () -> Leading = { Spacer() },
         @ViewBuilder title: @escaping () -> Title = { Spacer() },
         @ViewBuilder trailing: @escaping () -> Trailing = { Spacer() }
@@ -23,7 +22,7 @@ struct DNavigationBar<Leading: View, Title: View, Trailing: View>: View {
         self.trailing = trailing
     }
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             HStack {
                 leading()

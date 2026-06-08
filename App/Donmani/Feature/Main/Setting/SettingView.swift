@@ -48,9 +48,6 @@ struct SettingView: View {
     
     let width = UIScreen.main.bounds.width
     @State var isPresentingRecordGuideView = false
-    @State var isPresentingFeedbackView = false
-    @State var isPresentingPrivacyPolicyView = false
-    @State var isPresentingNoticeView = false
     @State var isPresentingEditNameView = false
     @State var isSaveEnabled = true
     @State var editUserName: String = ""
@@ -81,18 +78,17 @@ struct SettingView: View {
                     ) {
                         DNavigationBar(
                             leading: {
-                                DNavigationBarButton(.arrowLeft) {
+                                DNavigationBarButton(.image(.arrowLeft)) {
                                     dismiss()
                                 }
                             },
                             title: {
-                                DText("설정")
-                                    .style(.b1, .semibold, .white)
+                                DText("설정", style: .b1, weight: .semibold, color: .white)
                             }
                         )
                         
                         VStack(alignment: .center, spacing: 12) {
-                            DImage(.profile).image
+                            DImage(DImageAsset.profile)
                                 .resizable()
                                 .aspectRatio(1, contentMode: .fit)
                                 .frame(width: 100, height: 100)
@@ -104,9 +100,8 @@ struct SettingView: View {
                                     isPresentingEditNameView = true
                                     UINavigationController.isBlockSwipe = true
                                 } label: {
-                                    DText(store.userName)
-                                        .style(.b1, .semibold, .white)
-                                    DImage(.edit).image
+                                    DText(store.userName, style: .b1, weight: .semibold, color: .white)
+                                    DImage(DImageAsset.edit)
                                         .resizable()
                                         .aspectRatio(1, contentMode: .fit)
                                         .frame(width: .s4, height: .s4)
@@ -134,7 +129,7 @@ struct SettingView: View {
                                 Task {
                                     try await userUseCase.updateNoticeReadStatus()
                                     isNoticeNotRead = false
-                                    isPresentingNoticeView.toggle()
+                                    store.send(.touchNoticeButton)
                                 }
                             }
                             MenuButton(type: .recordGuide) {
@@ -144,29 +139,18 @@ struct SettingView: View {
                             }
                             
                             MenuButton(type: .feedback) {
-                                isPresentingFeedbackView.toggle()
+                                store.send(.touchFeedbackButton)
                             }
                             
                             MenuButton(type: .privacyPolicy) {
-                                isPresentingPrivacyPolicyView.toggle()
+                                store.send(.touchPrivacyPolicyButton)
                             }
                         }
                         Spacer()
                     }
                 }
                 .ignoresSafeArea(.keyboard, edges: .bottom)
-                .sheet(isPresented: $isPresentingPrivacyPolicyView) {
-                    // Privacy Policy WebView
-                    InnerWebView(urlString: DURL.privacyPolicy.urlString)
-                }
-                .sheet(isPresented: $isPresentingFeedbackView) {
-                    // Feeback WebView
-                    InnerWebView(urlString: DURL.feedback.urlString)
-                }
-                .sheet(isPresented: $isPresentingNoticeView) {
-                    // Notice WebView
-                    InnerWebView(urlString: DURL.notice.urlString)
-                }
+                .webSheet(url: $store.webURLString)
                 .onChange(of: scenePhase) { oldPhase, newPhase  in
                     if newPhase == .active {
                         let notification = NotificationManager()
@@ -225,12 +209,11 @@ struct SettingView: View {
         } label: {
             ZStack {
                 HStack(spacing: 4) {
-                    DText(type.title)
-                        .style(.b1, .bold, .white)
+                    DText(type.title, style: .b1, weight: .bold, color: .white)
                     if type == .notice {
                         HStack(alignment: .top) {
                             Circle()
-                                .fill(DColor.notice)
+                                .fill(ColorPalette.Semantic.noticeDot)
                                 .frame(width: 6, height: 6)
                                 .padding(.bottom, 18)
                         }
@@ -240,7 +223,7 @@ struct SettingView: View {
                     if type == .decoration {
                         HStack(alignment: .top) {
                             Circle()
-                                .fill(DColor.notice)
+                                .fill(ColorPalette.Semantic.noticeDot)
                                 .frame(width: 6, height: 6)
                                 .padding(.bottom, 18)
                         }

@@ -1,21 +1,20 @@
 //
 //  DButton.swift
-//  Donmani
+//  DesignSystem
 //
 //  Created by 문종식 on 2/9/25.
 //
 
 import SwiftUI
-import DesignSystem
 
-struct DButton: View {
-    let title: String
-    let action: () -> Void
-    var isEnabled: Bool = false
+public struct DButton: View {
+    private let title: String
+    private let action: () -> Void
+    private let isEnabled: Bool
     
-    init(
+    public init(
         title: String,
-        isEnabled: Bool,
+        isEnabled: Bool = true,
         action: @escaping () -> Void
     ) {
         self.title = title
@@ -23,16 +22,7 @@ struct DButton: View {
         self.isEnabled = isEnabled
     }
     
-    init(
-        title: String,
-        action: @escaping () -> Void
-    ) {
-        self.title = title
-        self.action = action
-        self.isEnabled = true
-    }
-    
-    var body: some View {
+    public var body: some View {
         Button {
             if isEnabled {
                 action()
@@ -45,16 +35,14 @@ struct DButton: View {
                 )
                 .fill(
                     isEnabled
-                    ? DColor(.gray95).color
-                    : DColor(.deepBlue20).color
+                    ? ColorPalette.Neutral.gray95
+                    : ColorPalette.Primary.deepBlue20
                 )
-                DText(title)
-                    .style(.h3, .bold, isEnabled ? .deepBlue20 : .deepBlue70)
+                DText(title, style: .h3, weight: .bold, color: isEnabled ? ColorPalette.Primary.deepBlue20 : ColorPalette.Primary.deepBlue70)
             }
         }
         .frame(height: 58)
         .allowsHitTesting(isEnabled)
     }
 }
-
 

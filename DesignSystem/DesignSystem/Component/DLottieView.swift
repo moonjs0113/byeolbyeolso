@@ -1,36 +1,37 @@
 //
 //  DLottieView.swift
-//  Donmani
+//  DesignSystem
 //
 //  Created by 문종식 on 6/2/25.
 //
 
 import SwiftUI
 import Lottie
-import DesignSystem
 
-struct DLottieView: UIViewRepresentable {
+public struct DLottieView: UIViewRepresentable {
+    public typealias UIViewType = UIView
+    
     let name: String?
     let loopMode: LottieLoopMode
     let data: Data?
     
-    init(name: String, loopMode: LottieLoopMode) {
+    public init(name: String, loopMode: LottieLoopMode) {
         self.name = name
         self.loopMode = loopMode
         self.data = nil
     }
     
-    init(data: Data, loopMode: LottieLoopMode) {
+    public init(data: Data, loopMode: LottieLoopMode) {
         self.name = nil
         self.loopMode = loopMode
         self.data = data
     }
 
-    class AnimationViewContainer: UIView {
+    final class AnimationViewContainer: UIView {
         let animationView = LottieAnimationView()
     }
 
-    func makeUIView(context: Context) -> AnimationViewContainer {
+    public func makeUIView(context: Context) -> UIView {
         let container = AnimationViewContainer()
         var animation: LottieAnimation!
         
@@ -67,7 +68,9 @@ struct DLottieView: UIViewRepresentable {
         return container
     }
 
-    func updateUIView(_ uiView: AnimationViewContainer, context: Context) {
+    public func updateUIView(_ uiView: UIView, context: Context) {
+        guard let uiView = uiView as? AnimationViewContainer else { return }
+        
         var animation: LottieAnimation!
         if let name {
             let fileManager = FileManager.default
@@ -83,7 +86,7 @@ struct DLottieView: UIViewRepresentable {
         if let data {
             animation = try? LottieAnimation.from(data: data)
         }
-        if animation.isNil {
+        if animation == nil {
             return
         }
         uiView.animationView.animation = animation

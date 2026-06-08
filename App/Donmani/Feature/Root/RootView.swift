@@ -49,8 +49,8 @@ struct RootView: View {
             .animation(.smooth, value: store.route)
             .background {
                 BackgroundView(colors: [
-                    DColor.backgroundTop,
-                    DColor.backgroundBottom,
+                    ColorPalette.Semantic.backgroundTop,
+                    ColorPalette.Semantic.backgroundBottom,
                 ])
             }
         }

@@ -18,13 +18,12 @@ struct MonthlyStarBottleView: View {
             VStack(alignment: .center, spacing: 0) {
                 DNavigationBar(
                     leading: {
-                        DNavigationBarButton(.arrowLeft) {
+                        DNavigationBarButton(.image(.arrowLeft)) {
                             dismiss()
                         }
                     },
                     title: {
-                        DText("\(store.day.year % 100)년 \(store.day.month)월")
-                            .style(.b1, .semibold, .white)
+                        DText("\(store.day.year % 100)년 \(store.day.month)월", style: .b1, weight: .semibold, color: .white)
                     }
                 )
                 
@@ -63,18 +62,16 @@ struct EmptyStarBottleView: View {
     var body: some View {
         ZStack {
             BackgroundView(colors: [
-                DColor.backgroundTop,
-                DColor.backgroundBottom,
+                ColorPalette.Semantic.backgroundTop,
+                ColorPalette.Semantic.backgroundBottom,
             ])
             
-            DImage(.backgroundStar)
-                .image
+            DImage(DImageAsset.backgroundStar)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: .screenWidth - 2 * .defaultLayoutPadding)
             
-            DImage(.starBottleLock)
-                .image
+            DImage(DImageAsset.starBottleLock)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .padding(.top, 10)

@@ -19,19 +19,18 @@ struct MainView: View {
                 VStack(spacing: .s1) {
                     DNavigationBar(
                         leading: {
-                            DNavigationBarButton(.setting) {
+                            DNavigationBarButton(.image(.setting)) {
                                 GA.Click(event: .mainSettingButton).send()
                                 store.send(.delegate(.pushSettingView))
                             }
                         },
                         trailing: {
-                            DNavigationBarButton(.reward) {
+                            DNavigationBarButton(.image(.reward)) {
                                 store.send(.touchRewardButton)
                             }
                         }
                     )
-                    DText(store.userName)
-                        .style(.h1, .bold, .gray95)
+                    DText(store.userName, style: .h1, weight: .bold, color: ColorPalette.Neutral.gray95)
                 }
                 
                 Spacer()
@@ -40,18 +39,17 @@ struct MainView: View {
                     RecordButton()
                 } else {
                     HStack(spacing: 4) {
-                        DImage(.starShape).image
+                        DImage(DImageAsset.starShape)
                             .resizable()
                             .renderingMode(.template)
                             .aspectRatio(contentMode: .fit)
                             .foregroundStyle(.white)
                             .frame(width: 22)
-                        DText("오늘 남길 수 있는 기록은 모두 작성했어요!")
-                            .style(.b2, .semibold, .white)
+                        DText("오늘 남길 수 있는 기록은 모두 작성했어요!", style: .b2, weight: .semibold, color: .white)
                     }
                     .background {
                         Ellipse()
-                            .fill(DColor.mainToolTipBackground)
+                            .fill(ColorPalette.Semantic.mainToolTipBackground)
                             .frame(height: 14)
                             .blur(radius: 20.0)
                             .opacity(0.6)
@@ -95,7 +93,7 @@ struct MainView: View {
         .modal(
             isPresented: $store.isPresentDailyFortuneModal,
             config: ModalConfig(
-                backgroundColor: DColor.dailyFortuneBackground
+                backgroundColor: ColorPalette.Semantic.dailyFortuneBackground
             )
         ) {
             dailyFortune()

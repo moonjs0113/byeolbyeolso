@@ -10,9 +10,9 @@ import SwiftUI
 import DesignSystem
 
 extension StarBottleScene {
-    public static let starShapeTexture = SKTexture(image: DImage(.starShape).uiImage)
-    public static let starDoubleHighlighterTexture = SKTexture(image: DImage(.starDoubleHighlighter).uiImage)
-    public static let starInnerShadow = SKTexture(image: DImage(.starInnerShadow).uiImage)
+    public static let starShapeTexture = SKTexture(image: UIImage(dAsset: .starShape))
+    public static let starDoubleHighlighterTexture = SKTexture(image: UIImage(dAsset: .starDoubleHighlighter))
+    public static let starInnerShadow = SKTexture(image: UIImage(dAsset: .starInnerShadow))
     
     public func addGroundNodeWithStarBottleShape(
         width: CGFloat,
@@ -21,7 +21,7 @@ extension StarBottleScene {
     ) {
         self.backgroundColor = .clear
         let nodeSize = CGSize(width: size.width, height: size.height)
-        let texture = SKTexture(image: DImage(shape.imageAsset).uiImage)
+        let texture = SKTexture(image: UIImage(dAsset: shape.imageAsset))
         let node = SKSpriteNode(texture: texture)
         node.size = nodeSize
         node.physicsBody = SKPhysicsBody(texture: node.texture!, size: node.size)
@@ -324,7 +324,7 @@ extension StarBottleScene {
             record.records[$0]?.category.color
         }
         if colors.isEmpty {
-            colors = [DColor.empty]
+            colors = [ColorPalette.Semantic.empty]
         }
         addGradientColor(node: starNode, colors: colors)
         addHighlightTexture(node: starNode, size: size)

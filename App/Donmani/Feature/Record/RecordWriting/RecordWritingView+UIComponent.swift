@@ -50,11 +50,10 @@ extension RecordWritingView {
                     .opacity((initState || isSelected) ? 1 : 0.4)
 //                    .overlay(
 //                        RoundedRectangle(cornerRadius: .s5)
-//                            .stroke(DColor(.deepBlue99).color, lineWidth: (isSelected && !initState) ? 2 : 0)
+//                            .stroke(ColorPalette.Primary.deepBlue99, lineWidth: (isSelected && !initState) ? 2 : 0)
 //                    )
 
-                DText(category.title)
-                    .style(.b2, .semibold, isSelected ? .deepBlue99 : .deepBlue90)
+                DText(category.title, style: .b2, weight: .semibold, color: isSelected ? ColorPalette.Primary.deepBlue99 : ColorPalette.Primary.deepBlue90)
             }
         }
         .padding(.horizontal, .s5)
@@ -62,16 +61,15 @@ extension RecordWritingView {
     
     func TextGuideView() -> some View {
         HStack(spacing: 8) {
-            DImage(.warning).image
+            DImage(DImageAsset.warning)
                 .resizable()
                 .frame(width: .s3, height: .s3)
-            DText("최대로 작성했어요")
-                .style(.b2, .bold, .white)
+            DText("최대로 작성했어요", style: .b2, weight: .bold, color: .white)
         }
         .padding(.s5)
         .background {
             Capsule(style: .continuous)
-                .fill(DColor.textGuide.opacity(0.9))
+                .fill(ColorPalette.Semantic.textGuide.opacity(0.9))
         }
     }
     

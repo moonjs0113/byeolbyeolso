@@ -19,13 +19,12 @@ struct StatisticsView: View {
             VStack(alignment: .center,spacing: 0) {
                 DNavigationBar(
                     leading: {
-                        DNavigationBarButton(.arrowLeft) {
+                        DNavigationBarButton(.image(.arrowLeft)) {
                             dismiss()
                         }
                     },
                     title: {
-                        DText("\(store.day.year)년 \(store.day.month)월 기록 통계")
-                            .style(.b1, .semibold, .white)
+                        DText("\(store.day.year)년 \(store.day.month)월 기록 통계", style: .b1, weight: .semibold, color: .white)
                     }
                 )
                 
@@ -53,9 +52,7 @@ struct StatisticsView: View {
         .background {
             BackgroundView()
         }
-        .sheet(isPresented: $store.isPresentingProposeFunctionView) {
-            InnerWebView(urlString: DURL.proposeFunction.urlString)
-        }
+        .webSheet(url: $store.webURLString)
         .onAppear {
             GA.View(event: .insight).send()
         }

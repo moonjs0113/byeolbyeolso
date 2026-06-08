@@ -72,15 +72,15 @@ extension RecordCategory {
     }
     
     var color: Color {
-        DColor(assetName).color
+        ColorPalette.color(named: assetName)
     }
     
     var image: Image {
-        DImage(assetName).image
+        DImage(assetName: assetName)
     }
     
     var smallImage: Image {
-        DImage("\(assetName)_small").image
+        DImage(assetName: "\(assetName)_small")
     }
 }
 

@@ -20,15 +20,20 @@ struct SettingStore {
     @ObservableState
     struct State {
         var userName: String
+        var webURLString: String?
     
         init(context: Context) {
             self.userName = context.userName
+            self.webURLString = nil
         }
     }
 
     // MARK: - Action
     enum Action: BindableAction {
         case touchDecorationButton
+        case touchNoticeButton
+        case touchFeedbackButton
+        case touchPrivacyPolicyButton
         case updateUserName(String)
         
         case binding(BindingAction<State>)
@@ -57,6 +62,15 @@ struct SettingStore {
                     let (decorationItem, currentDecorationItem) = try await (decorationItemTask, currentDecorationItemTask)
                     await send(.delegate(.pushDecoration(records ?? [], decorationItem, currentDecorationItem)))
                 }
+
+            case .touchNoticeButton:
+                state.webURLString = DURL.notice.urlString
+
+            case .touchFeedbackButton:
+                state.webURLString = DURL.feedback.urlString
+
+            case .touchPrivacyPolicyButton:
+                state.webURLString = DURL.privacyPolicy.urlString
                 
             case .updateUserName(let userName):
                 state.userName = userName

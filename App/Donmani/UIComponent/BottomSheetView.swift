@@ -61,7 +61,7 @@ struct BottomSheetView<Content: View>: View {
                                     Button {
                                         dismiss(nil)
                                     } label: {
-                                        DImage(.closeCircle).image
+                                        DImage(DImageAsset.closeCircle)
                                             .resizable()
                                             .frame(width: .s2, height: .s2)
                                     }
@@ -76,7 +76,7 @@ struct BottomSheetView<Content: View>: View {
                     }
                     .padding(.defaultLayoutPadding)
                     .background {
-                        DColor(.deepBlue60).color
+                        ColorPalette.Primary.deepBlue60
                             .clipShape(
                                 .rect(
                                     topLeadingRadius: .s1,
@@ -118,7 +118,6 @@ struct BottomSheetView<Content: View>: View {
 
 #Preview {
     BottomSheetView(closeAction: { }) { _ in
-        DText("Bottom Sheet")
-            .style(.h1, .bold, .white)
+        DText("Bottom Sheet", style: .h1, weight: .bold, color: .white)
     }
 }

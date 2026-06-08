@@ -12,21 +12,20 @@ extension BottleCalendarView {
     func TopBannerView() -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: .s5, style: .circular)
-                .fill(DColor(.deepBlue60).color)
+                .fill(ColorPalette.Primary.deepBlue60)
                 .frame(height: 56)
             HStack(alignment: .center, spacing: 8) {
-                DImage(.notice).image
+                DImage(DImageAsset.notice)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: .s3, height: .s3)
-                DText("매 월 1일에 새로운 별통이가 열려요")
-                    .style(.b1, .regular, .gray95)
+                DText("매 월 1일에 새로운 별통이가 열려요", style: .b1, weight: .regular, color: ColorPalette.Neutral.gray95)
                 Spacer()
                 
                 Button {
                     store.send(.closeTopBanner)
                 } label: {
-                    DImage(.close).image
+                    DImage(DImageAsset.close)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: .s4, height: .s4)
@@ -75,25 +74,23 @@ extension BottleCalendarView {
     ) -> some View {
         VStack(alignment: .center, spacing: 4) {
             if (count == -1) {
-                DImage(.calendarStarBottleLock).image
+                DImage(DImageAsset.calendarStarBottleLock)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 116)
             } else {
                 ZStack {
-                    DImage(.calendarStarBottleOpen).image
+                    DImage(DImageAsset.calendarStarBottleOpen)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                     VStack(spacing: 4) {
-                        DImage(.starSmall).image
+                        DImage(DImageAsset.starSmall)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: .s4, height: .s4)
                         HStack(alignment: .bottom,spacing: 0) {
-                            DText("\(count)")
-                                .style(.b2, .semibold, .gray80)
-                            DText("/\(store.lastDaysOfMonths[month, default: 0])")
-                                .style(.b3, .semibold, .deepBlue80)
+                            DText("\(count)", style: .b2, weight: .semibold, color: ColorPalette.Neutral.gray80)
+                            DText("/\(store.lastDaysOfMonths[month, default: 0])", style: .b3, weight: .semibold, color: ColorPalette.Primary.deepBlue80)
                         }
                     }
                     .padding(.top, 6)
@@ -101,8 +98,7 @@ extension BottleCalendarView {
                 .frame(height: 116)
             }
             
-            DText("\(month)월")
-                .style(.b2, .semibold, (count > -1) ? .gray99 : .deepBlue80)
+            DText("\(month)월", style: .b2, weight: .semibold, color: (count > -1) ? ColorPalette.Neutral.gray99 : ColorPalette.Primary.deepBlue80)
         }
     }
 }

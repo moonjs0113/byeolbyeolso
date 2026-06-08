@@ -28,21 +28,18 @@ struct DecorationView: View {
                     VStack {
                         DNavigationBar(
                             leading: {
-                                DNavigationBarButton(.arrowLeft) {
+                                DNavigationBarButton(.image(.arrowLeft)) {
                                     store.send(.touchBackButton)
                                 }
                             },
                             title: {
-                                DText("꾸미기")
-                                    .style(.b1, .semibold, .white)
+                                DText("꾸미기", style: .b1, weight: .semibold, color: .white)
                             },
                             trailing: {
                                 Button {
                                     store.send(.touchSaveButton)
                                 } label: {
-                                    DText("완료")
-                                        .style(.b1, .semibold,
-                                               store.disabledSaveButton
+                                    DText("완료", style: .b1, weight: .semibold, color: store.disabledSaveButton
                                                ? .white.opacity(0.4)
                                                : .white
                                         )
@@ -74,11 +71,9 @@ struct DecorationView: View {
                                     store.send(.touchRewardItemCategoryButton(item))
                                 } label: {
                                     if (store.selectedRewardItemCategory == item) {
-                                        DText(item.title)
-                                            .style(.b1, .bold, Color.white)
+                                        DText(item.title, style: .b1, weight: .bold, color: Color.white)
                                     } else {
-                                        DText(item.title)
-                                            .style(.b1, .bold, .deepBlue80)
+                                        DText(item.title, style: .b1, weight: .bold, color: ColorPalette.Primary.deepBlue80)
                                     }
                                 }
                             }
@@ -97,7 +92,7 @@ struct DecorationView: View {
                         }
                     }
                     .frame(height: layout.bottom)
-                    .background(DColor(.deepBlue60).color)
+                    .background(ColorPalette.Primary.deepBlue60)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
@@ -118,8 +113,7 @@ struct DecorationView: View {
                     Color.black.opacity(0.6)
                         .ignoresSafeArea()
                     VStack(spacing: .s4) {
-                        DText("설정 > 꾸미기에서\n언제든 바꿀 수 있어요")
-                            .style(.h2, .bold, .deepBlue99)
+                        DText("설정 > 꾸미기에서\n언제든 바꿀 수 있어요", style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                             .lineSpacing(8)
                             .multilineTextAlignment(.center)
                         HStack(spacing: 10) {
@@ -131,10 +125,9 @@ struct DecorationView: View {
                                         cornerRadius: .s1 / 2,
                                         style: .continuous
                                     )
-                                    .fill(DColor(.deepBlue50).color)
+                                    .fill(ColorPalette.Primary.deepBlue50)
                                     .frame(height: 58)
-                                    DText("돌아가기")
-                                        .style(.h3, .bold, .white)
+                                    DText("돌아가기", style: .h3, weight: .bold, color: .white)
                                 }
                             }
                             
@@ -146,10 +139,9 @@ struct DecorationView: View {
                                         cornerRadius: .s1 / 2,
                                         style: .continuous
                                     )
-                                    .fill(DColor(.gray95).color)
+                                    .fill(ColorPalette.Neutral.gray95)
                                     .frame(height: 58)
-                                    DText("저장하기")
-                                        .style(.h3, .bold, .deepBlue20)
+                                    DText("저장하기", style: .h3, weight: .bold, color: ColorPalette.Primary.deepBlue20)
                                 }
                             }
                         }
@@ -160,7 +152,7 @@ struct DecorationView: View {
                             cornerRadius: .s1,
                             style: .continuous
                         )
-                        .fill(DColor(.deepBlue60).color)
+                        .fill(ColorPalette.Primary.deepBlue60)
                     }
                     .padding(.defaultLayoutPadding)
                 }

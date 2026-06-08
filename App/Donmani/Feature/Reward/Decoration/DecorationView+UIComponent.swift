@@ -13,10 +13,8 @@ import Lottie
 extension DecorationView {
     func EmptyItemListView() -> some View {
         VStack(spacing: 12) {
-            DText("아직 아이템이 없어요!")
-                .style(.h2, .bold, .deepBlue99)
-            DText("기록하면 아이템을 받을 수 있어요")
-                .style(.b2, .regular, .deepBlue90)
+            DText("아직 아이템이 없어요!", style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
+            DText("기록하면 아이템을 받을 수 있어요", style: .b2, weight: .regular, color: ColorPalette.Primary.deepBlue90)
         }
     }
     
@@ -62,9 +60,9 @@ extension DecorationView {
     
     func ItemGridImage(reward: Reward) -> some View {
         let mapper = RewardResourceMapper(id: reward.id, category: reward.category)
-        var image = mapper.image().image
+        var image = mapper.image()
         if reward.category == .bottle {
-            image = mapper.image(isPreview: true).image
+            image = mapper.image(isPreview: true)
         }
         return Group {
             ZStack {
@@ -74,7 +72,7 @@ extension DecorationView {
                         .aspectRatio(contentMode: .fill)
                 } else {
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(DColor(.deepBlue50).color)
+                        .fill(ColorPalette.Primary.deepBlue50)
                         .overlay {
                             if reward.category == .decoration && reward.id == 23 {
                                 image
@@ -93,11 +91,10 @@ extension DecorationView {
                     HStack {
                         VStack {
                             Circle()
-                                .fill(DColor.notice)
+                                .fill(ColorPalette.Semantic.noticeDot)
                                 .frame(width: .s5, height: .s5)
                                 .overlay {
-                                    DText("N")
-                                        .style(.b4, .bold, .white)
+                                    DText("N", style: .b4, weight: .bold, color: .white)
                                         .multilineTextAlignment(.center)
                                 }
                             Spacer()
@@ -114,7 +111,6 @@ extension DecorationView {
         backgroundShapeImage: DImage
     ) -> some View {
         backgroundShapeImage
-            .image
             .resizable()
             .scaledToFit()
             .padding(.vertical, 50)

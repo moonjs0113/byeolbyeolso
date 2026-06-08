@@ -73,7 +73,7 @@ struct YearPicker: UIViewRepresentable {
         func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
             let label = (view as? UILabel) ?? UILabel()
             label.font = DFont.uiFont(.h3, weight: .semibold)
-            label.textColor = DColor(.gray99).uiColor
+            label.textColor = UIColor(ColorPalette.Neutral.gray99)
             label.textAlignment = .center
             label.text = "\(parent.years[row])년"
             return label

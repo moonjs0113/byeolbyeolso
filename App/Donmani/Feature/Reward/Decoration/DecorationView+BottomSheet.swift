@@ -24,15 +24,13 @@ extension DecorationView {
                     달이 바뀌어도,
                     내가 꾸민 별통이는 그대로!
                     """
-                )
-                .style(.h2, .bold, .deepBlue99)
+                , style: .h2, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                 .lineSpacing(4)
                 .padding(.top, -4)
                 
-                DText("달이 바뀌어 새로 열린 별통이는 언제든 꾸밀 수 있어요")
-                    .style(.b2, .regular, .deepBlue90)
+                DText("달이 바뀌어 새로 열린 별통이는 언제든 꾸밀 수 있어요", style: .b2, weight: .regular, color: ColorPalette.Primary.deepBlue90)
                 
-                DImage(.decorationGuide).image
+                DImage(DImageAsset.decorationGuide)
                     .resizable()
                     .scaledToFit()
                 
@@ -56,13 +54,11 @@ extension DecorationView {
             }
         ) { dismissSheet in
             VStack(alignment: .center, spacing: .s3) {
-                DText("축하해요! 🎉")
-                .style(.h1, .bold, .deepBlue99)
+                DText("축하해요! 🎉", style: .h1, weight: .bold, color: ColorPalette.Primary.deepBlue99)
                 .lineSpacing(4)
                 .padding(.top, -4)
                 
-                DText("12개 선물을 모두 모아\n토비의 우주바캉스🏝️를 받았어요!")
-                    .style(.b2, .regular, .deepBlue99)
+                DText("12개 선물을 모두 모아\n토비의 우주바캉스🏝️를 받았어요!", style: .b2, weight: .regular, color: ColorPalette.Primary.deepBlue99)
                     .multilineTextAlignment(.center)
                     .padding(.top, -10)
                 

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		C705239E2FDBE59F00988FA5 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C705239D2FDBE59F00988FA5 /* Core.framework */; };
 		C705239F2FDBE59F00988FA5 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C705239D2FDBE59F00988FA5 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C70523B32FDBFA3000988FA5 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70523B22FDBFA3000988FA5 /* Domain.framework */; };
+		C70523B42FDBFA3000988FA5 /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C70523B22FDBFA3000988FA5 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C78A5A972FDBE1A4009F5BD0 /* Persistence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78A5A8D2FDBE1A4009F5BD0 /* Persistence.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +32,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C705239F2FDBE59F00988FA5 /* Core.framework in Embed Frameworks */,
+				C70523B42FDBFA3000988FA5 /* Domain.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -38,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		C705239D2FDBE59F00988FA5 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70523B22FDBFA3000988FA5 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78A5A8D2FDBE1A4009F5BD0 /* Persistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Persistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C78A5A962FDBE1A4009F5BD0 /* PersistenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PersistenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -61,6 +65,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C705239E2FDBE59F00988FA5 /* Core.framework in Frameworks */,
+				C70523B32FDBFA3000988FA5 /* Domain.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				C705239D2FDBE59F00988FA5 /* Core.framework */,
+				C70523B22FDBFA3000988FA5 /* Domain.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

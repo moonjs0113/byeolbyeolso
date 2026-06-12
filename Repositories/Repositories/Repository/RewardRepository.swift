@@ -6,8 +6,8 @@
 //
 
 import Networking
-import ComposableArchitecture
 import Domain
+import Persistence
 
 struct DefaultRewardRepository: RewardRepository {
     private let dataSource = RewardAPI()
@@ -111,23 +111,5 @@ struct DefaultRewardRepository: RewardRepository {
             byeoltongCaseId: byeoltongCaseId
         )
         try await dataSource.putSaveReward(bodyData: bodyData)
-    }
-}
-
-extension DependencyValues {
-    private enum RewardRepositoryKey: DependencyKey {
-        static let liveValue: RewardRepository = {
-            @Dependency(\.keychainDataSource) var keychainDataSource
-            @Dependency(\.rewardDataSource) var rewardDataSource
-            return DefaultRewardRepository(
-                keychainDataSource: keychainDataSource,
-                rewardDataSource: rewardDataSource
-            )
-        }()
-    }
-    
-    var rewardRepository: RewardRepository {
-        get { self[RewardRepositoryKey.self] }
-        set { self[RewardRepositoryKey.self] = newValue }
     }
 }

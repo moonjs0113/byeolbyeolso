@@ -6,8 +6,8 @@
 //
 
 import Networking
-import ComposableArchitecture
 import Domain
+import Persistence
 
 struct DefaultRecordRepository: RecordRepository {
     private let dataSource = RecordAPI()
@@ -104,23 +104,5 @@ struct DefaultRecordRepository: RecordRepository {
             userKey: userKey,
             year: year
         ).toDomain()
-    }
-}
-
-extension DependencyValues {
-    private enum RecordRepositoryKey: DependencyKey {
-        static let liveValue: RecordRepository = {
-            @Dependency(\.keychainDataSource) var keychainDataSource
-            @Dependency(\.recordDataSource) var recordDataSource
-            return DefaultRecordRepository(
-                keychainDataSource: keychainDataSource,
-                recordDataSource: recordDataSource
-            )
-        }()
-    }
-    
-    var recordRepository: RecordRepository {
-        get { self[RecordRepositoryKey.self] }
-        set { self[RecordRepositoryKey.self] = newValue }
     }
 }

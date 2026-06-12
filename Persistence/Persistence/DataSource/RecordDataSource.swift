@@ -5,10 +5,9 @@
 //  Created by 문종식 on 2/16/25.
 //
 
-import ComposableArchitecture
 import Domain
 
-protocol RecordDataSource {
+public protocol RecordDataSource {
     func save(_ record: Record)
     func load(year: Int, month: Int, day: Int) -> Record?
     func loadRecords(year: Int, month: Int) -> [Record]?
@@ -38,18 +37,5 @@ final class DefaultRecordDataSource: RecordDataSource {
         guard let yearRecords = data[year] else { return nil }
         guard let monthRecords = yearRecords[month] else { return nil }
         return monthRecords
-    }
-}
-
-
-
-extension DependencyValues {
-    private enum RecordDataSourceKey: DependencyKey {
-        static let liveValue: RecordDataSource = DefaultRecordDataSource()
-    }
-    
-    var recordDataSource: RecordDataSource {
-        get { self[RecordDataSourceKey.self] }
-        set { self[RecordDataSourceKey.self] = newValue }
     }
 }

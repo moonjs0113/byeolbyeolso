@@ -6,8 +6,8 @@
 //
 
 import Networking
-import ComposableArchitecture
 import Domain
+import Persistence
 
 struct DefaultUserRepository: UserRepository {
     private let dataSource = UserAPI()
@@ -79,21 +79,5 @@ struct DefaultUserRepository: UserRepository {
         let response = try await dataSource.getRewardStatus(userKey: userKey)
         let hasNewBadge = response.checked
         return hasNewBadge
-    }
-}
-
-extension DependencyValues {
-    private enum UserRepositoryKey: DependencyKey {
-        static let liveValue: UserRepository = {
-            @Dependency(\.keychainDataSource) var keychainDataSource
-            return DefaultUserRepository(
-                keychainDataSource: keychainDataSource
-            )
-        }()
-    }
-    
-    var userRepository: UserRepository {
-        get { self[UserRepositoryKey.self] }
-        set { self[UserRepositoryKey.self] = newValue }
     }
 }

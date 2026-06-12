@@ -6,10 +6,8 @@
 //
 
 import Foundation
-import ComposableArchitecture
-import Domain
 
-enum FileType {
+public enum FileType {
     case thumbnail
     case image
     case json
@@ -32,7 +30,7 @@ enum FileType {
     }
 }
 
-protocol FileDataSource {
+public protocol FileDataSource {
     func saveFile(from data: Data, name: String, type: FileType) throws
     func loadFile(name: String, type: FileType) throws -> Data
 }
@@ -62,16 +60,5 @@ struct DefaultFileDataSource: FileDataSource {
             throw NSError(domain: "DefaultFileService", code: 404, userInfo: [NSLocalizedDescriptionKey: "File not found"])
         }
         return try Data(contentsOf: fileURL)
-    }
-}
-
-extension DependencyValues {
-    private enum FileDataSourceKey: DependencyKey {
-        static let liveValue: FileDataSource = DefaultFileDataSource()
-    }
-    
-    var fileDataSource: FileDataSource {
-        get { self[FileDataSourceKey.self] }
-        set { self[FileDataSourceKey.self] = newValue }
     }
 }

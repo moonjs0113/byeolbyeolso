@@ -6,7 +6,6 @@
 //
 
 import Networking
-import ComposableArchitecture
 import Domain
 
 struct DefaultAppVersionRepository: AppVersionRepository {
@@ -16,16 +15,5 @@ struct DefaultAppVersionRepository: AppVersionRepository {
     func getAppVersion() async throws -> Version {
         let response = try await dataSource.getAppVersion()
         return response.toDomain()
-    }
-}
-
-extension DependencyValues {
-    private enum AppVersionRepositoryKey: DependencyKey {
-        static let liveValue: AppVersionRepository = DefaultAppVersionRepository()
-    }
-    
-    var appVersionRepository: AppVersionRepository {
-        get { self[AppVersionRepositoryKey.self] }
-        set { self[AppVersionRepositoryKey.self] = newValue }
     }
 }

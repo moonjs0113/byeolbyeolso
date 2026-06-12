@@ -6,8 +6,8 @@
 //
 
 import Networking
-import ComposableArchitecture
 import Domain
+import Persistence
 
 struct DefaultFortuneRepository: FortuneRepository {
     private let dataSource = FortuneAPI()
@@ -31,21 +31,5 @@ struct DefaultFortuneRepository: FortuneRepository {
             userKey: userKey,
             readSource: readSource.rawValue
         )
-    }
-}
-
-extension DependencyValues {
-    private enum FortuneRepositoryKey: DependencyKey {
-        static let liveValue: FortuneRepository = {
-            @Dependency(\.keychainDataSource) var keychainDataSource
-            return DefaultFortuneRepository(
-                keychainDataSource: keychainDataSource
-            )
-        }()
-    }
-
-    var fortuneRepository: FortuneRepository {
-        get { self[FortuneRepositoryKey.self] }
-        set { self[FortuneRepositoryKey.self] = newValue }
     }
 }

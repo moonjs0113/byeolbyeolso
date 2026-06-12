@@ -11,6 +11,8 @@
 		C70523932FDBE57800988FA5 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C70523912FDBE57800988FA5 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C70523952FDBE58A00988FA5 /* Repositories.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70523942FDBE58A00988FA5 /* Repositories.framework */; };
 		C70523962FDBE58A00988FA5 /* Repositories.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C70523942FDBE58A00988FA5 /* Repositories.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C70523B02FDBFA1300988FA5 /* Persistence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70523AF2FDBFA1300988FA5 /* Persistence.framework */; };
+		C70523B12FDBFA1300988FA5 /* Persistence.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C70523AF2FDBFA1300988FA5 /* Persistence.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = C7199C0F2EB786A200926C94 /* GoogleMobileAds */; };
 		C72CD4B02D92FCAC00274F37 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4AF2D92FCAC00274F37 /* FirebaseAnalytics */; };
 		C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B12D92FCAC00274F37 /* FirebaseCrashlytics */; };
@@ -49,6 +51,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C77E58172FD6ABD100F12122 /* Domain.framework in Embed Frameworks */,
+				C70523B12FDBFA1300988FA5 /* Persistence.framework in Embed Frameworks */,
 				C70523962FDBE58A00988FA5 /* Repositories.framework in Embed Frameworks */,
 				C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */,
 				C70523932FDBE57800988FA5 /* Core.framework in Embed Frameworks */,
@@ -61,6 +64,7 @@
 /* Begin PBXFileReference section */
 		C70523912FDBE57800988FA5 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70523942FDBE58A00988FA5 /* Repositories.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Repositories.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70523AF2FDBFA1300988FA5 /* Persistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Persistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77E58152FD6ABD100F12122 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C781510D2D60E10C00026BC1 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A24E2D4A826B00B4CF35 /* Donmani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Donmani.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +121,7 @@
 			files = (
 				C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */,
 				C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */,
+				C70523B02FDBFA1300988FA5 /* Persistence.framework in Frameworks */,
 				C70523952FDBE58A00988FA5 /* Repositories.framework in Frameworks */,
 				C70523922FDBE57800988FA5 /* Core.framework in Frameworks */,
 				C77E58162FD6ABD100F12122 /* Domain.framework in Frameworks */,
@@ -172,6 +177,7 @@
 		C7BF8A332D50F4F600ACE68D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C70523AF2FDBFA1300988FA5 /* Persistence.framework */,
 				C70523942FDBE58A00988FA5 /* Repositories.framework */,
 				C70523912FDBE57800988FA5 /* Core.framework */,
 				C77E58152FD6ABD100F12122 /* Domain.framework */,

@@ -5,11 +5,9 @@
 //  Created by 문종식 on 8/2/25.
 //
 
-import ComposableArchitecture
 import Domain
 
-
-protocol RewardDataSource {
+public protocol RewardDataSource {
     func saveEquippedItems(year: Int, month: Int, items: [Reward])
     func loadEquippedItems(year: Int, month: Int) -> [RewardItemCategory: Reward]
     func saveReward(item: Reward)
@@ -62,16 +60,5 @@ final class DefaultRewardDataSource: RewardDataSource {
     
     func initRewardInventory() {
         userRewardInventory = [:]
-    }
-}
-
-extension DependencyValues {
-    private enum RewardDataSourceKey: DependencyKey {
-        static var liveValue: RewardDataSource = DefaultRewardDataSource()
-    }
-    
-    var rewardDataSource: RewardDataSource {
-        get { self[RewardDataSourceKey.self] }
-        set { self[RewardDataSourceKey.self] = newValue }
     }
 }

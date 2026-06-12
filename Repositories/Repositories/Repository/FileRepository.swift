@@ -5,9 +5,10 @@
 //  Created by 문종식 on 8/6/25.
 //
 
+import Foundation
 import Networking
-import ComposableArchitecture
 import Domain
+import Persistence
 
 struct DefaultFileRepository: FileRepository {
     private let downloader = DownloadAPI()
@@ -64,21 +65,5 @@ struct DefaultFileRepository: FileRepository {
                 }
             }()
         )
-    }
-}
-
-extension DependencyValues {
-    private enum FileRepositoryKey: DependencyKey {
-        static let liveValue: FileRepository = {
-            @Dependency(\.fileDataSource) var fileDataSource
-            return DefaultFileRepository(
-                fileDataSource: fileDataSource
-            )
-        }()
-    }
-    
-    var fileRepository: FileRepository {
-        get { self[FileRepositoryKey.self] }
-        set { self[FileRepositoryKey.self] = newValue }
     }
 }

@@ -7,10 +7,8 @@
 
 import Foundation
 import Security
-import ComposableArchitecture
-import Domain
 
-protocol KeychainDataSource {
+public protocol KeychainDataSource {
     func generateUUID()
     func getUserKey() -> String
     func getUserName() -> String
@@ -30,11 +28,11 @@ struct DefaultKeychainDataSource: KeychainDataSource {
         }
     }
     
-    public init() { }
+    init() { }
     
     /// Keychain에서 UUID 가져오기 (없으면 새로 생성 후 저장)
     // TODO: - 배포 전 확인하기
-    public func generateUUID() {
+    func generateUUID() {
         guard let newUUID = load(from: .uuid) else {
             let newUUID = load(from: .uuid) ?? UUID().uuidString
             save(to: .uuid, value: newUUID)
@@ -43,9 +41,12 @@ struct DefaultKeychainDataSource: KeychainDataSource {
         save(to: .uuid, value: newUUID)
     }
     
-    public func getUserKey() -> String {
+    func getUserKey() -> String {
 #if DEBUG
-        if let adminID = AppConfig.string(.adminID) {
+        if
+            let adminID = Bundle.main.object(forInfoDictionaryKey: "ADMIN_ID") as? String,
+            adminID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty == false
+        {
             return adminID
         }
 #endif
@@ -53,12 +54,12 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     }
     
     /// 사용자 이름 가져오기
-    public func getUserName() -> String {
+    func getUserName() -> String {
         load(from: .name) ?? ""
     }
     
     /// 사용자 이름 설정하기
-    public func setUserName(name: String) {
+    func setUserName(name: String) {
         save(to: .name, value: name)
     }
     
@@ -107,16 +108,5 @@ struct DefaultKeychainDataSource: KeychainDataSource {
         guard let data = dataTypeRef as? Data else { return nil }
         guard let uuid = String(data: data, encoding: .utf8) else { return nil }
         return uuid
-    }
-}
-
-extension DependencyValues {
-    private enum KeychainDataSourceKey: DependencyKey {
-        static let liveValue: KeychainDataSource = DefaultKeychainDataSource()
-    }
-    
-    var keychainDataSource: KeychainDataSource {
-        get { self[KeychainDataSourceKey.self] }
-        set { self[KeychainDataSourceKey.self] = newValue }
     }
 }

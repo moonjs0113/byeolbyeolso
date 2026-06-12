@@ -10,7 +10,7 @@ import Domain
 import Persistence
 
 struct DefaultFortuneRepository: FortuneRepository {
-    private let dataSource = FortuneAPI()
+    private let api = FortuneAPI()
     private var keychainDataSource: KeychainDataSource
 
     init(keychainDataSource: KeychainDataSource) {
@@ -22,12 +22,12 @@ struct DefaultFortuneRepository: FortuneRepository {
     }
 
     func getTodayFortune() async throws -> Fortune {
-        let response = try await dataSource.getTodayFortune(userKey: userKey)
+        let response = try await api.getTodayFortune(userKey: userKey)
         return response.toDomain()
     }
     
     func putFortuneRead(readSource: FortuneReadSource) async throws {
-        try await dataSource.putFortuneRead(
+        try await api.putFortuneRead(
             userKey: userKey,
             readSource: readSource.rawValue
         )

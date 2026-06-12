@@ -11,7 +11,7 @@ import Domain
 import Persistence
 
 struct DefaultFileRepository: FileRepository {
-    private let downloader = DownloadAPI()
+    private let api = DownloadAPI()
     private var fileDataSource: FileDataSource
     
     init(fileDataSource: FileDataSource) {
@@ -23,25 +23,25 @@ struct DefaultFileRepository: FileRepository {
         try await withThrowingTaskGroup(of: Void.self) { group in
             if let thumbnailUrl = item.thumbnailUrl {
                 group.addTask {
-                    let data = try await self.downloader.getResourceData(urlString: thumbnailUrl)
+                    let data = try await self.api.getResourceData(urlString: thumbnailUrl)
                     try self.fileDataSource.saveFile(from: data, name: "\(item.name)", type: .thumbnail)
                 }
             }
             if let jsonUrl = item.jsonUrl {
                 group.addTask {
-                    let data = try await self.downloader.getResourceData(urlString: jsonUrl)
+                    let data = try await self.api.getResourceData(urlString: jsonUrl)
                     try self.fileDataSource.saveFile(from: data, name: "\(item.name)", type: .json)
                 }
             }
             if let imageUrl = item.imageUrl {
                 group.addTask {
-                    let data = try await self.downloader.getResourceData(urlString: imageUrl)
+                    let data = try await self.api.getResourceData(urlString: imageUrl)
                     try self.fileDataSource.saveFile(from: data, name: "\(item.name)", type: .image)
                 }
             }
             if let soundUrl = item.soundUrl {
                 group.addTask {
-                    let data = try await self.downloader.getResourceData(urlString: soundUrl)
+                    let data = try await self.api.getResourceData(urlString: soundUrl)
                     try self.fileDataSource.saveFile(from: data, name: "\(item.name)", type: .mp3)
                 }
             }

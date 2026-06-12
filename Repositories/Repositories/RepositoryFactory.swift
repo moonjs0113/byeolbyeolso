@@ -9,19 +9,25 @@ public enum RepositoryFactory {
     public static func makeFeedbackRepository(
         keychainDataSource: KeychainDataSource
     ) -> FeedbackRepository {
-        DefaultFeedbackRepository(keychainDataSource: keychainDataSource)
+        DefaultFeedbackRepository(
+            keychainDataSource: keychainDataSource
+        )
     }
 
     public static func makeFileRepository(
         fileDataSource: FileDataSource
     ) -> FileRepository {
-        DefaultFileRepository(fileDataSource: fileDataSource)
+        DefaultFileRepository(
+            fileDataSource: fileDataSource
+        )
     }
 
     public static func makeFortuneRepository(
         keychainDataSource: KeychainDataSource
     ) -> FortuneRepository {
-        DefaultFortuneRepository(keychainDataSource: keychainDataSource)
+        DefaultFortuneRepository(
+            keychainDataSource: keychainDataSource
+        )
     }
 
     public static func makeRecordRepository(
@@ -47,6 +53,8 @@ public enum RepositoryFactory {
     public static func makeUserRepository(
         keychainDataSource: KeychainDataSource
     ) -> UserRepository {
-        DefaultUserRepository(keychainDataSource: keychainDataSource)
+        DefaultUserRepository(
+            keychainDataSource: keychainDataSource
+        )
     }
 }

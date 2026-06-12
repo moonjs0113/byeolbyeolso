@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Core
 import Domain
 
 protocol WriteRecordUseCase {

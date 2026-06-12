@@ -10,7 +10,7 @@ import Domain
 import Persistence
 
 struct DefaultRecordRepository: RecordRepository {
-    private let dataSource = RecordAPI()
+    private let api = RecordAPI()
     private var keychainDataSource: KeychainDataSource
     private var recordDataSource: RecordDataSource
     
@@ -59,12 +59,12 @@ struct DefaultRecordRepository: RecordRepository {
     /// 기록 작성
     func postRecord(record: Record) async throws {
         let bodyData = RecordRequest(userKey: userKey, record: record)
-        try await dataSource.postRecord(bodyData: bodyData)
+        try await api.postRecord(bodyData: bodyData)
     }
     
     /// 월별 기록 정보(리스트)
     func getMonthlyRecordList(year: Int, month: Int) async throws -> MonthlyRecordState {
-        try await dataSource.getMonthlyRecordList(
+        try await api.getMonthlyRecordList(
             userKey: userKey,
             year: year,
             month: month
@@ -73,7 +73,7 @@ struct DefaultRecordRepository: RecordRepository {
     
     /// 월별 기록 정보(캘린더)
     func getMonthlyRecordCalendar(year: Int, month: Int) async throws -> MonthlyRecordState {
-        try await dataSource.getMonthlyRecordCalendar(
+        try await api.getMonthlyRecordCalendar(
             userKey: userKey,
             year: year,
             month: month
@@ -82,7 +82,7 @@ struct DefaultRecordRepository: RecordRepository {
     
     /// 월별 행복/후회 기록 개수 통계
     func getMonthlyRecordStatistics(year: Int, month: Int) async throws -> RecordStatistics {
-        try await dataSource.getMonthlyRecordStatistics(
+        try await api.getMonthlyRecordStatistics(
             userKey: userKey,
             year: year,
             month: month
@@ -91,7 +91,7 @@ struct DefaultRecordRepository: RecordRepository {
     
     /// 월간 카테고리별 기록 수
     func getMonthlyCategoryStatistics(year: Int, month: Int) async throws -> CategoryStatistics {
-        try await dataSource.getMonthlyCategoryStatistics(
+        try await api.getMonthlyCategoryStatistics(
             userKey: userKey,
             year: year,
             month: month
@@ -100,7 +100,7 @@ struct DefaultRecordRepository: RecordRepository {
     
     /// 연간 기록(별통이 달력)
     func getYearlyRecordSummary(year: Int) async throws -> RecordCountSummary {
-        try await dataSource.getYearlyRecordSummary(
+        try await api.getYearlyRecordSummary(
             userKey: userKey,
             year: year
         ).toDomain()

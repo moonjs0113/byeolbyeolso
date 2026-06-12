@@ -10,7 +10,7 @@ import Domain
 import Persistence
 
 struct DefaultRewardRepository: RewardRepository {
-    private let dataSource = RewardAPI()
+    private let api = RewardAPI()
     private var keychainDataSource: KeychainDataSource
     private var rewardDataSource: RewardDataSource
     
@@ -61,17 +61,17 @@ struct DefaultRewardRepository: RewardRepository {
     // RewardAPI
     /// 사용자의 리워드 아이템 조회
     func getUserRewardItem() async throws -> [RewardItemCategory: [Reward]] {
-        try await dataSource.getUserRewardItem(userKey: userKey).toDomain()
+        try await api.getUserRewardItem(userKey: userKey).toDomain()
     }
     
     /// 열지 않은 리워드 개수 조회
     func getNotOpenRewardCount() async throws -> Int {
-        try await dataSource.getNotOpenRewardCount(userKey: userKey)
+        try await api.getNotOpenRewardCount(userKey: userKey)
     }
     
     /// 월별 착용아이템 조회
     func getMonthlyRewardItem(year: Int, month: Int) async throws -> [Reward] {
-        try await dataSource.getMonthlyRewardItem(
+        try await api.getMonthlyRewardItem(
             userKey: userKey,
             year: year,
             month: month
@@ -80,7 +80,7 @@ struct DefaultRewardRepository: RewardRepository {
     
     /// 히든 아이템 확인 여부 업데이트
     func putHiddenRead(year: Int, month: Int) async throws {
-        try await dataSource.putHiddenRead(
+        try await api.putHiddenRead(
             userKey: userKey,
             year: year,
             month: month
@@ -89,7 +89,7 @@ struct DefaultRewardRepository: RewardRepository {
     
     /// 리워드 아이템 오픈
     func putOpenReward() async throws -> [Reward] {
-        try await dataSource.putOpenReward(userKey: userKey).map { $0.toDomain() }
+        try await api.putOpenReward(userKey: userKey).map { $0.toDomain() }
     }
     
     /// 월별 리워드 아이템 저장
@@ -110,6 +110,6 @@ struct DefaultRewardRepository: RewardRepository {
             decorationId: decorationId,
             byeoltongCaseId: byeoltongCaseId
         )
-        try await dataSource.putSaveReward(bodyData: bodyData)
+        try await api.putSaveReward(bodyData: bodyData)
     }
 }

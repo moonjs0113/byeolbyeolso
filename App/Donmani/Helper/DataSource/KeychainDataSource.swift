@@ -8,6 +8,7 @@
 import Foundation
 import Security
 import ComposableArchitecture
+import Domain
 
 protocol KeychainDataSource {
     func generateUUID()

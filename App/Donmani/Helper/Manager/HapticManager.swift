@@ -6,6 +6,7 @@
 //
 
 import CoreHaptics
+import Domain
 
 struct HapticManager {
     static public let shared = HapticManager()

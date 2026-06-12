@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Domain
 
 @main
 struct DonmaniApp: App {

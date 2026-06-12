@@ -8,6 +8,7 @@
 import SwiftUI
 import DNetwork
 import DesignSystem
+import Domain
 
 extension SplashView {
     func AppStoreView() -> some View {

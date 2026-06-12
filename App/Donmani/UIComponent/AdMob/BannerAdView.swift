@@ -7,6 +7,7 @@
 
 import GoogleMobileAds
 import SwiftUI
+import Domain
 
 struct BannerViewContainer: UIViewRepresentable {
     let adSize: AdSize

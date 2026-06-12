@@ -8,6 +8,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Domain
 
 struct RootView: View {
     @Bindable var store: StoreOf<RootStore>

@@ -6,6 +6,7 @@
 //
 
 import DNetwork
+import Domain
 
 extension RewardItemResponse {
     func toDomain() -> Reward {

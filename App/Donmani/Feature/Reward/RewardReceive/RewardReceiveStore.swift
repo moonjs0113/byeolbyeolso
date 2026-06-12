@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Lottie
+import Domain
 
 @Reducer
 struct RewardReceiveStore {

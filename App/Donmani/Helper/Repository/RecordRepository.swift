@@ -7,19 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
-
-protocol RecordRepository {
-    func save(_ record: Record)
-    func load(date: Day) -> Record?
-    func saveRecords(_ records: [Record])
-    func loadRecords(year: Int, month: Int) -> [Record]?
-    func postRecord(record: Record) async throws
-    func getMonthlyRecordList(year: Int, month: Int) async throws -> MonthlyRecordState
-    func getMonthlyRecordCalendar(year: Int, month: Int) async throws -> MonthlyRecordState
-    func getMonthlyRecordStatistics(year: Int, month: Int) async throws -> RecordStatistics
-    func getMonthlyCategoryStatistics(year: Int, month: Int) async throws -> CategoryStatistics
-    func getYearlyRecordSummary(year: Int) async throws -> RecordCountSummary
-}
+import Domain
 
 struct DefaultRecordRepository: RecordRepository {
     private let dataSource = RecordAPI()

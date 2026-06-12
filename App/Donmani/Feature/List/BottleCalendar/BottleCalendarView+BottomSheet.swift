@@ -8,6 +8,7 @@
 import SwiftUI
 import DesignSystem
 import Lottie
+import Domain
 
 extension BottleCalendarView {
     func YearSelectBottomSheet() -> some View {

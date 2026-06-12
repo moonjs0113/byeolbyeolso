@@ -8,6 +8,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Domain
 
 struct SplashView: View {
     @EnvironmentObject private var toastManager: ToastManager

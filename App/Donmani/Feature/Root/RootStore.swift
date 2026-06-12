@@ -7,6 +7,7 @@
 
 import UIKit
 import ComposableArchitecture
+import Domain
 
 @Reducer
 struct RootStore {

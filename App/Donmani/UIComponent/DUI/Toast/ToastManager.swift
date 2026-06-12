@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DesignSystem
+import Domain
 
 final class ToastManager: ObservableObject {
     private var type: ToastType = .none

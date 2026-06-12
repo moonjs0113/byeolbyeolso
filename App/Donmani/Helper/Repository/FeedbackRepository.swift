@@ -7,11 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
-
-protocol FeedbackRepository {
-    func getFeedbackState() async throws -> FeedbackInfo
-    func getFeedbackCard() async throws -> FeedbackCard
-}
+import Domain
 
 struct DefaultFeedbackRepository: FeedbackRepository {
     private let dataSource = FeedbackAPI()

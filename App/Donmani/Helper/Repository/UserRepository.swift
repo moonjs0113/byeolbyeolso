@@ -7,18 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
-
-protocol UserRepository {
-    func registerUser() async throws -> User
-    func getUserName() -> String
-    func updateUserName(newUserName: String) async throws -> User
-    func postUpdateToken(token: String) async throws -> String
-    func putLastLogin() async throws
-    func putNoticeStatus() async throws
-    func getNoticeStatus() async throws -> Bool
-    func putRewardStatus() async throws
-    func getRewardStatus() async throws -> Bool
-}
+import Domain
 
 struct DefaultUserRepository: UserRepository {
     private let dataSource = UserAPI()

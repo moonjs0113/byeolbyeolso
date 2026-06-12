@@ -6,6 +6,7 @@
 //
 
 import DNetwork
+import Domain
 
 extension RecordRequest {
     init(userKey: String, record: Record) {

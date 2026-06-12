@@ -8,6 +8,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Domain
 
 struct MonthlyStarBottleView: View {
     @Environment(\.dismiss) private var dismiss

@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 protocol UserUseCase {
     var userName: String { get }

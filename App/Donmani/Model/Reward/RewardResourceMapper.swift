@@ -6,6 +6,7 @@
 //
 
 import DesignSystem
+import Domain
 
 struct RewardResourceMapper {
     let id: Int

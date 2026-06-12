@@ -9,6 +9,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
+import Domain
 
 extension RecordListView {
     struct BottleCalendarToolTipView: View {

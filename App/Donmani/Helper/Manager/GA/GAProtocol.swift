@@ -6,6 +6,7 @@
 //
 
 import FirebaseAnalytics
+import Domain
 
 protocol GAProtocol {
     var eventName: String { get }

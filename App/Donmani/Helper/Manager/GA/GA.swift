@@ -6,6 +6,7 @@
 //
 
 import FirebaseAnalytics
+import Domain
 
 class GA {
     private init() {

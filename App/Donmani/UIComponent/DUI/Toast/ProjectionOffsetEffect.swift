@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Domain
 
 public extension View {
     func projectionOffset(x: CGFloat = 0, y: CGFloat = 0) -> some View {

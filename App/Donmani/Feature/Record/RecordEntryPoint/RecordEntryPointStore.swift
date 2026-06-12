@@ -8,6 +8,7 @@
 import UIKit
 import ComposableArchitecture
 import DNetwork
+import Domain
 
 @Reducer
 struct RecordEntryPointStore {

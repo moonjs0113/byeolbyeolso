@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WebKit
+import Domain
 
 struct InnerWebView: UIViewRepresentable {
     let urlString: String

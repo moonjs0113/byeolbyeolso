@@ -7,10 +7,7 @@
 
 import DNetwork
 import ComposableArchitecture
-
-protocol AppVersionRepository {
-    func getAppVersion() async throws -> Version
-}
+import Domain
 
 struct DefaultAppVersionRepository: AppVersionRepository {
     private let dataSource = AppVersionAPI()

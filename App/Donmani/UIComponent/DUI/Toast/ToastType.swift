@@ -6,6 +6,7 @@
 //
 
 import DesignSystem
+import Domain
 
 enum ToastType {
     case maxNicknameLengthExceeded

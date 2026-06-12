@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import Domain
 
 protocol RewardDataUseCase {
     func loadData(from reward: Reward) -> Data

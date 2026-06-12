@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 protocol GetRecordEntryContextUseCase {
     var context: RecordEntryPointStore.Context { get }

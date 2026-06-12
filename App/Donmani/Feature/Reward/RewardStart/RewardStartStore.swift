@@ -9,6 +9,7 @@ import UIKit
 import ComposableArchitecture
 import Lottie
 import DNetwork
+import Domain
 
 @Reducer
 struct RewardStartStore {

@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 protocol StateFactory {
     func makeMainNavigationState(mainState: MainStore.State) -> MainNavigationStore.State

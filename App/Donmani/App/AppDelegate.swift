@@ -11,6 +11,7 @@ import FirebaseCore
 import FirebaseMessaging
 import ComposableArchitecture
 import GoogleMobileAds
+import Domain
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     @Dependency(\.settings) var settings

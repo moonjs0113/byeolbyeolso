@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import StoreKit
 import UIKit
+import Domain
 
 extension MainNavigationStore {
     func requestAppStoreReview() async {

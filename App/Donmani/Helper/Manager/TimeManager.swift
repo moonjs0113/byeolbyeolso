@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Domain
 
 final class TimeManager {
     static private var timer: Timer?

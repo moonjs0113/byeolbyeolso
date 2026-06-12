@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 protocol RecordDataSource {
     func save(_ record: Record)

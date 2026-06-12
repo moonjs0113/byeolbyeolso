@@ -7,6 +7,7 @@
 
 import UIKit
 import ComposableArchitecture
+import Domain
 
 extension UINavigationController: @retroactive ObservableObject, @retroactive UIGestureRecognizerDelegate {
     static var isBlockSwipe: Bool = false

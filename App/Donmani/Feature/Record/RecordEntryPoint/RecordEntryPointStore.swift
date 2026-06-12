@@ -7,7 +7,7 @@
 
 import UIKit
 import ComposableArchitecture
-import DNetwork
+import Networking
 import Domain
 
 @Reducer

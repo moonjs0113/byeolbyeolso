@@ -2,15 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Domain/Domain.xcodeproj">
+      location = "group:App/App.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:App/App.xcodeproj">
+      location = "group:Domain/Domain.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:DesignSystem/DesignSystem.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:DNetwork/DNetwork.xcodeproj">
+      location = "group:Networking/Networking.xcodeproj">
    </FileRef>
 </Workspace>

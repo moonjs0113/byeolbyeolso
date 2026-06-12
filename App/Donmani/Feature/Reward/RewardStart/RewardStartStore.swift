@@ -8,7 +8,7 @@
 import UIKit
 import ComposableArchitecture
 import Lottie
-import DNetwork
+import Networking
 import Domain
 
 @Reducer

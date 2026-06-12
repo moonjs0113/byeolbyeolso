@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DNetwork
+import Networking
 import ComposableArchitecture
 import DesignSystem
 import Domain

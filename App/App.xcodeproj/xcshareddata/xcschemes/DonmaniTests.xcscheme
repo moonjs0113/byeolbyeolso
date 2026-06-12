@@ -30,9 +30,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C78150F52D60E0DE00026BC1"
-               BuildableName = "DNetworkTests.xctest"
-               BlueprintName = "DNetworkTests"
-               ReferencedContainer = "container:../DNetwork/DNetwork.xcodeproj">
+               BuildableName = "NetworkingTests.xctest"
+               BlueprintName = "NetworkingTests"
+               ReferencedContainer = "container:../Networking/Networking.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

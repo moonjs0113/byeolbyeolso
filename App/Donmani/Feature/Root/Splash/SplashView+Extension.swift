@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DNetwork
+import Networking
 import Domain
 
 extension SplashView {

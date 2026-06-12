@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import DesignSystem
-import DNetwork
+import Networking
 import Domain
 
 @Reducer

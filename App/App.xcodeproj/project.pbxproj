@@ -17,8 +17,8 @@
 		C77E58182FD6ABD100F12122 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77E58152FD6ABD100F12122 /* Domain.framework */; };
 		C7A5DA922D7D6ED100C3BC6D /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; };
 		C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C7A5DA942D7D6ED200C3BC6D /* DNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* DNetwork.framework */; };
-		C7A5DA952D7D6ED200C3BC6D /* DNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* DNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C7A5DA942D7D6ED200C3BC6D /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* Networking.framework */; };
+		C7A5DA952D7D6ED200C3BC6D /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = C7A6A2952D4A89D500B4CF35 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
@@ -47,7 +47,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C77E58172FD6ABD100F12122 /* Domain.framework in Embed Frameworks */,
-				C7A5DA952D7D6ED200C3BC6D /* DNetwork.framework in Embed Frameworks */,
+				C7A5DA952D7D6ED200C3BC6D /* Networking.framework in Embed Frameworks */,
 				C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -57,7 +57,7 @@
 
 /* Begin PBXFileReference section */
 		C77E58152FD6ABD100F12122 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C781510D2D60E10C00026BC1 /* DNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C781510D2D60E10C00026BC1 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A24E2D4A826B00B4CF35 /* Donmani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Donmani.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A25E2D4A826D00B4CF35 /* DonmaniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DonmaniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A2682D4A826D00B4CF35 /* DonmaniUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DonmaniUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,7 +111,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */,
-				C7A5DA942D7D6ED200C3BC6D /* DNetwork.framework in Frameworks */,
+				C7A5DA942D7D6ED200C3BC6D /* Networking.framework in Frameworks */,
 				C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */,
 				C77E58162FD6ABD100F12122 /* Domain.framework in Frameworks */,
 				C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */,
@@ -167,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				C77E58152FD6ABD100F12122 /* Domain.framework */,
-				C781510D2D60E10C00026BC1 /* DNetwork.framework */,
+				C781510D2D60E10C00026BC1 /* Networking.framework */,
 				C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */,
 			);
 			name = Frameworks;

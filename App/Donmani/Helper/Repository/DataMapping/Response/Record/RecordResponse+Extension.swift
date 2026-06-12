@@ -5,7 +5,7 @@
 //  Created by Gabia on 7/30/25.
 //
 
-import DNetwork
+import Networking
 import Domain
 
 extension RecordResponse {

@@ -5,7 +5,7 @@
 //  Created by 문종식 on 8/17/25.
 //
 
-import DNetwork
+import Networking
 import Domain
 
 extension SummaryResponse {

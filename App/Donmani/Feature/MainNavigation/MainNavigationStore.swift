@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import DNetwork
+import Networking
 import ComposableArchitecture
 import Domain
 

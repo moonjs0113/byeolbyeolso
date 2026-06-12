@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import DesignSystem
-import DNetwork
+import Networking
 import Domain
 
 struct RewardStartView: View {

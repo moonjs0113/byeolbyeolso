@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C7BF89922D50F28500ACE68D"
-               BuildableName = "DesignSystem.framework"
-               BlueprintName = "DesignSystem"
-               ReferencedContainer = "container:DesignSystem.xcodeproj">
+               BlueprintIdentifier = "C7A6A24D2D4A826B00B4CF35"
+               BuildableName = "Donmani.app"
+               BlueprintName = "Donmani"
+               ReferencedContainer = "container:App.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,19 +29,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C7BF899C2D50F28500ACE68D"
-               BuildableName = "DesignSystemTests.xctest"
-               BlueprintName = "DesignSystemTests"
-               ReferencedContainer = "container:DesignSystem.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -53,6 +40,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "C7A6A24D2D4A826B00B4CF35"
+            BuildableName = "Donmani.app"
+            BlueprintName = "Donmani"
+            ReferencedContainer = "container:App.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -60,15 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C7BF89922D50F28500ACE68D"
-            BuildableName = "DesignSystem.framework"
-            BlueprintName = "DesignSystem"
-            ReferencedContainer = "container:DesignSystem.xcodeproj">
+            BlueprintIdentifier = "C7A6A24D2D4A826B00B4CF35"
+            BuildableName = "Donmani.app"
+            BlueprintName = "Donmani"
+            ReferencedContainer = "container:App.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

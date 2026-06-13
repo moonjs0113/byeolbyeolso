@@ -80,9 +80,9 @@ struct MainNavigationView: View {
 
 #Preview {
     MainNavigationView(
-        store: MainStoreFactory().makeMainNavigationStore(
-            state: MainStateFactory().makeMainNavigationState(
-                mainState: MainStateFactory().makeMainState(
+        store: DefaultStoreFactory().makeMainNavigationStore(
+            state: DefaultStateFactory().makeMainNavigationState(
+                mainState: DefaultStateFactory().makeMainState(
                     context: MainStore.Context(
                         records: [],
                         hasRecord: (today: true, yesterday: false),

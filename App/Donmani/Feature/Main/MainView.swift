@@ -113,7 +113,7 @@ struct MainView: View {
 #Preview {
     MainView(
         store: Store(
-            initialState: MainStateFactory().makeMainState(
+            initialState: DefaultStateFactory().makeMainState(
                 context: MainStore.Context(
                     records: [],
                     hasRecord: (true, true),

@@ -92,8 +92,8 @@ struct BottleCalendarView: View {
 #Preview {
     {
         let context = RecordCountSummary(year: 2025, monthlyRecords: [:])
-        let state = MainStateFactory().makeBottleCalendarState(context: [2025: context])
-        let store = MainStoreFactory().makeBottleCalendarStore(state: state)
+        let state = DefaultStateFactory().makeBottleCalendarState(context: [2025: context])
+        let store = DefaultStoreFactory().makeBottleCalendarStore(state: state)
         return BottleCalendarView(store: store)
     }()
 }

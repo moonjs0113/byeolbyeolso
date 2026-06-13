@@ -97,7 +97,7 @@ extension SettingView {
                     ) {
                         isFocusToTextField = false
                         Task {
-                            let newUserName = try await userUseCase.update(newUserName: editUserName).userName
+                            let newUserName = try await userRepository.updateUserName(newUserName: editUserName).userName
                             isPresentingEditNameView = false
                             store.send(.updateUserName(newUserName))
                             UINavigationController.isBlockSwipe = false

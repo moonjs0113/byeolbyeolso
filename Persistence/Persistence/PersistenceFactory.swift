@@ -1,4 +1,8 @@
 public enum PersistenceFactory {
+    public static func makeSettings() -> any SettingsDataSource {
+        DefaultSettingsDataSource()
+    }
+
     public static func makeFileDataSource() -> FileDataSource {
         DefaultFileDataSource()
     }

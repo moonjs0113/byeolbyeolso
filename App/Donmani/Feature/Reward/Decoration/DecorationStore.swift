@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Core
 import DesignSystem
 import Lottie
+import Persistence
 import SwiftUI
 import Domain
 
@@ -108,7 +109,6 @@ struct DecorationStore {
                     return .rewardBottleDefaultShape
                 }
             }()
-            self.isPresentingGuideBottomSheet = SettingDataSource.shouldShowDecorationGuideBottomSheet
         }
     }
     

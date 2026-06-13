@@ -67,7 +67,7 @@ struct MainNavigationStore {
     @Dependency(\.feedbackRepository) var feedbackRepository
     @Dependency(\.fileRepository) var fileRepository
     @Dependency(\.settings) var settings
-    @Dependency(\.getRecordEntryContextUseCase) var getRecordEntryContextUseCase
+    @Dependency(\.getRecordEntryDayTitleUseCase) var getRecordEntryDayTitleUseCase
     
     var body: some ReducerOf<Self> {
         Scope(
@@ -89,7 +89,9 @@ struct MainNavigationStore {
                     
                 case .pushRecordEntryPointView:
                     return .run { send in
-                        let context = getRecordEntryContextUseCase.context
+                        let context = RecordEntryPointStore.Context(
+                            recordEntryDayTitle: getRecordEntryDayTitleUseCase()
+                        )
                         await send(.push(.record(context)))
                     }
                     

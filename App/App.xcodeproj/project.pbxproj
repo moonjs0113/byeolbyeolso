@@ -79,7 +79,7 @@
 		C75F7BD72E86299700B5BBDE /* Exceptions for "Donmani" folder in "DonmaniTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Helper/Manager/VersionManager.swift,
+				Manager/VersionManager.swift,
 			);
 			target = C7A6A25D2D4A826D00B4CF35 /* DonmaniTests */;
 		};

@@ -9,6 +9,15 @@ import ComposableArchitecture
 import Persistence
 
 extension DependencyValues {
+    private enum SettingKey: DependencyKey {
+        static var liveValue: any SettingsDataSource = PersistenceFactory.makeSettings()
+    }
+
+    var settings: any SettingsDataSource {
+        get { self[SettingKey.self] }
+        set { self[SettingKey.self] = newValue }
+    }
+
     private enum KeychainDataSourceKey: DependencyKey {
         static let liveValue: KeychainDataSource = PersistenceFactory.makeKeychainDataSource()
     }

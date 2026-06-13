@@ -54,7 +54,7 @@ struct RootStore {
     }
     
     @Dependency(\.fileRepository) var fileRepository
-    @Dependency(\.getRecordEntryContextUseCase) var getRecordEntryContextUseCase
+    @Dependency(\.getRecordEntryDayTitleUseCase) var getRecordEntryDayTitleUseCase
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -128,7 +128,9 @@ struct RootStore {
                     var mainNavigationState = stateFactory.makeMainNavigationState(mainState: mainState)
                     
                     if !(hasTodayRecord && hasYesterdayRecord) {
-                        let context = getRecordEntryContextUseCase.context
+                        let context = RecordEntryPointStore.Context(
+                            recordEntryDayTitle: getRecordEntryDayTitleUseCase()
+                        )
                         let recordEntryPointState = stateFactory.makeRecordEntryPointState(context: context)
                         mainNavigationState.path.append(.record(recordEntryPointState))
                         mainNavigationState.mainState.starBottleOpacity = 0.0

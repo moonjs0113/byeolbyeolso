@@ -17,7 +17,9 @@ extension MainNavigationStore {
         switch action {
         case  .pushRecordEntryPointView:
             return .run { send in
-                let context = getRecordEntryContextUseCase.context
+                let context = RecordEntryPointStore.Context(
+                    recordEntryDayTitle: getRecordEntryDayTitleUseCase()
+                )
                 await send(.push(.record(context)))
             }
         

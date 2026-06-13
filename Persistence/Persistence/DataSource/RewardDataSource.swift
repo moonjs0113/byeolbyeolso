@@ -16,13 +16,12 @@ public protocol RewardDataSource {
 }
 
 final class DefaultRewardDataSource: RewardDataSource {
-    // Typealias
-    private typealias Year = Int
-    private typealias Month = Int
-    private typealias EquippedItem = [RewardItemCategory: Reward]
-    private typealias MonthlyEquippedItem = [Month: EquippedItem]
+    private typealias _Year = Int
+    private typealias _Month = Int
+    private typealias _EquippedItem = [RewardItemCategory: Reward]
+    private typealias _MonthlyEquippedItem = [_Month: _EquippedItem]
     
-    private var yearlyEquippedItem: [Year: MonthlyEquippedItem]
+    private var yearlyEquippedItem: [_Year: _MonthlyEquippedItem]
     private var userRewardInventory: [RewardItemCategory: [Reward]]
     
     init() {
@@ -33,8 +32,8 @@ final class DefaultRewardDataSource: RewardDataSource {
     func saveEquippedItems(year: Int, month: Int, items: [Reward]) {
         items.forEach { reward in
             yearlyEquippedItem
-                .self[year, default: MonthlyEquippedItem()]
-                .self[month, default: EquippedItem()]
+                .self[year, default: _MonthlyEquippedItem()]
+                .self[month, default: _EquippedItem()]
                 .self[reward.category] = reward
         }
     }

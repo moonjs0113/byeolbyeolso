@@ -30,8 +30,6 @@ struct DefaultKeychainDataSource: KeychainDataSource {
     
     init() { }
     
-    /// Keychain에서 UUID 가져오기 (없으면 새로 생성 후 저장)
-    // TODO: - 배포 전 확인하기
     func generateUUID() {
         guard let newUUID = load(from: .uuid) else {
             let newUUID = load(from: .uuid) ?? UUID().uuidString

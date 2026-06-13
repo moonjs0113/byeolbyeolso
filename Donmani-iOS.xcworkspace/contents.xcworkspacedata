@@ -22,4 +22,7 @@
    <FileRef
       location = "group:Repositories/Repositories.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:App/Config/DonmaniTests.xctestplan">
+   </FileRef>
 </Workspace>

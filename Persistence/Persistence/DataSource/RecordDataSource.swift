@@ -14,8 +14,8 @@ public protocol RecordDataSource {
 }
 
 final class DefaultRecordDataSource: RecordDataSource {
-    private typealias MonthlyRecord = [Int: [Record]]
-    private var data: [Int: MonthlyRecord] = [:]
+    private typealias _MonthlyRecord = [Int: [Record]]
+    private var data: [Int: _MonthlyRecord] = [:]
     
     init() {
         self.data = [:]
@@ -24,7 +24,7 @@ final class DefaultRecordDataSource: RecordDataSource {
     func save(_ record: Record) {
         let year = record.day.year
         let month = record.day.month
-        data[year, default: MonthlyRecord()][month, default: []].append(record)
+        data[year, default: _MonthlyRecord()][month, default: []].append(record)
     }
     
     func load(year: Int, month: Int, day: Int) -> Record? {

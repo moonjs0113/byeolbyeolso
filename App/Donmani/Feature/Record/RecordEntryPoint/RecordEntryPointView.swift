@@ -47,14 +47,19 @@ struct RecordEntryPointView: View {
                     }
                 )
                 .opacity(store.isReadyToSave ? 0 : 1)
-
+                
                 VStack(
                     alignment: .center,
                     spacing: .defaultLayoutPadding
                 ) {
                     ScrollView {
-                        DText(store.isReadyToSave ? "저장하면 수정할 수 없어요!" : store.title, style: .h1, weight: .bold, color: .white)
-                            .padding(.bottom, 40)
+                        DText(
+                            store.isReadyToSave ? "저장하면 수정할 수 없어요!" : store.title,
+                            style: .h1,
+                            weight: .bold,
+                            color: .white
+                        )
+                        .padding(.bottom, 40)
                         
                         // 기록 버튼
                         VStack(
@@ -131,12 +136,10 @@ struct RecordEntryPointView: View {
 #Preview {
     {
         let context = RecordEntryPointStore.Context(
-            dayTitle: "하루",
-            dayType: .today,
-            isDayToggleEnabled: true
+            recordEntryDayTitle: .oneDay
         )
-        let state = MainStateFactory().makeRecordEntryPointState(context: context)
-        let store = MainStoreFactory().makeRecordEntryPointStore(state: state)
+        let state = DefaultStateFactory().makeRecordEntryPointState(context: context)
+        let store = DefaultStoreFactory().makeRecordEntryPointStore(state: state)
         return RecordEntryPointView(store: store) { _ in }
     }()
 }

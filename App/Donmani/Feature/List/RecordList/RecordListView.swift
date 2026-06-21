@@ -84,8 +84,8 @@ struct RecordListView: View {
 #Preview {
     {
         let context = RecordListStore.Context(day: .today, records: [], false)
-        let state = MainStateFactory().makeMonthlyRecordListState(context: context)
-        let store = MainStoreFactory().makeMonthlyRecordListStore(state: state)
+        let state = DefaultStateFactory().makeMonthlyRecordListState(context: context)
+        let store = DefaultStoreFactory().makeMonthlyRecordListStore(state: state)
         return RecordListView(store: store)
     }()
 }

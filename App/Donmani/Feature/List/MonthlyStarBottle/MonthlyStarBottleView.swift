@@ -96,8 +96,8 @@ struct EmptyStarBottleView: View {
                 bottleShape: .default
             )
         )
-        let state = MainStateFactory().makeMonthlyStarBottleState(context: context)
-        let store = MainStoreFactory().makeMonthlyStarBottleStore(state: state)
+        let state = DefaultStateFactory().makeMonthlyStarBottleState(context: context)
+        let store = DefaultStoreFactory().makeMonthlyStarBottleStore(state: state)
         return MonthlyStarBottleView(store: store)
     }()
 }

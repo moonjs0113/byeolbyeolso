@@ -63,8 +63,8 @@ struct RewardReceiveView: View {
 #Preview {
     {
         let context = RewardReceiveStore.Context(rewardCount: 2)
-        let state = MainStateFactory().makeRewardReceiveState(context: context)
-        let store = MainStoreFactory().makeRewardReceiveStore(state: state)
+        let state = DefaultStateFactory().makeRewardReceiveState(context: context)
+        let store = DefaultStoreFactory().makeRewardReceiveStore(state: state)
         return RewardReceiveView(store: store)
     }()
 }

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C70523922FDBE57800988FA5 /* Core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70523912FDBE57800988FA5 /* Core.framework */; };
+		C70523932FDBE57800988FA5 /* Core.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C70523912FDBE57800988FA5 /* Core.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C70523952FDBE58A00988FA5 /* Repositories.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70523942FDBE58A00988FA5 /* Repositories.framework */; };
+		C70523962FDBE58A00988FA5 /* Repositories.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C70523942FDBE58A00988FA5 /* Repositories.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C70523B02FDBFA1300988FA5 /* Persistence.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C70523AF2FDBFA1300988FA5 /* Persistence.framework */; };
+		C70523B12FDBFA1300988FA5 /* Persistence.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C70523AF2FDBFA1300988FA5 /* Persistence.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = C7199C0F2EB786A200926C94 /* GoogleMobileAds */; };
 		C72CD4B02D92FCAC00274F37 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4AF2D92FCAC00274F37 /* FirebaseAnalytics */; };
 		C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B12D92FCAC00274F37 /* FirebaseCrashlytics */; };
@@ -17,8 +23,6 @@
 		C77E58182FD6ABD100F12122 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77E58152FD6ABD100F12122 /* Domain.framework */; };
 		C7A5DA922D7D6ED100C3BC6D /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; };
 		C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C7A5DA942D7D6ED200C3BC6D /* DNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* DNetwork.framework */; };
-		C7A5DA952D7D6ED200C3BC6D /* DNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* DNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = C7A6A2952D4A89D500B4CF35 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
@@ -47,8 +51,10 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C77E58172FD6ABD100F12122 /* Domain.framework in Embed Frameworks */,
-				C7A5DA952D7D6ED200C3BC6D /* DNetwork.framework in Embed Frameworks */,
+				C70523B12FDBFA1300988FA5 /* Persistence.framework in Embed Frameworks */,
+				C70523962FDBE58A00988FA5 /* Repositories.framework in Embed Frameworks */,
 				C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */,
+				C70523932FDBE57800988FA5 /* Core.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,8 +62,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C70523912FDBE57800988FA5 /* Core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70523942FDBE58A00988FA5 /* Repositories.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Repositories.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70523AF2FDBFA1300988FA5 /* Persistence.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Persistence.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77E58152FD6ABD100F12122 /* Domain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Domain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C781510D2D60E10C00026BC1 /* DNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C781510D2D60E10C00026BC1 /* Networking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Networking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A24E2D4A826B00B4CF35 /* Donmani.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Donmani.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A25E2D4A826D00B4CF35 /* DonmaniTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DonmaniTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6A2682D4A826D00B4CF35 /* DonmaniUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DonmaniUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,7 +79,7 @@
 		C75F7BD72E86299700B5BBDE /* Exceptions for "Donmani" folder in "DonmaniTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Helper/Manager/VersionManager.swift,
+				Manager/VersionManager.swift,
 			);
 			target = C7A6A25D2D4A826D00B4CF35 /* DonmaniTests */;
 		};
@@ -111,8 +120,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */,
-				C7A5DA942D7D6ED200C3BC6D /* DNetwork.framework in Frameworks */,
 				C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */,
+				C70523B02FDBFA1300988FA5 /* Persistence.framework in Frameworks */,
+				C70523952FDBE58A00988FA5 /* Repositories.framework in Frameworks */,
+				C70523922FDBE57800988FA5 /* Core.framework in Frameworks */,
 				C77E58162FD6ABD100F12122 /* Domain.framework in Frameworks */,
 				C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */,
 				C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */,
@@ -166,8 +177,11 @@
 		C7BF8A332D50F4F600ACE68D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C70523AF2FDBFA1300988FA5 /* Persistence.framework */,
+				C70523942FDBE58A00988FA5 /* Repositories.framework */,
+				C70523912FDBE57800988FA5 /* Core.framework */,
 				C77E58152FD6ABD100F12122 /* Domain.framework */,
-				C781510D2D60E10C00026BC1 /* DNetwork.framework */,
+				C781510D2D60E10C00026BC1 /* Networking.framework */,
 				C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */,
 			);
 			name = Frameworks;

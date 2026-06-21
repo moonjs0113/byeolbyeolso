@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import DesignSystem
 import ComposableArchitecture
+import Core
+import DesignSystem
 import Domain
 
 @Reducer
@@ -97,10 +98,9 @@ struct MainStore {
     }
     
     // MARK: - Dependency
-    @Dependency(\.userUseCase) var userUseCase
-    @Dependency(\.writeRecordUseCase) var writeRecordUseCase
+    @Dependency(\.userRepository) var userRepository
+    @Dependency(\.canWriteRecordUseCase) var canWriteRecordUseCase
     @Dependency(\.recordRepository) var recordRepository
-    @Dependency(\.loadRewardUseCase) var loadRewardUseCase
     @Dependency(\.fileRepository) var fileRepository
     @Dependency(\.rewardRepository) var rewardRepository
     @Dependency(\.fortuneRepository) var fortuneRepository
@@ -114,8 +114,8 @@ struct MainStore {
             case .onAppear:
                 GA.View(event: .main).send()
                 state.day = .today
-                state.userName = userUseCase.userName
-                state.canWriteRecord = writeRecordUseCase.canWriteRecord()
+                state.userName = userRepository.getUserName()
+                state.canWriteRecord = canWriteRecordUseCase()
                 state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
                 return .run { send in
                     let day: Day = .today

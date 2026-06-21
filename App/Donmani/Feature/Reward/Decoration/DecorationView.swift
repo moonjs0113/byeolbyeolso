@@ -208,9 +208,9 @@ struct DecorationView: View {
                 bottleShape: .bead
             )
         )
-        var state = MainStateFactory().makeDecorationState(context: context)
+        var state = DefaultStateFactory().makeDecorationState(context: context)
         state.monthlyRecords = []
-        let store = MainStoreFactory().makeDecorationStore(state: state)
+        let store = DefaultStoreFactory().makeDecorationStore(state: state)
         return DecorationView(store: store)
     }()
 }

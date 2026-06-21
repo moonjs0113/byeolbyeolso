@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import DesignSystem
-import DNetwork
+import Networking
 import Domain
 
 struct RewardStartView: View {
@@ -128,8 +128,8 @@ struct RewardStartView: View {
 #Preview {
     {
         let context = RewardStartStore.Context(recordCount: 2, isNotOpened: true, userName: "", hasTodayRecord: false, hasYesterdayRecord: false)
-        let state = MainStateFactory().makeRewardStartState(context: context)
-        let store = MainStoreFactory().makeRewardStartStore(state: state)
+        let state = DefaultStateFactory().makeRewardStartState(context: context)
+        let store = DefaultStoreFactory().makeRewardStartStore(state: state)
         return RewardStartView(store: store)
     }()
 }
@@ -137,8 +137,8 @@ struct RewardStartView: View {
 #Preview {
     {
         let context = RewardStartStore.Context(recordCount: 1, isNotOpened: true, userName: "", hasTodayRecord: false, hasYesterdayRecord: false)
-        let state = MainStateFactory().makeRewardStartState(context: context)
-        let store = MainStoreFactory().makeRewardStartStore(state: state)
+        let state = DefaultStateFactory().makeRewardStartState(context: context)
+        let store = DefaultStoreFactory().makeRewardStartStore(state: state)
         return RewardStartView(store: store)
     }()
 }
@@ -146,10 +146,9 @@ struct RewardStartView: View {
 #Preview {
     {
         let context = RewardStartStore.Context(recordCount: 0, isNotOpened: false, userName: "", hasTodayRecord: false, hasYesterdayRecord: false)
-        let state = MainStateFactory().makeRewardStartState(context: context)
-        let store = MainStoreFactory().makeRewardStartStore(state: state)
+        let state = DefaultStateFactory().makeRewardStartState(context: context)
+        let store = DefaultStoreFactory().makeRewardStartStore(state: state)
         return RewardStartView(store: store)
     }()
 }
-
 

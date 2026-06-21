@@ -8,7 +8,7 @@
 import SwiftUI
 import DesignSystem
 import ComposableArchitecture
-import DNetwork
+import Networking
 import Domain
 
 struct StatisticsView: View {

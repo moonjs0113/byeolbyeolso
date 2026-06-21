@@ -7,23 +7,16 @@
 
 import UIKit
 import ComposableArchitecture
-import DNetwork
+import Networking
 import Domain
 
 @Reducer
 struct RecordEntryPointStore {
     struct Context {
-        let dayTitle: String
-        let dayType: Day
-        let isDayToggleEnabled: Bool
-        init(
-            dayTitle: String,
-            dayType: Day,
-            isDayToggleEnabled: Bool
-        ) {
-            self.dayTitle = dayTitle
-            self.dayType = dayType
-            self.isDayToggleEnabled = isDayToggleEnabled
+        let recordEntryDayTitle: RecordEntryDayTitle
+
+        init(recordEntryDayTitle: RecordEntryDayTitle) {
+            self.recordEntryDayTitle = recordEntryDayTitle
         }
     }
     
@@ -80,11 +73,11 @@ struct RecordEntryPointStore {
         var isError: Bool = false
         
         init(context: Context) {
-            self.dayType = context.dayType
-            self.dayTitle = context.dayTitle
+            self.dayType = context.recordEntryDayTitle == .yesterday ? .yesterday : .today
+            self.dayTitle = context.recordEntryDayTitle.displayTitle
             self.title = "\(self.dayTitle) 소비 정리해 볼까요?"
-            self.selectedDay = context.dayType
-            self.isPresentingDayToggle = context.isDayToggleEnabled
+            self.selectedDay = context.recordEntryDayTitle == .yesterday ? .yesterday : .today
+            self.isPresentingDayToggle = context.recordEntryDayTitle == .oneDay
             self.remainingTime = TimeManager.getRemainingTime()
         }
         

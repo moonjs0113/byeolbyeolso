@@ -164,8 +164,8 @@ struct RecordWritingView: View {
 #Preview {
     {
         let context = RecordWritingStore.Context(type: .good)
-        let state = MainStateFactory().makeRecordWritingState(context: context)
-        let store = MainStoreFactory().makeRecordWritingStore(state: state)
+        let state = DefaultStateFactory().makeRecordWritingState(context: context)
+        let store = DefaultStoreFactory().makeRecordWritingStore(state: state)
         return RecordWritingView(store: store) { _ in }
     }()
 }
@@ -173,8 +173,8 @@ struct RecordWritingView: View {
 #Preview {
     {
         let context = RecordWritingStore.Context(type: .bad)
-        let state = MainStateFactory().makeRecordWritingState(context: context)
-        let store = MainStoreFactory().makeRecordWritingStore(state: state)
+        let state = DefaultStateFactory().makeRecordWritingState(context: context)
+        let store = DefaultStoreFactory().makeRecordWritingStore(state: state)
         return RecordWritingView(store: store) { _ in }
             .SelectCategoryView()
     }()

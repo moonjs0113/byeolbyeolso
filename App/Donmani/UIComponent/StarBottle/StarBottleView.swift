@@ -83,8 +83,6 @@ struct StarBottleView: View {
     @State private var starBottleScene: StarBottleScene
     @State private var records: [Record]
     
-    @Dependency(\.rewardDataUseCase) var rewardDataUseCase
-    
     @State var backgroundRewardData: Data = Data()
     @State private var backgroundImage: UIImage?
     @State var effectRewardData: Data?

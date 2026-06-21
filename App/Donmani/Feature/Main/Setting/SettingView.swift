@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import DNetwork
+import Networking
 import ComposableArchitecture
 import DesignSystem
 import Domain
@@ -58,8 +58,7 @@ struct SettingView: View {
     
     @FocusState var isFocusToTextField: Bool
     
-    @Dependency(\.rewardRepository) var rewardRepository
-    @Dependency(\.userUseCase) var userUseCase
+    @Dependency(\.userRepository) var userRepository
     @Dependency(\.settings) var settings
     
     let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\\s]+$"
@@ -128,7 +127,7 @@ struct SettingView: View {
                             MenuButton(type: .notice) {
                                 GA.Click(event: .settingNotice).send()
                                 Task {
-                                    try await userUseCase.updateNoticeReadStatus()
+                                    try await userRepository.putNoticeStatus()
                                     isNoticeNotRead = false
                                     store.send(.touchNoticeButton)
                                 }
@@ -170,8 +169,8 @@ struct SettingView: View {
                         isNotificationEnabled = (status == .authorized)
                     }
                     Task {
-                        isNoticeNotRead = !(try await userUseCase.getNoticeReadStatus())
-                        isDecorationNotRead = (try await userUseCase.getRewardReadStatus())
+                        isNoticeNotRead = !(try await userRepository.getNoticeStatus())
+                        isDecorationNotRead = (try await userRepository.getRewardStatus())
                     }
                     GA.View(event: .setting).send()
                 }
@@ -250,8 +249,8 @@ struct SettingView: View {
 
 #Preview {
     SettingView(
-        store: MainStoreFactory().makeSettingStore(
-            state: MainStateFactory().makeSettingState(
+        store: DefaultStoreFactory().makeSettingStore(
+            state: DefaultStateFactory().makeSettingState(
                 context: SettingStore.Context(userName: "닉네임")
             )
         )

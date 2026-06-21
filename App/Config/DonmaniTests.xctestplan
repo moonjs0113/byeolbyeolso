@@ -1,0 +1,59 @@
+{
+  "configurations" : [
+    {
+      "id" : "1221F9F6-2A42-46E0-82DD-E575494DBAE9",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:..\/Persistence\/Persistence.xcodeproj",
+        "identifier" : "C78A5A952FDBE1A4009F5BD0",
+        "name" : "PersistenceTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Core\/Core.xcodeproj",
+        "identifier" : "C78A5ADD2FDBE1F1009F5BD0",
+        "name" : "CoreTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:App.xcodeproj",
+        "identifier" : "C7A6A25D2D4A826D00B4CF35",
+        "name" : "DonmaniTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Domain\/Domain.xcodeproj",
+        "identifier" : "C77E58012FD6AAD300F12122",
+        "name" : "DomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Repositories\/Repositories.xcodeproj",
+        "identifier" : "C78A5ABB2FDBE1E4009F5BD0",
+        "name" : "RepositoriesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/Networking\/Networking.xcodeproj",
+        "identifier" : "C78150F52D60E0DE00026BC1",
+        "name" : "NetworkingTests"
+      }
+    }
+  ],
+  "version" : 1
+}

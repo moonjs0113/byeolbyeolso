@@ -126,6 +126,16 @@ extension Day {
         koreanFormatter.locale = Locale(identifier: "ko_KR")
         return koreanFormatter.string(from: date)
     }
+
+    public var weekday: String {
+        guard let date = self.toDate else {
+            return ""
+        }
+        let weekdayFormatter = DateFormatter()
+        weekdayFormatter.dateFormat = "EEE"
+        weekdayFormatter.locale = Locale(identifier: "ko_KR")
+        return weekdayFormatter.string(from: date)
+    }
     
     public var fortuneDate: String {
         guard let date = self.toDate else {

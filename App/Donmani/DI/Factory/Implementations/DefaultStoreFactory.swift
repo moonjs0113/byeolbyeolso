@@ -16,6 +16,10 @@ struct DefaultStoreFactory: StoreFactory {
         Store(initialState: state) { SettingStore() }
     }
 
+    func makeFortuneStore(state: FortuneStore.State) -> StoreOf<FortuneStore> {
+        Store(initialState: state) { FortuneStore() }
+    }
+
     // Record
     func makeRecordEntryPointStore(state: RecordEntryPointStore.State) -> StoreOf<RecordEntryPointStore> {
         Store(initialState: state) { RecordEntryPointStore() }

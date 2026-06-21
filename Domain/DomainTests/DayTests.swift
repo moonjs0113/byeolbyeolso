@@ -1,13 +1,12 @@
 //
 //  DayTests.swift
-//  DonmaniTests
+//  DomainTests
 //
 //  Created by 문종식 on 5/15/26.
 //
 
 import Testing
-import Domain
-@testable import Donmani
+@testable import Domain
 
 struct DayTests {
     @Test
@@ -109,5 +108,11 @@ struct DayTests {
         let day = Day(year: 2026, month: 5, day: 9)
         #expect(day.yyyyMMdd == "2026-05-09")
         #expect(day.yyyyMMddCompact == "20260509")
+    }
+
+    @Test
+    func weekday_returnsKoreanWeekday() async throws {
+        let day = Day(year: 2026, month: 5, day: 15)
+        #expect(day.weekday == "금")
     }
 }

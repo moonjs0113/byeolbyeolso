@@ -122,7 +122,7 @@ extension MainView {
                     .padding(.horizontal, 8)
                     .background {
                         Capsule()
-                            .fill(Color.fromHex("6045E6"))
+                            .fill(Color.fromHex("#6045E6"))
                     }
                 Spacer()
             }

@@ -54,8 +54,8 @@ extension MainNavigationStore {
             let initialState = stateFactory.makeSettingState(context: context)
             state.path.append(.setting(initialState))
 
-        case .fortune(let weekday):
-            let context = FortuneStore.Context(weekday: weekday)
+        case .fortune(let fortunes):
+            let context = FortuneStore.Context(fortunes: fortunes)
             let initialState = stateFactory.makeFortuneState(context: context)
             state.path.append(.fortune(initialState))
             

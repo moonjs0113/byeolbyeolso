@@ -19,7 +19,7 @@ struct MainView: View {
     var body: some View {
         ZStack {
             VStack {
-                VStack(spacing: .s1) {
+                VStack(spacing: .s3) {
                     DNavigationBar(
                         leading: {
                             DNavigationBarButton(.image(.setting)) {
@@ -84,7 +84,7 @@ struct MainView: View {
                     .ignoresSafeArea()
             }
         }
-        .safeAreaPadding()
+        .safeAreaPadding(.bottom)
         .background {
             StarBottleView(
                 records: store.records,

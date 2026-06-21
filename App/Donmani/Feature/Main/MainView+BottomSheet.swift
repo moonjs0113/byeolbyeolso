@@ -145,7 +145,7 @@ extension MainView {
                         DButton(title: "오늘의 내 행운은?") {
                             store.send(.touchTodayFortuneConfirm)
                         }
-
+                        
                         if !(isNotificationEnabled ?? false) {
                             Button {
                                 store.send(.touchEnableNotificationButton)
@@ -156,10 +156,11 @@ extension MainView {
                                         style: .continuous
                                     )
                                     .fill(ColorPalette.Primary.deepBlue50)
-                                    DText("알림 켜기",
-                                          style: .h3,
-                                          weight: .bold,
-                                          color: .white
+                                    DText(
+                                        "알림 켜기",
+                                        style: .h3,
+                                        weight: .bold,
+                                        color: .white
                                     )
                                 }
                             }

@@ -22,7 +22,8 @@ struct FortuneStore {
     struct State {
         let month: Int
         let fortunes: [Fortune]
-        var selectedDay: Day = .today
+        var selectedDay: Day
+        var flippedDays: Set<Day> = []
         
         var weekday: [Day] {
             self.fortunes.map { $0.day }
@@ -31,14 +32,18 @@ struct FortuneStore {
         init(context: Context) {
             self.month = Day.today.month
             self.fortunes = context.fortunes
+            self.selectedDay = context.fortunes.last?.day ?? .today
         }
     }
     
-    enum Action {
+    enum Action: BindableAction {
         case onAppear
-        
+
         case touchDay(Day)
+        case touchFortuneCard(Day)
         case touchBackButton
+        
+        case binding(BindingAction<State>)
         
         case delegate(Delegate)
         enum Delegate {
@@ -47,12 +52,20 @@ struct FortuneStore {
     }
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case .onAppear:
                 return .none
             case .touchDay(let day):
                 state.selectedDay = day
+                return .none
+            case .touchFortuneCard(let day):
+                if state.flippedDays.contains(day) {
+                    state.flippedDays.remove(day)
+                } else {
+                    state.flippedDays.insert(day)
+                }
                 return .none
             case .touchBackButton:
                 return .run { send in

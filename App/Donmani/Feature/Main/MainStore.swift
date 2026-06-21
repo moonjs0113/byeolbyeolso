@@ -91,7 +91,7 @@ struct MainStore {
             case pushRecordEntryPointView
             case pushRecordListView
             case pushBottleCalendarView([Int: RecordCountSummary])
-            case pushFortuneView([Day])
+            case pushFortuneView([Fortune])
             case pushRewardStartView
         }
     }
@@ -116,9 +116,9 @@ struct MainStore {
                 state.userName = userRepository.getUserName()
                 state.canWriteRecord = canWriteRecordUseCase()
                 state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
-                #if DEBUG
+#if DEBUG
                 state.isPresentingTodayFortuneView = true
-                #endif
+#endif
                 return .merge(
                     .send(.refreshNotificationPermissionStatus),
                     .run { send in
@@ -151,16 +151,16 @@ struct MainStore {
                         await send(.checkDailyFortuneModal)
                     }
                 )
-
+                
             case .refreshNotificationPermissionStatus:
                 return .run { send in
                     let status = await NotificationManager().getNotificationPermissionStatus()
                     await send(._updateNotificationPermissionStatus(status == .authorized))
                 }
-
+                
             case ._updateNotificationPermissionStatus(let isEnabled):
                 state.isNotificationEnabled = isEnabled
-
+                
             case .checkDailyFortuneModal:
                 let shouldShowByNotification = settings.shouldShowFortuneByNotification
                 let today = Day.today.yyyyMMddCompact
@@ -169,17 +169,17 @@ struct MainStore {
                     return .none
                 }
                 state.shouldPushRecordAfterFortuneConfirm = shouldShowByNotification
-                    ? settings.shouldPushRecordAfterFortuneConfirm
-                    : false
+                ? settings.shouldPushRecordAfterFortuneConfirm
+                : false
                 settings.shouldShowFortuneByNotification = false
                 let readSource: FortuneReadSource = shouldShowByNotification ? .notification : .appDirection
                 return requestDailyFortuneEffect(readSource: readSource)
-
+                
             case .presentDailyFortuneByNotification:
                 state.shouldPushRecordAfterFortuneConfirm = settings.shouldPushRecordAfterFortuneConfirm
                 settings.shouldShowFortuneByNotification = false
                 return requestDailyFortuneEffect(readSource: .notification)
-
+                
             case ._updateDailyFortune(let fortune):
                 state.dailyFortune = fortune
                 state.isPresentDailyFortuneModal = true
@@ -248,8 +248,8 @@ struct MainStore {
             case .touchTodayFortuneConfirm:
                 state.isPresentingTodayFortuneView = false
                 return .run { send in
-                    let weekdays = makeFortuneWeek()
-                    await send(.delegate(.pushFortuneView(weekdays)))
+                    let fortunes = makeFortunes()
+                    await send(.delegate(.pushFortuneView(fortunes)))
                 }
                 
             case .touchEnableNotificationButton:
@@ -269,24 +269,28 @@ struct MainStore {
 }
 
 extension MainStore {
-    func makeFortuneWeek() -> [Day] {
-        let calendar = Calendar.current
-        let today = Date()
-
+    /// TEMP Function
+    func makeFortunes() -> [Fortune] {
         return (0..<7)
             .compactMap { offset in
-                calendar.date(byAdding: .day, value: -(6 - offset), to: today)
+                Calendar.current.date(byAdding: .day, value: -(6 - offset), to: Date.now)
             }
             .map { date in
-                let components = calendar.dateComponents([.year, .month, .day], from: date)
-                return Day(
-                    year: components.year ?? 0,
-                    month: components.month ?? 0,
-                    day: components.day ?? 0
+                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
+                return Fortune(
+                    day: Day(
+                        year: components.year ?? 0,
+                        month: components.month ?? 0,
+                        day: components.day ?? 0
+                    ),
+                    title: "새로운 한 주를 시작하는 당신에게 행운이 배달돼요!📦",
+                    subtitle: "",
+                    content: "새로운 달이 시작되었으니 오늘은 가벼운 마음으로 지갑 속 영수증을 정리하며 마음을 정돈해 보세요. 깨끗해진 지갑만큼 이번 달에는 기분 좋은 소비 행운이 가득 들어올 것만 같은 예감이 들거든요.",
+                    item: "연두색"
                 )
             }
     }
-
+    
     func requestDailyFortuneEffect(readSource: FortuneReadSource) -> Effect<MainStore.Action> {
         .run { send in
             do {
@@ -298,7 +302,7 @@ extension MainStore {
             }
         }
     }
-
+    
     func makeRewardItemData(items: [RewardItemCategory: Reward]) -> RewardItemData {
         var decorationItemId: Int? = nil
         var decorationItemName: String? = nil

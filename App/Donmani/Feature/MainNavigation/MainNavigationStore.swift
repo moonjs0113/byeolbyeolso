@@ -42,7 +42,7 @@ struct MainNavigationStore {
         case push(Destination)
         enum Destination {
             case setting(String)
-            case fortune([Day])
+            case fortune([Fortune])
             
             // Record
             case record(RecordEntryPointStore.Context)
@@ -112,9 +112,9 @@ struct MainNavigationStore {
                         await send(.push(.bottleCalendar(recordCountSummary)))
                     }
 
-                case .pushFortuneView(let weekday):
+                case .pushFortuneView(let fortunes):
                     return .run { send in
-                        await send(.push(.fortune(weekday)))
+                        await send(.push(.fortune(fortunes)))
                     }
                     
                 case .pushRewardStartView:

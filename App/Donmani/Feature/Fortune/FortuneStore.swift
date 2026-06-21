@@ -11,24 +11,26 @@ import Domain
 @Reducer
 struct FortuneStore {
     struct Context {
-        let weekday: [Day]
+        let fortunes: [Fortune]
         
-        init(
-            weekday: [Day]
-        ) {
-            self.weekday = weekday
+        init(fortunes: [Fortune]) {
+            self.fortunes = fortunes
         }
     }
     
     @ObservableState
     struct State {
         let month: Int
-        let weekday: [Day]
+        let fortunes: [Fortune]
         var selectedDay: Day = .today
+        
+        var weekday: [Day] {
+            self.fortunes.map { $0.day }
+        }
         
         init(context: Context) {
             self.month = Day.today.month
-            self.weekday = context.weekday
+            self.fortunes = context.fortunes
         }
     }
     

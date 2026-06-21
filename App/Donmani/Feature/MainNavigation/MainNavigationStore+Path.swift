@@ -17,6 +17,8 @@ extension MainNavigationStore {
         switch action {
         case .setting(.delegate(let childAction)):
             return settingDelegateAction(state: &state, action: childAction)
+        case .fortune(.delegate(let childAction)):
+            return fortuneDelegateAction(state: &state, action: childAction)
         
             // Record
         case .record(.delegate(let childAction)):
@@ -51,6 +53,11 @@ extension MainNavigationStore {
             let context = SettingStore.Context(userName: userName)
             let initialState = stateFactory.makeSettingState(context: context)
             state.path.append(.setting(initialState))
+
+        case .fortune(let weekday):
+            let context = FortuneStore.Context(weekday: weekday)
+            let initialState = stateFactory.makeFortuneState(context: context)
+            state.path.append(.fortune(initialState))
             
             // Record
         case .record(let context):

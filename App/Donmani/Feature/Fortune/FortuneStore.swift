@@ -22,14 +22,26 @@ struct FortuneStore {
     
     @ObservableState
     struct State {
+        let month: Int
         let weekday: [Day]
+        var selectedDay: Day = .today
+        
         init(context: Context) {
+            self.month = Day.today.month
             self.weekday = context.weekday
         }
     }
     
     enum Action {
         case onAppear
+        
+        case touchDay(Day)
+        case touchBackButton
+        
+        case delegate(Delegate)
+        enum Delegate {
+            case pop(Bool)
+        }
     }
     
     var body: some ReducerOf<Self> {
@@ -37,7 +49,17 @@ struct FortuneStore {
             switch action {
             case .onAppear:
                 return .none
+            case .touchDay(let day):
+                state.selectedDay = day
+                return .none
+            case .touchBackButton:
+                return .run { send in
+                    await send(.delegate(.pop(false)))
+                }
+            default:
+                break
             }
+            return .none
         }
     }
 }

@@ -91,6 +91,7 @@ struct MainStore {
             case pushRecordEntryPointView
             case pushRecordListView
             case pushBottleCalendarView([Int: RecordCountSummary])
+            case pushFortuneView([Day])
             case pushRewardStartView
         }
     }
@@ -245,8 +246,11 @@ struct MainStore {
                 }
                 
             case .touchTodayFortuneConfirm:
-                /// TODO: 구현 예정
-                return .none
+                state.isPresentingTodayFortuneView = false
+                return .run { send in
+                    let weekdays = makeFortuneWeek()
+                    await send(.delegate(.pushFortuneView(weekdays)))
+                }
                 
             case .touchEnableNotificationButton:
                 /// TODO: 구현 예정
@@ -265,6 +269,24 @@ struct MainStore {
 }
 
 extension MainStore {
+    func makeFortuneWeek() -> [Day] {
+        let calendar = Calendar.current
+        let today = Date()
+
+        return (0..<7)
+            .compactMap { offset in
+                calendar.date(byAdding: .day, value: -(6 - offset), to: today)
+            }
+            .map { date in
+                let components = calendar.dateComponents([.year, .month, .day], from: date)
+                return Day(
+                    year: components.year ?? 0,
+                    month: components.month ?? 0,
+                    day: components.day ?? 0
+                )
+            }
+    }
+
     func requestDailyFortuneEffect(readSource: FortuneReadSource) -> Effect<MainStore.Action> {
         .run { send in
             do {

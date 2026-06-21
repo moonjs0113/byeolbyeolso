@@ -10,10 +10,15 @@ import DesignSystem
 import Domain
 
 struct BottomSheetView<Content: View>: View {
-    let isActiveClose: Bool
-    let closeAction: () -> Void
-    let addCancelButton: Bool
-    let content: (@escaping (@escaping () -> Void) -> Void) -> Content
+    private let isActiveClose: Bool
+    private let closeAction: () -> Void
+    private let addCancelButton: Bool
+    private let content: (@escaping (@escaping () -> Void) -> Void) -> Content
+    
+    private var isShowCloseButton: Bool {
+        isActiveClose && addCancelButton
+    }
+    
     @State private var isPresented = false
     
     
@@ -57,15 +62,13 @@ struct BottomSheetView<Content: View>: View {
                     VStack(alignment: .leading) {
                         HStack {
                             Spacer()
-                            if isActiveClose {
-                                if addCancelButton {
-                                    Button {
-                                        dismiss(nil)
-                                    } label: {
-                                        DImage(DImageAsset.closeCircle)
-                                            .resizable()
-                                            .frame(width: .s2, height: .s2)
-                                    }
+                            if isShowCloseButton {
+                                Button {
+                                    dismiss(nil)
+                                } label: {
+                                    DImage(DImageAsset.closeCircle)
+                                        .resizable()
+                                        .frame(width: .s2, height: .s2)
                                 }
                             }
                         }

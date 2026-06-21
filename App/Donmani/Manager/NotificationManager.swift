@@ -34,6 +34,14 @@ class NotificationManager {
             handler(settings.authorizationStatus)
         }
     }
+
+    public func getNotificationPermissionStatus() async -> UNAuthorizationStatus {
+        await withCheckedContinuation { continuation in
+            getNotificationPermissionStatus { status in
+                continuation.resume(returning: status)
+            }
+        }
+    }
     
     public func registerForRemoteNotifications() {
         DispatchQueue.main.async {

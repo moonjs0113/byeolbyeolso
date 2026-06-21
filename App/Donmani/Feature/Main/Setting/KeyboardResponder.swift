@@ -15,18 +15,20 @@ final class KeyboardResponder: ObservableObject {
     private var cancellableSet: Set<AnyCancellable> = []
 
     init() {
-        let keyboardWillShow = NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
-            .compactMap { ($0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue }
+        let keyboardWillShow = NotificationCenter.default
+            .publisher(for: UIResponder.keyboardWillShowNotification)
+            .compactMap {
+                ($0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            }
             .map {
-//                print($0.height)
-//                print(CGFloat.screenHegiht)
                 return $0.height
             }
 
-        let keyboardWillHide = NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
+        let keyboardWillHide = NotificationCenter.default
+            .publisher(for: UIResponder.keyboardWillHideNotification)
             .map { _ in
-//                print(CGFloat.screenHegiht)
-                return CGFloat(0) }
+                return CGFloat(0)
+            }
 
         Publishers.Merge(keyboardWillShow, keyboardWillHide)
             .receive(on: RunLoop.main)

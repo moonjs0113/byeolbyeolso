@@ -27,9 +27,11 @@ struct DefaultFileRepository: FileRepository {
                     try self.fileDataSource.saveFile(from: data, name: "\(item.name)", type: .thumbnail)
                 }
             }
-            if let jsonUrl = item.jsonUrl {
+            if let jsonUrl = item.jsonUrl?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
                 group.addTask {
-                    let data = try await self.api.getResourceData(urlString: jsonUrl)
+                    let data = try await self.api.getResourceData(
+                        urlString: jsonUrl
+                    )
                     try self.fileDataSource.saveFile(from: data, name: "\(item.name)", type: .json)
                 }
             }

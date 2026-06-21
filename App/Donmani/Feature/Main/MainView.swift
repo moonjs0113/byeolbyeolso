@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import UIKit
 import ComposableArchitecture
 import DesignSystem
 import Domain
 
 struct MainView: View {
     @EnvironmentObject private var toastManager: ToastManager
+    @Environment(\.scenePhase) private var scenePhase
     @Bindable var store: StoreOf<MainStore>
     
     var body: some View {
@@ -69,6 +71,12 @@ struct MainView: View {
             
             if store.isPresentingRewardToolTipView {
                 RewardToolTipView()
+            }
+            
+            if store.isPresentingTodayFortuneView {
+                TodayFortuneView(
+                    isNotificationEnabled: store.isNotificationEnabled
+                )
             }
             
             if store.isLoading {

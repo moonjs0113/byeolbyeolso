@@ -44,6 +44,9 @@ struct FortuneView: View {
             store.send(.onAppear)
         }
         .navigationBarBackButtonHidden()
+        .background {
+            BackgroundView()
+        }
     }
 }
 

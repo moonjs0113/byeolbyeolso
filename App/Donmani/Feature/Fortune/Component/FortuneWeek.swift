@@ -26,12 +26,16 @@ struct FortuneWeek: View {
     
     var body: some View {
         HStack {
-            ForEach(week, id: \.yyyyMMdd) { day in
+            ForEach(week.indices, id: \.self) { index in
                 Button {
-                    touchDayAction(day)
+                    touchDayAction(week[index])
                 } label: {
-                    dayComponent(day: day)
+                    dayComponent(day: week[index])
+                        .frame(width: 40)
                 }
+                if index < week.count - 1 {
+                     Spacer()
+                 }
             }
         }
     }

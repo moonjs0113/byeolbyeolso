@@ -16,8 +16,6 @@ public enum DImageAsset: String {
     case backgroundStar = "background_star"
     case close = "close"
     case downArrow = "down_arrow"
-    case dailyFortune = "daily_fortune"
-    case todayFortune = "today_fortune"
     
     // Navigation Icon
     case calendar = "navigation_icon_calendar"
@@ -130,6 +128,11 @@ public enum DImageAsset: String {
     // Toast
     case warning = "toast_icon_warning"
     case success = "toast_icon_success"
+    
+    // Fortune
+    case dailyFortune = "daily_fortune"
+    case todayFortune = "today_fortune"
+    case fortuneToby = "fortune_toby"
 }
 
 

@@ -54,4 +54,13 @@ class NotificationManager {
             UIApplication.shared.unregisterForRemoteNotifications()
         }
     }
+
+    @MainActor
+    public func openAppNotificationSettings() {
+        guard let appSettings = URL(string: UIApplication.openSettingsURLString),
+              UIApplication.shared.canOpenURL(appSettings) else {
+            return
+        }
+        UIApplication.shared.open(appSettings)
+    }
 }

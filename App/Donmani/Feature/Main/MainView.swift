@@ -99,6 +99,11 @@ struct MainView: View {
         .onAppear {
             store.send(.onAppear)
         }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                store.send(.refreshNotificationPermissionStatus)
+            }
+        }
         .modal(
             isPresented: $store.isPresentDailyFortuneModal,
             config: ModalConfig(

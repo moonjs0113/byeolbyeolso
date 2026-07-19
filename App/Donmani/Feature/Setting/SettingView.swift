@@ -60,6 +60,7 @@ struct SettingView: View {
     
     @Dependency(\.userRepository) var userRepository
     @Dependency(\.settings) var settings
+    let notification = NotificationManager()
     
     let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\\s]+$"
     var isSaveEnable: Bool {
@@ -117,12 +118,7 @@ struct SettingView: View {
                                 store.send(.touchDecorationButton)
                             }
                             MenuButton(type: .notification) {
-                                GA.Click(event: .settingNotice).send()
-                                if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                                    if UIApplication.shared.canOpenURL(appSettings) {
-                                        UIApplication.shared.open(appSettings)
-                                    }
-                                }
+                                store.send(.touchNotificationButton)
                             }
                             MenuButton(type: .notice) {
                                 GA.Click(event: .settingNotice).send()
@@ -153,7 +149,6 @@ struct SettingView: View {
                 .webSheet(url: $store.webURLString)
                 .onChange(of: scenePhase) { oldPhase, newPhase  in
                     if newPhase == .active {
-                        let notification = NotificationManager()
                         notification.getNotificationPermissionStatus { status in
                             if (status == .authorized) {
                                 notification.registerForRemoteNotifications()
@@ -165,7 +160,7 @@ struct SettingView: View {
                     }
                 }
                 .onAppear() {
-                    NotificationManager().getNotificationPermissionStatus { status in
+                    notificationManager.getNotificationPermissionStatus { status in
                         isNotificationEnabled = (status == .authorized)
                     }
                     Task {

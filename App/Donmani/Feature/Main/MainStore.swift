@@ -104,6 +104,7 @@ struct MainStore {
     @Dependency(\.rewardRepository) var rewardRepository
     @Dependency(\.fortuneRepository) var fortuneRepository
     @Dependency(\.settings) var settings
+    let notificationManager = NotificationManager()
     
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
@@ -154,7 +155,7 @@ struct MainStore {
                 
             case .refreshNotificationPermissionStatus:
                 return .run { send in
-                    let status = await NotificationManager().getNotificationPermissionStatus()
+                    let status = await notificationManager.getNotificationPermissionStatus()
                     await send(._updateNotificationPermissionStatus(status == .authorized))
                 }
                 
@@ -253,8 +254,10 @@ struct MainStore {
                 }
                 
             case .touchEnableNotificationButton:
-                /// TODO: 구현 예정
-                return .none
+                GA.Click(event: .settingNotice).send()
+                return .run { _ in
+                    await notificationManager.openAppNotificationSettings()
+                }
                 
             case .completeDailyFortuneDismiss:
                 state.shouldPushRecordAfterFortuneConfirm = false

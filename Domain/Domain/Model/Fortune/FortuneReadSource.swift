@@ -7,5 +7,5 @@
 
 public enum FortuneReadSource: String, Encodable {
     case notification = "NOTIFICATION"
-    case appDirection = "APP_DIRECTION"
+    case appDirection = "APP_DIRECT"
 }

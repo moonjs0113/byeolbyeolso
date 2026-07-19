@@ -18,6 +18,9 @@
 		C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B12D92FCAC00274F37 /* FirebaseCrashlytics */; };
 		C72CD4B42D92FCAC00274F37 /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B32D92FCAC00274F37 /* FirebaseInAppMessaging-Beta */; };
 		C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C72CD4B52D92FCAC00274F37 /* FirebaseMessaging */; };
+		C7322541300CEFC900308BB6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C7322540300CEFC900308BB6 /* Lottie */; };
+		C7322542300CF17F00308BB6 /* Networking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* Networking.framework */; };
+		C7322543300CF17F00308BB6 /* Networking.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C781510D2D60E10C00026BC1 /* Networking.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C77E58162FD6ABD100F12122 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77E58152FD6ABD100F12122 /* Domain.framework */; };
 		C77E58172FD6ABD100F12122 /* Domain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C77E58152FD6ABD100F12122 /* Domain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C77E58182FD6ABD100F12122 /* Domain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C77E58152FD6ABD100F12122 /* Domain.framework */; };
@@ -52,6 +55,7 @@
 			files = (
 				C77E58172FD6ABD100F12122 /* Domain.framework in Embed Frameworks */,
 				C70523B12FDBFA1300988FA5 /* Persistence.framework in Embed Frameworks */,
+				C7322543300CF17F00308BB6 /* Networking.framework in Embed Frameworks */,
 				C70523962FDBE58A00988FA5 /* Repositories.framework in Embed Frameworks */,
 				C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */,
 				C70523932FDBE57800988FA5 /* Core.framework in Embed Frameworks */,
@@ -125,11 +129,13 @@
 				C70523952FDBE58A00988FA5 /* Repositories.framework in Frameworks */,
 				C70523922FDBE57800988FA5 /* Core.framework in Frameworks */,
 				C77E58162FD6ABD100F12122 /* Domain.framework in Frameworks */,
+				C7322542300CF17F00308BB6 /* Networking.framework in Frameworks */,
 				C7199C102EB786A200926C94 /* GoogleMobileAds in Frameworks */,
 				C72CD4B22D92FCAC00274F37 /* FirebaseCrashlytics in Frameworks */,
 				C72CD4B02D92FCAC00274F37 /* FirebaseAnalytics in Frameworks */,
 				C7A5DA922D7D6ED100C3BC6D /* DesignSystem.framework in Frameworks */,
 				C72CD4B42D92FCAC00274F37 /* FirebaseInAppMessaging-Beta in Frameworks */,
+				C7322541300CEFC900308BB6 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +220,7 @@
 				C72CD4B32D92FCAC00274F37 /* FirebaseInAppMessaging-Beta */,
 				C72CD4B52D92FCAC00274F37 /* FirebaseMessaging */,
 				C7199C0F2EB786A200926C94 /* GoogleMobileAds */,
+				C7322540300CEFC900308BB6 /* Lottie */,
 			);
 			productName = Donmani;
 			productReference = C7A6A24E2D4A826B00B4CF35 /* Donmani.app */;
@@ -301,6 +308,7 @@
 				C7A6A2942D4A89D500B4CF35 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				C72CD4AE2D92FCAC00274F37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C7199C0E2EB786A200926C94 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				C732253F300CEFC900308BB6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C7A6A24F2D4A826B00B4CF35 /* Products */;
@@ -703,6 +711,14 @@
 				version = 11.10.0;
 			};
 		};
+		C732253F300CEFC900308BB6 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = exactVersion;
+				version = 4.5.0;
+			};
+		};
 		C7A6A2942D4A89D500B4CF35 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -738,6 +754,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C72CD4AE2D92FCAC00274F37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		C7322540300CEFC900308BB6 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C732253F300CEFC900308BB6 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
 		};
 		C7A6A2952D4A89D500B4CF35 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;

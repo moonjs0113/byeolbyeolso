@@ -7,5 +7,6 @@
 
 public protocol FortuneRepository {
     func getTodayFortune() async throws -> Fortune
+    func getFortunes(startDay: Day, endDay: Day) async throws -> [Fortune]
     func putFortuneRead(readSource: FortuneReadSource) async throws
 }

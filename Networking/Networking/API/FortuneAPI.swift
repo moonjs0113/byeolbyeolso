@@ -22,6 +22,26 @@ public struct FortuneAPI {
         return data
     }
     
+    /// 일주일 운세 조회
+    public func getFortuneList(
+        userKey: String,
+        startDate: String,
+        endDate: String,
+    ) async throws -> [FortuneResponse] {
+        let result: ResponseWrapper<[FortuneResponse]> = try await request.get(
+            path: .fortune,
+            additionalPaths: ["list", userKey],
+            parameters: [
+                "startDate": startDate,
+                "endDate": endDate,
+            ]
+        )
+        guard let data = result.responseData else {
+            throw NetworkError.noData
+        }
+        return data
+    }
+    
     /// 오늘의 운세 읽음 처리
     public func putFortuneRead(userKey: String, readSource: String) async throws {
         let _: EmptyResponse = try await request.put(

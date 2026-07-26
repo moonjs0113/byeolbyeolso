@@ -13,9 +13,12 @@ public struct Day {
     public let day: Int
     
     public init(year: Int, month: Int, day: Int) {
-        self.year = year
-        self.month = month
-        self.day = day
+        if Day.isValid(year: year, month: month, day: day) {
+            self.init(uncheckedYear: year, month: month, day: day)
+        } else {
+            let today = Day.today
+            self.init(uncheckedYear: today.year, month: today.month, day: today.day)
+        }
     }
     
     /// YYYY-MM-DD 형식의 문자열로 초기화
@@ -31,7 +34,7 @@ public struct Day {
               Day.isValid(year: year, month: month, day: day) else {
             return nil
         }
-        self.init(year: year, month: month, day: day)
+        self.init(uncheckedYear: year, month: month, day: day)
     }
     
     /// YY-MM-DD 형식의 문자열로 초기화
@@ -50,19 +53,34 @@ public struct Day {
         guard Day.isValid(year: year, month: month, day: day) else {
             return nil
         }
-        self.init(year: year, month: month, day: day)
+        self.init(uncheckedYear: year, month: month, day: day)
+    }
+
+    public init?(date: Date) {
+        let components = Self.calendar.dateComponents([.year, .month, .day], from: date)
+        guard let year = components.year,
+              let month = components.month,
+              let day = components.day,
+              Day.isValid(year: year, month: month, day: day) else {
+            return nil
+        }
+        self.init(uncheckedYear: year, month: month, day: day)
     }
 }
 
 private extension Day {
+    static var calendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .current
+        return calendar
+    }
+
     static func isValid(year: Int, month: Int, day: Int) -> Bool {
         guard (1...9999).contains(year),
               (1...12).contains(month),
               (1...31).contains(day) else {
             return false
         }
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(secondsFromGMT: 0) ?? .current
         let components = DateComponents(year: year, month: month, day: day)
         guard let date = calendar.date(from: components) else {
             return false
@@ -71,6 +89,12 @@ private extension Day {
         return normalized.year == year
             && normalized.month == month
             && normalized.day == day
+    }
+
+    init(uncheckedYear year: Int, month: Int, day: Int) {
+        self.year = year
+        self.month = month
+        self.day = day
     }
 }
 
@@ -97,6 +121,10 @@ extension Day {
         (year * 10_000) + (month * 100) + day
     }
 
+    public var dateComponents: DateComponents {
+        DateComponents(year: year, month: month, day: day)
+    }
+
     /// YYYY-MM-DD
     public var yyyyMMdd: String {
         "\(year)-\(Self.twoDigitString(month))-\(Self.twoDigitString(day))"
@@ -108,13 +136,26 @@ extension Day {
     }
     
     public var toDate: Date? {
-        let dateString = "\(year)-\(month)-\(day)"
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone.current
-        
-        return dateFormatter.date(from: dateString)
+        Self.calendar.date(from: dateComponents)
+    }
+
+    public func adding(
+        year: Int? = nil,
+        month: Int? = nil,
+        day: Int? = nil
+    ) -> Day? {
+        guard let date = toDate,
+              let adjusted = Self.calendar.date(
+                byAdding: DateComponents(
+                    year: year,
+                    month: month,
+                    day: day
+                ),
+                to: date
+              ) else {
+            return nil
+        }
+        return Day(date: adjusted)
     }
     
     public var dateString: String {
@@ -156,30 +197,11 @@ extension Day {
     }
 
     public static var today: Day {
-        let components = todayComponents
-        return Day(
-            year: components.year ?? 0,
-            month: components.month ?? 0,
-            day: components.day ?? 0
-        )
+        Day(date: Date()) ?? .distantPast
     }
     
     public static var yesterday: Day {
-        let components = yesterdayComponents
-        return Day(
-            year: components.year ?? 0,
-            month: components.month ?? 0,
-            day: components.day ?? 0
-        )
-    }
-    
-    private static var todayComponents: DateComponents {
-        Calendar.current.dateComponents([.day, .month, .year], from: Date())
-    }
-    
-    private static var yesterdayComponents: DateComponents {
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())
-        return Calendar.current.dateComponents([.day, .month, .year], from: yesterday ?? Date())
+        today.adding(day: -1) ?? .distantPast
     }
     
     public static func lastDaysOfMonths(year: Int) -> [Int: Int] {

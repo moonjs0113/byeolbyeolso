@@ -12,10 +12,11 @@ extension FortuneResponse {
     func toDomain() -> Fortune {
         Fortune(
             day: Day(yyyymmdd: self.targetDate) ?? .today,
-            title: self.title,
+            title: self.title ?? "",
             subtitle: self.subtitle,
             content: self.content,
-            item: self.item
+            item: self.item,
+            imageUrl: self.imageUrl ?? ""
         )
     }
 }

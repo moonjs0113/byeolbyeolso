@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Domain
 
 extension MainNavigationStore {
     func fortuneDelegateAction(
@@ -19,6 +20,11 @@ extension MainNavigationStore {
                 state.path.pop(from: fortuneID)
             }
             return .none
+        case .pushRecordEntryPointView(let dayTitle):
+            let context = RecordEntryPointStore.Context(recordEntryDayTitle: dayTitle)
+            return .run { send in
+                await send(.push(.record(context)))
+            }
         }
     }
 }

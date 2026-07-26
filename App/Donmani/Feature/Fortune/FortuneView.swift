@@ -49,13 +49,19 @@ struct FortuneView: View {
             FortunePage(
                 fortunes: store.fortunes,
                 selectedDay: $store.selectedDay,
+                referenceToday: store.referenceToday,
+                referenceYesterday: store.referenceYesterday,
+                hasTodayRecord: store.hasTodayRecord,
+                hasYesterdayRecord: store.hasYesterdayRecord,
                 isFortuneCardFlipped: { day in
                     store.flippedDays.contains(day)
                 },
                 touchFortuneCardAction: { day in
                     store.send(.touchFortuneCard(day))
                 },
-                touchRecordAction: { _ in }
+                touchRecordAction: { day in
+                    store.send(.touchRecordButton(day))
+                }
             )
             
             Spacer()
@@ -92,7 +98,11 @@ struct FortuneView: View {
                                 content: "새로운 달이 시작되었으니 오늘은 가벼운 마음으로 지갑 속 영수증을 정리하며 마음을 정돈해 보세요. 깨끗해진 지갑만큼 이번 달에는 기분 좋은 소비 행운이 가득 들어올 것만 같은 예감이 들거든요.",
                                 item: "연두색"
                             )
-                        }
+                        },
+                    referenceToday: .today,
+                    referenceYesterday: .yesterday,
+                    hasTodayRecord: false,
+                    hasYesterdayRecord: false
                 )
             )
         )

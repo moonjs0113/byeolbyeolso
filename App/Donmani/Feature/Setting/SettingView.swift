@@ -60,7 +60,7 @@ struct SettingView: View {
     
     @Dependency(\.userRepository) var userRepository
     @Dependency(\.settings) var settings
-    let notification = NotificationManager()
+    let notificationManager = NotificationManager()
     
     let pattern = "^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9\\s]+$"
     var isSaveEnable: Bool {
@@ -149,11 +149,11 @@ struct SettingView: View {
                 .webSheet(url: $store.webURLString)
                 .onChange(of: scenePhase) { oldPhase, newPhase  in
                     if newPhase == .active {
-                        notification.getNotificationPermissionStatus { status in
+                        notificationManager.getNotificationPermissionStatus { status in
                             if (status == .authorized) {
-                                notification.registerForRemoteNotifications()
+                                notificationManager.registerForRemoteNotifications()
                             } else {
-                                notification.unregisterForRemoteNotifications()
+                                notificationManager.unregisterForRemoteNotifications()
                             }
                             isNotificationEnabled = (status == .authorized)
                         }

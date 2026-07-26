@@ -12,9 +12,23 @@ import Domain
 struct FortuneStore {
     struct Context {
         let fortunes: [Fortune]
+        let referenceToday: Day
+        let referenceYesterday: Day
+        let hasTodayRecord: Bool
+        let hasYesterdayRecord: Bool
         
-        init(fortunes: [Fortune]) {
+        init(
+            fortunes: [Fortune],
+            referenceToday: Day = .today,
+            referenceYesterday: Day = .yesterday,
+            hasTodayRecord: Bool = false,
+            hasYesterdayRecord: Bool = false
+        ) {
             self.fortunes = fortunes
+            self.referenceToday = referenceToday
+            self.referenceYesterday = referenceYesterday
+            self.hasTodayRecord = hasTodayRecord
+            self.hasYesterdayRecord = hasYesterdayRecord
         }
     }
     
@@ -22,6 +36,10 @@ struct FortuneStore {
     struct State {
         let month: Int
         let fortunes: [Fortune]
+        let referenceToday: Day
+        let referenceYesterday: Day
+        let hasTodayRecord: Bool
+        let hasYesterdayRecord: Bool
         var selectedDay: Day
         var flippedDays: Set<Day> = []
         
@@ -30,9 +48,23 @@ struct FortuneStore {
         }
         
         init(context: Context) {
-            self.month = Day.today.month
+            self.month = context.referenceToday.month
             self.fortunes = context.fortunes
-            self.selectedDay = context.fortunes.last?.day ?? .today
+            self.referenceToday = context.referenceToday
+            self.referenceYesterday = context.referenceYesterday
+            self.hasTodayRecord = context.hasTodayRecord
+            self.hasYesterdayRecord = context.hasYesterdayRecord
+            self.selectedDay = context.fortunes.last?.day ?? context.referenceToday
+        }
+
+        func recordEntryDayTitle(for day: Day) -> RecordEntryDayTitle? {
+            if day == referenceToday, !hasTodayRecord {
+                return .today
+            }
+            if day == referenceYesterday, !hasYesterdayRecord {
+                return .yesterday
+            }
+            return nil
         }
     }
     
@@ -41,6 +73,7 @@ struct FortuneStore {
 
         case touchDay(Day)
         case touchFortuneCard(Day)
+        case touchRecordButton(Day)
         case touchBackButton
         
         case binding(BindingAction<State>)
@@ -48,6 +81,7 @@ struct FortuneStore {
         case delegate(Delegate)
         enum Delegate {
             case pop(Bool)
+            case pushRecordEntryPointView(RecordEntryDayTitle)
         }
     }
     
@@ -67,6 +101,13 @@ struct FortuneStore {
                     state.flippedDays.insert(day)
                 }
                 return .none
+            case .touchRecordButton(let day):
+                guard let dayTitle = state.recordEntryDayTitle(for: day) else {
+                    return .none
+                }
+                return .run { send in
+                    await send(.delegate(.pushRecordEntryPointView(dayTitle)))
+                }
             case .touchBackButton:
                 return .run { send in
                     await send(.delegate(.pop(false)))

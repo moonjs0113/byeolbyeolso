@@ -171,7 +171,8 @@ struct StarBottleView: View {
             }
             .offset(
                 x: spaceVacanceItemOffset.x,
-                y: spaceVacanceItemOffset.y + (viewType == .decoration ? 10 : 20)
+                y: spaceVacanceItemOffset.y
+                + (viewType == .decoration ? 30 : (bottleShape == .default ? 10 : 0)) 
             )
             Spacer()
         }

@@ -118,9 +118,6 @@ struct MainStore {
                 state.userName = userRepository.getUserName()
                 state.canWriteRecord = canWriteRecordUseCase()
                 state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
-#if DEBUG
-                state.isPresentingTodayFortuneView = true
-#endif
                 return .merge(
                     .send(.refreshNotificationPermissionStatus),
                     .run { send in
@@ -165,15 +162,17 @@ struct MainStore {
                 
             case .checkDailyFortuneModal:
                 let shouldShowByNotification = settings.shouldShowFortuneByNotification
-                let today = Day.today.yyyyMMddCompact
-                let shouldShowByDay = settings.lastFortuneDay != today
-                guard shouldShowByNotification || shouldShowByDay else {
+                let shouldShowInitialModal = settings.shouldShowInitialFortuneModal
+                guard shouldShowByNotification || shouldShowInitialModal else {
                     return .none
                 }
                 state.shouldPushRecordAfterFortuneConfirm = shouldShowByNotification
                 ? settings.shouldPushRecordAfterFortuneConfirm
                 : false
                 settings.shouldShowFortuneByNotification = false
+                if !shouldShowByNotification {
+                    settings.shouldShowInitialFortuneModal = false
+                }
                 let readSource: FortuneReadSource = shouldShowByNotification ? .notification : .appDirection
                 return requestDailyFortuneEffect(readSource: readSource)
                 

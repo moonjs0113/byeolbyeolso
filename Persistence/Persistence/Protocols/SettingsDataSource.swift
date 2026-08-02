@@ -27,6 +27,7 @@ public protocol SettingsDataSource: AnyObject {
     var lastNewBottleGuideDay: String { get set }
     var shouldShowRewardToolTip: Bool { get set }
     var lastFortuneDay: String { get set }
+    var shouldShowInitialFortuneModal: Bool { get set }
     var shouldShowFortuneByNotification: Bool { get set }
     var shouldPushRecordAfterFortuneConfirm: Bool { get set }
     var appVersion: String { get set }

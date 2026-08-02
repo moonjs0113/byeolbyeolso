@@ -35,3 +35,25 @@ struct DecorationData {
         self.bottleShape = bottleShape
     }
 }
+
+extension DecorationData {
+    static func resolvedDecorationState(
+        from reward: Reward?
+    ) -> (
+        decorationRewardName: String?,
+        decorationRewardId: Int?,
+        showsDefaultFortuneToby: Bool
+    ) {
+        guard let reward else {
+            return (nil, nil, true)
+        }
+        guard reward.id != 3 else {
+            return (nil, nil, true)
+        }
+        return (
+            RewardResourceMapper(id: reward.id, category: .decoration).resource(),
+            reward.id,
+            reward.id != 23
+        )
+    }
+}

@@ -29,8 +29,9 @@ enum StarBottleAction: Equatable {
 }
 
 enum StarBottleViewType {
-    case `default`
+    case main
     case decoration
+    case monthly
 }
 
 struct StarBottleView: View {
@@ -108,7 +109,7 @@ struct StarBottleView: View {
     init(
         records: [Record],
         decorationData: DecorationData,
-        viewType: StarBottleViewType = .default,
+        viewType: StarBottleViewType = .main,
         starBottleAction: Binding<StarBottleAction> = .constant(.none),
         onFortuneTobyTapGesture: (() -> Void)? = nil,
         onTapGesture: (() -> Void)? = nil
@@ -139,36 +140,57 @@ struct StarBottleView: View {
 
     @ViewBuilder
     private var decorationOverlay: some View {
-        if let decorationRewardId {
-            if decorationRewardId == 23 {
-                spaceTobyView
-            } else {
-                lottieDecorationView(decorationRewardId: decorationRewardId)
+        ZStack {
+            if showsDefaultFortuneToby, decorationRewardId != 23 {
+                defaultFortuneTobyView
             }
-        } else if showsDefaultFortuneToby {
-            defaultFortuneTobyView
+            if let decorationRewardId {
+                if decorationRewardId == 23 {
+                    spaceTobyView
+                } else {
+                    lottieDecorationView(decorationRewardId: decorationRewardId)
+                }
+            }
         }
     }
 
     private var defaultFortuneTobyView: some View {
         VStack {
-            HStack {
+            VStack {
+                if viewType == .main {
+                    fortuneTobyTooltip
+                }
                 DImage(DImageAsset.fortuneToby)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: viewType == .decoration ? Self.width * 0.24 : Self.width * 0.28)
+                    .aspectRatio(0.67, contentMode: .fit)
+                    .frame(height: .screenWidth * 0.17)
                     .contentShape(Rectangle())
                     .onTapGesture {
                         onFortuneTobyTapGesture?()
                     }
-                Spacer()
             }
+            .offset(
+                x: spaceVacanceItemOffset.x,
+                y: spaceVacanceItemOffset.y + (viewType == .decoration ? 10 : 20)
+            )
             Spacer()
         }
-        .offset(
-            x: viewType == .decoration ? -(Self.width / 5.5) : -(Self.width / 12),
-            y: viewType == .decoration ? -(Self.width / 14) : -(Self.width / 5)
-        )
+        .zIndex(1)
+    }
+    
+    private var fortuneTobyTooltip: some View {
+        VStack(spacing: 0) {
+            HStack {
+                DText("오늘 운세보기", style: .b3, weight: .semibold, color: .white)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 4)
+                    .background(ColorPalette.Semantic.fortuneTooltip)
+                    .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+            }
+            Triangle(direction: .down)
+                .fill(ColorPalette.Semantic.fortuneTooltip)
+                .frame(width: 8, height: 4)
+        }
     }
 
     private var spaceTobyView: some View {
@@ -189,6 +211,7 @@ struct StarBottleView: View {
             }
             Spacer()
         }
+        .zIndex(1)
     }
 
     @ViewBuilder
@@ -338,7 +361,7 @@ struct StarBottleView: View {
                 effectRewardData = itemData.effectItem
                 decorationRewardId = itemData.decorationItemId
                 decorationRewardName = itemData.decorationItemName
-                showsDefaultFortuneToby = itemData.decorationItemId == nil
+                showsDefaultFortuneToby = itemData.decorationItemId != 23
                 if let bottleItemId = itemData.bottleItemId,
                    let bottleShape = itemData.bottleShape {
                     bottleRewardId = bottleItemId
@@ -352,7 +375,7 @@ struct StarBottleView: View {
             case .changeDecorationItem(let id, let name):
                 decorationRewardId = id
                 decorationRewardName = name
-                showsDefaultFortuneToby = id == nil
+                showsDefaultFortuneToby = id != 23
             case .changeBottleItem(let id, let bottleShape):
                 bottleRewardId = id
                 self.bottleShape = bottleShape

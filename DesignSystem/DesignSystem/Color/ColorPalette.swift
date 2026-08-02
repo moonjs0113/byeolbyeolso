@@ -17,6 +17,8 @@ public enum ColorPalette {
         public static let empty = Color("empty", bundle: .designSystem)
         public static let mainToolTipBackground = Color("main_tool_tip_background", bundle: .designSystem)
         public static let dailyFortuneBackground = Color("daily_fortune_background", bundle: .designSystem)
+        public static let fortuneTooltip = Color("fortune_tooltip", bundle: .designSystem)
+        
     }
     
     public enum Primary {

@@ -29,8 +29,9 @@ enum StarBottleAction: Equatable {
 }
 
 enum StarBottleViewType {
-    case `default`
+    case main
     case decoration
+    case monthly
 }
 
 struct StarBottleView: View {
@@ -77,6 +78,7 @@ struct StarBottleView: View {
     }
     
     private let onTapGesture: (() -> Void)?
+    private let onFortuneTobyTapGesture: (() -> Void)?
     
     @Binding private var starBottleAction: StarBottleAction
     
@@ -88,6 +90,7 @@ struct StarBottleView: View {
     @State var effectRewardData: Data?
     @State var decorationRewardName: String?
     @State var decorationRewardId: Int?
+    @State var showsDefaultFortuneToby: Bool
     @State var bottleRewardId: Int?
     @State var bottleShape: BottleShape
     @State var bottleOffset: CGFloat = 0.0
@@ -106,8 +109,9 @@ struct StarBottleView: View {
     init(
         records: [Record],
         decorationData: DecorationData,
-        viewType: StarBottleViewType = .default,
+        viewType: StarBottleViewType = .main,
         starBottleAction: Binding<StarBottleAction> = .constant(.none),
+        onFortuneTobyTapGesture: (() -> Void)? = nil,
         onTapGesture: (() -> Void)? = nil
     ) {
         self.records = records
@@ -126,10 +130,128 @@ struct StarBottleView: View {
         self.effectRewardData = decorationData.effectRewardData
         self.decorationRewardName = decorationData.decorationRewardName
         self.decorationRewardId = decorationData.decorationRewardId
+        self.showsDefaultFortuneToby = decorationData.showsDefaultFortuneToby
         self.bottleRewardId = decorationData.bottleRewardId
         self.bottleShape = decorationData.bottleShape
         
+        self.onFortuneTobyTapGesture = onFortuneTobyTapGesture
         self.onTapGesture = onTapGesture
+    }
+
+    @ViewBuilder
+    private var decorationOverlay: some View {
+        ZStack {
+            if showsDefaultFortuneToby, decorationRewardId != 23 {
+                defaultFortuneTobyView
+            }
+            if let decorationRewardId {
+                if decorationRewardId == 23 {
+                    spaceTobyView
+                } else {
+                    lottieDecorationView(decorationRewardId: decorationRewardId)
+                }
+            }
+        }
+    }
+
+    private var defaultFortuneTobyView: some View {
+        VStack {
+            VStack {
+                if viewType == .main {
+                    fortuneTobyTooltip
+                }
+                DImage(DImageAsset.fortuneToby)
+                    .resizable()
+                    .aspectRatio(0.67, contentMode: .fit)
+                    .frame(height: .screenWidth * 0.17)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        onFortuneTobyTapGesture?()
+                    }
+            }
+            .offset(
+                x: spaceVacanceItemOffset.x,
+                y: spaceVacanceItemOffset.y
+                + (viewType == .decoration ? 30 : (bottleShape == .default ? 10 : 0)) 
+            )
+            Spacer()
+        }
+        .zIndex(1)
+    }
+    
+    private var fortuneTobyTooltip: some View {
+        VStack(spacing: 0) {
+            HStack {
+                DText("오늘 운세보기", style: .b3, weight: .semibold, color: .white)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 4)
+                    .background(ColorPalette.Semantic.fortuneTooltip)
+                    .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+            }
+            Triangle(direction: .down)
+                .fill(ColorPalette.Semantic.fortuneTooltip)
+                .frame(width: 8, height: 4)
+        }
+    }
+
+    private var spaceTobyView: some View {
+        VStack {
+            HStack {
+                DImage(DImageAsset.rewardDecorationSpaceVacance)
+                    .resizable()
+                    .aspectRatio(0.67, contentMode: .fit)
+                    .frame(height: .screenWidth * 0.27)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        onFortuneTobyTapGesture?()
+                    }
+                    .offset(
+                        x: spaceVacanceItemOffset.x,
+                        y: spaceVacanceItemOffset.y
+                    )
+            }
+            Spacer()
+        }
+        .zIndex(1)
+    }
+
+    @ViewBuilder
+    private func lottieDecorationView(decorationRewardId: Int) -> some View {
+        if decorationRewardId == 20, let decorationRewardName { // 둥둥배
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    DLottieView(
+                        name: decorationRewardName,
+                        loopMode: .loop
+                    )
+                    .frame(width: 80, height: 80)
+                }
+            }
+            .allowsHitTesting(false)
+            .offset(
+                x: viewType == .decoration ? (Self.width / 6) : 0,
+                y: viewType == .decoration ? -((.screenWidth / 3 - .defaultLayoutPadding) + (Self.width / 10)) : (Self.width / 8)
+            )
+        } else if let decorationRewardName { // 토비호, 몽글몽글 열기구, 달베개
+            VStack {
+                HStack {
+                    DLottieView(
+                        name: decorationRewardName,
+                        loopMode: .loop
+                    )
+                    .frame(width: 80, height: 80)
+                    Spacer()
+                }
+                Spacer()
+            }
+            .allowsHitTesting(false)
+            .offset(
+                x: viewType == .decoration ? -(Self.width / 5) : -(Self.width / 10),
+                y: viewType == .decoration ? -(Self.width / 10) : -(Self.width / 5)
+            )
+        }
     }
     
     var body: some View {
@@ -206,59 +328,7 @@ struct StarBottleView: View {
                 }
                 .offset(y: bottleOffset)
                 .overlay {
-                    Group {
-                        if let decorationRewardName, let decorationRewardId {
-                            if decorationRewardId == 20 { // 둥둥배
-                                VStack {
-                                    Spacer()
-                                    HStack {
-                                        Spacer()
-                                        DLottieView(
-                                            name: decorationRewardName,
-                                            loopMode: .loop
-                                        )
-                                        .frame(width: 80, height: 80)
-                                    }
-                                }
-                                .allowsHitTesting(false)
-                                .offset(
-                                    x: viewType == .decoration ? (Self.width/6) : 0,
-                                    y: viewType == .decoration ? -((.screenWidth / 3 - .defaultLayoutPadding) + (Self.width/10) ) : (Self.width/8)
-                                )
-                            } else if decorationRewardId == 23 { // 우주바캉스 토비
-                                VStack {
-                                    HStack {
-                                        DImage(DImageAsset.rewardDecorationSpaceVacance)
-                                            .resizable()
-                                            .aspectRatio(0.67, contentMode: .fit)
-                                            .frame(height: .screenWidth * 0.27)
-                                            .offset(
-                                                x: spaceVacanceItemOffset.x,
-                                                y: spaceVacanceItemOffset.y
-                                            )
-                                    }
-                                    Spacer()
-                                }
-                            } else { // 토비호, 몽글몽글 열기구, 달베개
-                                VStack {
-                                    HStack {
-                                        DLottieView(
-                                            name: decorationRewardName,
-                                            loopMode: .loop
-                                        )
-                                        .frame(width: 80, height: 80)
-                                        Spacer()
-                                    }
-                                    Spacer()
-                                }
-                                .allowsHitTesting(false)
-                                .offset(
-                                    x: viewType == .decoration ? -(Self.width/5) : -(Self.width/10),
-                                    y: viewType == .decoration ? -(Self.width/10) : -(Self.width/5)
-                                )
-                            }
-                        }
-                    }
+                    decorationOverlay
                     .frame(width: width)
                 }
                 .padding(.bottom, viewType == .decoration ? 70 : (70 + 52 + .s5))
@@ -292,6 +362,7 @@ struct StarBottleView: View {
                 effectRewardData = itemData.effectItem
                 decorationRewardId = itemData.decorationItemId
                 decorationRewardName = itemData.decorationItemName
+                showsDefaultFortuneToby = itemData.decorationItemId != 23
                 if let bottleItemId = itemData.bottleItemId,
                    let bottleShape = itemData.bottleShape {
                     bottleRewardId = bottleItemId
@@ -305,6 +376,7 @@ struct StarBottleView: View {
             case .changeDecorationItem(let id, let name):
                 decorationRewardId = id
                 decorationRewardName = name
+                showsDefaultFortuneToby = id != 23
             case .changeBottleItem(let id, let bottleShape):
                 bottleRewardId = id
                 self.bottleShape = bottleShape

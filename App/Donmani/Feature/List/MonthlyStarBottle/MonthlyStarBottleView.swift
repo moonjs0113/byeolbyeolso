@@ -49,10 +49,12 @@ struct MonthlyStarBottleView: View {
                 StarBottleView(
                     records: store.records,
                     decorationData: store.decorationData,
-                    starBottleAction: $store.starBottleAction
-                ) {
-                    store.send(.didTapStarBottle)
-                }
+                    viewType: .monthly,
+                    starBottleAction: $store.starBottleAction,
+                    onTapGesture:  {
+                        store.send(.didTapStarBottle)
+                    }
+                )
                 .ignoresSafeArea(.container)
             }
         }

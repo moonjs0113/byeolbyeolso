@@ -20,6 +20,10 @@ struct DefaultStateFactory: StateFactory {
         SettingStore.State(context: context)
     }
 
+    func makeFortuneState(context: FortuneStore.Context) -> FortuneStore.State {
+        FortuneStore.State(context: context)
+    }
+
     // Record
     func makeRecordEntryPointState(context: RecordEntryPointStore.Context) -> RecordEntryPointStore.State {
         RecordEntryPointStore.State(context: context)

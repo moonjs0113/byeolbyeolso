@@ -7,8 +7,9 @@
 
 public struct FortuneResponse: Decodable {
     public let targetDate: String // YYYY-MM-DD
-    public let title: String
+    public let title: String?
     public let subtitle: String
     public let content: String
     public let item: String
+    public let imageUrl: String?
 }

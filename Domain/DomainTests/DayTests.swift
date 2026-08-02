@@ -1,13 +1,12 @@
 //
 //  DayTests.swift
-//  DonmaniTests
+//  DomainTests
 //
 //  Created by 문종식 on 5/15/26.
 //
 
 import Testing
-import Domain
-@testable import Donmani
+@testable import Domain
 
 struct DayTests {
     @Test
@@ -94,6 +93,12 @@ struct DayTests {
     }
 
     @Test
+    func rawInit_invalidDate_fallsBackToToday() async throws {
+        let day = Day(year: 2026, month: 13, day: 40)
+        #expect(day == .today)
+    }
+
+    @Test
     func lastDaysOfMonths_nonLeapAndLeapYear() async throws {
         let y2025 = Day.lastDaysOfMonths(year: 2025)
         let y2024 = Day.lastDaysOfMonths(year: 2024)
@@ -109,5 +114,39 @@ struct DayTests {
         let day = Day(year: 2026, month: 5, day: 9)
         #expect(day.yyyyMMdd == "2026-05-09")
         #expect(day.yyyyMMddCompact == "20260509")
+    }
+
+    @Test
+    func toDate_roundTripsBackToDay() async throws {
+        let day = Day(year: 2026, month: 7, day: 17)
+        let date = try #require(day.toDate)
+        #expect(Day(date: date) == day)
+    }
+
+    @Test
+    func addingDays_movesBackwardIncludingMonthBoundary() async throws {
+        let startDay = Day(year: 2026, month: 7, day: 17)
+        let endDay = try #require(startDay.adding(day: -6))
+        #expect(endDay == Day(year: 2026, month: 7, day: 11))
+    }
+
+    @Test
+    func addingDays_movesAcrossYearBoundary() async throws {
+        let startDay = Day(year: 2026, month: 1, day: 1)
+        let previousDay = try #require(startDay.adding(day: -1))
+        #expect(previousDay == Day(year: 2025, month: 12, day: 31))
+    }
+
+    @Test
+    func adding_withAllNil_returnsSameDay() async throws {
+        let day = Day(year: 2026, month: 7, day: 26)
+        let sameDay = try #require(day.adding())
+        #expect(sameDay == day)
+    }
+
+    @Test
+    func weekday_returnsKoreanWeekday() async throws {
+        let day = Day(year: 2026, month: 5, day: 15)
+        #expect(day.weekday == "금")
     }
 }

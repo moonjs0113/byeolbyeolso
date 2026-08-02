@@ -32,6 +32,7 @@ struct SettingStore {
     // MARK: - Action
     enum Action: BindableAction {
         case touchDecorationButton
+        case touchNotificationButton
         case touchNoticeButton
         case touchFeedbackButton
         case touchPrivacyPolicyButton
@@ -47,6 +48,7 @@ struct SettingStore {
     // MARK: - Dependency
     @Dependency(\.rewardRepository) var rewardRepository
     @Dependency(\.recordRepository) var recordRepository
+    let notificationManager = NotificationManager()
     
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
@@ -62,6 +64,12 @@ struct SettingStore {
                     async let currentDecorationItemTask = rewardRepository.getMonthlyRewardItem(year: day.year, month: day.month )
                     let (decorationItem, currentDecorationItem) = try await (decorationItemTask, currentDecorationItemTask)
                     await send(.delegate(.pushDecoration(records ?? [], decorationItem, currentDecorationItem)))
+                }
+
+            case .touchNotificationButton:
+                GA.Click(event: .settingNotice).send()
+                return .run { _ in
+                    await notificationManager.openAppNotificationSettings()
                 }
 
             case .touchNoticeButton:

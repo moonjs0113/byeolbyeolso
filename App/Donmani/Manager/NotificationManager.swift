@@ -34,6 +34,14 @@ class NotificationManager {
             handler(settings.authorizationStatus)
         }
     }
+
+    public func getNotificationPermissionStatus() async -> UNAuthorizationStatus {
+        await withCheckedContinuation { continuation in
+            getNotificationPermissionStatus { status in
+                continuation.resume(returning: status)
+            }
+        }
+    }
     
     public func registerForRemoteNotifications() {
         DispatchQueue.main.async {
@@ -45,5 +53,14 @@ class NotificationManager {
         DispatchQueue.main.async {
             UIApplication.shared.unregisterForRemoteNotifications()
         }
+    }
+
+    @MainActor
+    public func openAppNotificationSettings() {
+        guard let appSettings = URL(string: UIApplication.openSettingsURLString),
+              UIApplication.shared.canOpenURL(appSettings) else {
+            return
+        }
+        UIApplication.shared.open(appSettings)
     }
 }

@@ -27,6 +27,9 @@ struct MainNavigationView: View {
             ))
         } destination: { store in
             switch store.case {
+            case .fortune(let store):
+                FortuneView(store: store)
+
                 // Record
             case .record(let store):
                 RecordEntryPointView(store: store) { record in

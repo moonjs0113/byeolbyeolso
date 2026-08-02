@@ -36,6 +36,8 @@ struct MainStore {
         var isPresentingAlreadyWrite: Bool = false
         var isPresentingNewStarBottle: Bool = false
         var isPresentingRewardToolTipView: Bool = false
+        var isPresentingTodayFortuneView: Bool = false
+        var isNotificationEnabled: Bool = false
         var isRequestNotificationPermission: Bool = true
         var isPresentDailyFortuneModal: Bool = false
         var shouldPushRecordAfterFortuneConfirm: Bool = false
@@ -61,6 +63,9 @@ struct MainStore {
         case binding(BindingAction<State>)
         
         case onAppear
+        case refreshNotificationPermissionStatus
+        case _updateNotificationPermissionStatus(Bool)
+        case touchEnableNotificationButton
         case checkDailyFortuneModal
         case presentDailyFortuneByNotification
         case _updateDailyFortune(Fortune)
@@ -76,23 +81,18 @@ struct MainStore {
         case delegate(Delegate)
         
         case touchDailyFortuneConfirm
+        case touchFortuneToby
+        case touchTodayFortuneConfirm
         case completeDailyFortuneDismiss
         
         case updateRewardUI(RewardItemData)
-        
-        //        case update(Update)
-        //        enum Update {
-        //            case changeBackgroundItem(Data)
-        //            case changeEffectItem(Data)
-        //            case changeDecorationItem(Int, String)
-        //            case changeBottleShapeItem(Int, BottleShape)
-        //        }
         
         enum Delegate {
             case pushSettingView
             case pushRecordEntryPointView
             case pushRecordListView
             case pushBottleCalendarView([Int: RecordCountSummary])
+            case pushFortuneView([Fortune])
             case pushRewardStartView
         }
     }
@@ -105,6 +105,7 @@ struct MainStore {
     @Dependency(\.rewardRepository) var rewardRepository
     @Dependency(\.fortuneRepository) var fortuneRepository
     @Dependency(\.settings) var settings
+    let notificationManager = NotificationManager()
     
     // MARK: - Reducer
     var body: some ReducerOf<Self> {
@@ -117,55 +118,69 @@ struct MainStore {
                 state.userName = userRepository.getUserName()
                 state.canWriteRecord = canWriteRecordUseCase()
                 state.isPresentingRewardToolTipView = settings.shouldShowRewardToolTip
-                return .run { send in
-                    let day: Day = .today
-                    let items = rewardRepository.loadEquippedItems(year: day.year, month: day.month)
-                    let backgroundRewardData: Data? = items[.background].map { try? fileRepository.loadRewardData(from: $0, resourceType: .image) }
-                    let effectRewardData: Data? = items[.effect].map { try? fileRepository.loadRewardData(from: $0, resourceType: .json) }
-                    let decorationRewardName: String? = items[.decoration].map { RewardResourceMapper(id: $0.id, category: .decoration).resource() }
-                    let decorationRewardId: Int? = items[.decoration]?.id
-                    let bottleRewardId: Int? = items[.bottle].map { $0.id }
-                    let bottleShape: BottleShape = bottleRewardId.map { BottleShape(id: $0) } ?? .default
-                    let decorationData = DecorationData(
-                        backgroundRewardData: backgroundRewardData,
-                        effectRewardData: effectRewardData,
-                        decorationRewardName: decorationRewardName,
-                        decorationRewardId: decorationRewardId,
-                        bottleRewardId: bottleRewardId,
-                        bottleShape: bottleShape
-                    )
-                    await send(.fetchRewardItem(decorationData))
-                    
-                    let itemData = makeRewardItemData(items: items)
-                    await send(.updateRewardUI(itemData))
-                    
-                    let hasTodayRecord = recordRepository.load(date: .today).isSome
-                    let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
-                    if (hasTodayRecord && !hasYesterdayRecord) {
-                        await send(.checkToolTip)
+                return .merge(
+                    .send(.refreshNotificationPermissionStatus),
+                    .run { send in
+                        let day: Day = .today
+                        let items = rewardRepository.loadEquippedItems(year: day.year, month: day.month)
+                        let backgroundRewardData: Data? = items[.background].map { try? fileRepository.loadRewardData(from: $0, resourceType: .image) }
+                        let effectRewardData: Data? = items[.effect].map { try? fileRepository.loadRewardData(from: $0, resourceType: .json) }
+                        let decorationState = DecorationData.resolvedDecorationState(from: items[.decoration])
+                        let bottleRewardId: Int? = items[.bottle].map { $0.id }
+                        let bottleShape: BottleShape = bottleRewardId.map { BottleShape(id: $0) } ?? .default
+                        let decorationData = DecorationData(
+                            backgroundRewardData: backgroundRewardData,
+                            effectRewardData: effectRewardData,
+                            decorationRewardName: decorationState.decorationRewardName,
+                            decorationRewardId: decorationState.decorationRewardId,
+                            showsDefaultFortuneToby: decorationState.showsDefaultFortuneToby,
+                            bottleRewardId: bottleRewardId,
+                            bottleShape: bottleShape
+                        )
+                        await send(.fetchRewardItem(decorationData))
+                        
+                        let itemData = makeRewardItemData(items: items)
+                        await send(.updateRewardUI(itemData))
+                        
+                        let hasTodayRecord = recordRepository.load(date: .today).isSome
+                        let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
+                        if (hasTodayRecord && !hasYesterdayRecord) {
+                            await send(.checkToolTip)
+                        }
+                        await send(.checkDailyFortuneModal)
                     }
-                    await send(.checkDailyFortuneModal)
+                )
+                
+            case .refreshNotificationPermissionStatus:
+                return .run { send in
+                    let status = await notificationManager.getNotificationPermissionStatus()
+                    await send(._updateNotificationPermissionStatus(status == .authorized))
                 }
-
+                
+            case ._updateNotificationPermissionStatus(let isEnabled):
+                state.isNotificationEnabled = isEnabled
+                
             case .checkDailyFortuneModal:
                 let shouldShowByNotification = settings.shouldShowFortuneByNotification
-                let today = Day.today.yyyyMMddCompact
-                let shouldShowByDay = settings.lastFortuneDay != today
-                guard shouldShowByNotification || shouldShowByDay else {
+                let shouldShowInitialModal = settings.shouldShowInitialFortuneModal
+                guard shouldShowByNotification || shouldShowInitialModal else {
                     return .none
                 }
                 state.shouldPushRecordAfterFortuneConfirm = shouldShowByNotification
-                    ? settings.shouldPushRecordAfterFortuneConfirm
-                    : false
+                ? settings.shouldPushRecordAfterFortuneConfirm
+                : false
                 settings.shouldShowFortuneByNotification = false
+                if !shouldShowByNotification {
+                    settings.shouldShowInitialFortuneModal = false
+                }
                 let readSource: FortuneReadSource = shouldShowByNotification ? .notification : .appDirection
                 return requestDailyFortuneEffect(readSource: readSource)
-
+                
             case .presentDailyFortuneByNotification:
                 state.shouldPushRecordAfterFortuneConfirm = settings.shouldPushRecordAfterFortuneConfirm
                 settings.shouldShowFortuneByNotification = false
                 return requestDailyFortuneEffect(readSource: .notification)
-
+                
             case ._updateDailyFortune(let fortune):
                 state.dailyFortune = fortune
                 state.isPresentDailyFortuneModal = true
@@ -184,9 +199,12 @@ struct MainStore {
                 state.isPresentingNewStarBottle = false
                 UINavigationController.isBlockSwipe = false
                 return .run { send in
-                    let year2025 = try await recordRepository.getYearlyRecordSummary(year: 2025)
-                    let year2026 = try await recordRepository.getYearlyRecordSummary(year: 2026)
-                    let result = [2025: year2025, 2026: year2026]
+                    async let year2025 = recordRepository.getYearlyRecordSummary(year: 2025)
+                    async let year2026 = recordRepository.getYearlyRecordSummary(year: 2026)
+                    let result = [
+                        2025: try await year2025,
+                        2026: try await year2026
+                    ]
                     await send(.delegate(.pushBottleCalendarView(result)))
                 }
                 
@@ -228,6 +246,19 @@ struct MainStore {
                     }
                 }
                 
+            case .touchTodayFortuneConfirm:
+                state.isPresentingTodayFortuneView = false
+                return requestWeeklyFortuneEffect()
+                
+            case .touchFortuneToby:
+                return requestWeeklyFortuneEffect()
+                
+            case .touchEnableNotificationButton:
+                GA.Click(event: .settingNotice).send()
+                return .run { _ in
+                    await notificationManager.openAppNotificationSettings()
+                }
+                
             case .completeDailyFortuneDismiss:
                 state.shouldPushRecordAfterFortuneConfirm = false
                 
@@ -241,6 +272,19 @@ struct MainStore {
 }
 
 extension MainStore {
+    func requestWeeklyFortuneEffect() -> Effect<MainStore.Action> {
+        .run { send in
+            let endDay: Day = .today
+            let startDay = endDay.adding(day: -6) ?? endDay
+            let fortunes = try await fortuneRepository.getFortunes(
+                startDay: startDay,
+                endDay: endDay
+            )
+            .sorted { $0.day < $1.day }
+            await send(.delegate(.pushFortuneView(fortunes)))
+        }
+    }
+
     func requestDailyFortuneEffect(readSource: FortuneReadSource) -> Effect<MainStore.Action> {
         .run { send in
             do {
@@ -252,7 +296,7 @@ extension MainStore {
             }
         }
     }
-
+    
     func makeRewardItemData(items: [RewardItemCategory: Reward]) -> RewardItemData {
         var decorationItemId: Int? = nil
         var decorationItemName: String? = nil

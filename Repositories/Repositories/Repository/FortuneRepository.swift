@@ -26,6 +26,18 @@ struct DefaultFortuneRepository: FortuneRepository {
         return response.toDomain()
     }
     
+    func getFortunes(
+        startDay: Day,
+        endDay: Day,
+    ) async throws -> [Fortune] {
+        let response = try await api.getFortuneList(
+            userKey: userKey,
+            startDate: startDay.yyyyMMdd,
+            endDate: endDay.yyyyMMdd
+        )
+        return response.map { $0.toDomain() }
+    }
+    
     func putFortuneRead(readSource: FortuneReadSource) async throws {
         try await api.putFortuneRead(
             userKey: userKey,

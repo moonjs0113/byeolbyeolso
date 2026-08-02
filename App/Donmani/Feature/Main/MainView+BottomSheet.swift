@@ -112,4 +112,63 @@ extension MainView {
             .padding(.top, -10)
         }
     }
+    
+    func TodayFortuneView(isNotificationEnabled: Bool?) -> some View {
+        BottomSheetView(
+            addCancelButton: false,
+            closeAction: { }
+        ) { dismissSheet in
+            VStack(spacing: .s3) {
+                VStack(spacing: 8) {
+                    DText(
+                        "저 왔어요! 오늘의 운세 🍀",
+                        style: .h1,
+                        weight: .bold,
+                        color: ColorPalette.Primary.deepBlue99
+                    )
+                    .lineSpacing(.s5/2)
+                    DText(
+                        "오늘, 무슨 일이 생길까요?\n토비 요정이 알려주는 운세 확인해보세요!",
+                        style: .b1,
+                        weight: .regular,
+                        color: ColorPalette.Neutral.gray95
+                    )
+                    .lineSpacing(.s5/2)
+                    .multilineTextAlignment(.center)
+                }
+                
+                VStack(spacing: 0) {
+                    DImage(DImageAsset.todayFortune)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    VStack(spacing: 8) {
+                        DButton(title: "오늘의 내 행운은?") {
+                            store.send(.touchTodayFortuneConfirm)
+                        }
+                        
+                        if !(isNotificationEnabled ?? false) {
+                            Button {
+                                store.send(.touchEnableNotificationButton)
+                            } label: {
+                                ZStack {
+                                    RoundedRectangle(
+                                        cornerRadius: .s5,
+                                        style: .continuous
+                                    )
+                                    .fill(ColorPalette.Primary.deepBlue50)
+                                    DText(
+                                        "알림 켜기",
+                                        style: .h3,
+                                        weight: .bold,
+                                        color: .white
+                                    )
+                                }
+                            }
+                            .frame(height: 58)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

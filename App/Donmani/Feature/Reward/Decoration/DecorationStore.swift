@@ -29,11 +29,20 @@ struct DecorationStore {
             selectedCategory: RewardItemCategory,
             decorationData: DecorationData
         ) {
+            let normalizedCurrentDecorationItem = RewardItemCategory.allCases
+                .reduce(
+                    into: currentDecorationItem.reduce(into: [:]) { result, item in
+                        result[item.category] = item
+                    }
+                ) { result, category in
+                    guard result[category] == nil else {
+                        return
+                    }
+                    result[category] = decorationItem[category]?.first { $0.name.contains("기본") }
+                }
             self.records = records
             self.decorationItem = decorationItem
-            self.currentDecorationItem = currentDecorationItem.reduce(into: [:]) { result, item in
-                result[item.category] = item
-            }
+            self.currentDecorationItem = normalizedCurrentDecorationItem
             self.selectedCategory = selectedCategory
             self.decorationData = decorationData
         }
@@ -188,15 +197,14 @@ struct DecorationStore {
                 state.selectedRewardItemCategory = category
                 
             case .touchRewardItem(let category, let item):
-                guard let previousItem = state.selectedDecorationItem[category] else {
-                    return .none
-                }
-                if (previousItem.id == item.id) {
+                if state.selectedDecorationItem[category]?.id == item.id {
                     return .none
                 }
                 state.selectedDecorationItem[category] = item
-                let diffCount = state.previousDecorationItem.compactMap { (key, item) in
-                    (state.selectedDecorationItem[key]?.id ?? 0) == (item.id) ? nil : 0
+                let diffCount = RewardItemCategory.allCases.compactMap { category in
+                    let previousItemId = state.previousDecorationItem[category]?.id
+                    let selectedItemId = state.selectedDecorationItem[category]?.id
+                    return previousItemId == selectedItemId ? nil : 0
                 }.count
                 state.disabledSaveButton = (diffCount == 0)
                 if (item.id == 23 && !item.hiddenRead) {

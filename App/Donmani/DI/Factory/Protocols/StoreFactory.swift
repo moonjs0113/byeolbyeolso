@@ -10,6 +10,7 @@ import ComposableArchitecture
 protocol StoreFactory {
     func makeMainNavigationStore(state: MainNavigationStore.State) -> StoreOf<MainNavigationStore>
     func makeSettingStore(state: SettingStore.State) -> StoreOf<SettingStore>
+    func makeFortuneStore(state: FortuneStore.State) -> StoreOf<FortuneStore>
 
     // Record
     func makeRecordEntryPointStore(state: RecordEntryPointStore.State) -> StoreOf<RecordEntryPointStore>

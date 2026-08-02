@@ -6,18 +6,20 @@
 //
 
 import SwiftUI
+import UIKit
 import ComposableArchitecture
 import DesignSystem
 import Domain
 
 struct MainView: View {
     @EnvironmentObject private var toastManager: ToastManager
+    @Environment(\.scenePhase) private var scenePhase
     @Bindable var store: StoreOf<MainStore>
     
     var body: some View {
         ZStack {
             VStack {
-                VStack(spacing: .s1) {
+                VStack(spacing: .s3) {
                     DNavigationBar(
                         leading: {
                             DNavigationBarButton(.image(.setting)) {
@@ -71,25 +73,40 @@ struct MainView: View {
                 RewardToolTipView()
             }
             
+            if store.isPresentingTodayFortuneView {
+                TodayFortuneView(
+                    isNotificationEnabled: store.isNotificationEnabled
+                )
+            }
+            
             if store.isLoading {
                 Color.black.opacity(0.1)
                     .ignoresSafeArea()
             }
         }
-        .safeAreaPadding()
+        .safeAreaPadding(.bottom)
         .background {
             StarBottleView(
                 records: store.records,
                 decorationData: store.decorationData,
-                starBottleAction: $store.starBottleAction
-            ) {
-                GA.Click(event: .mainRecordArchiveButton).send()
-                store.send(.delegate(.pushRecordListView))
-            }
+                starBottleAction: $store.starBottleAction,
+                onFortuneTobyTapGesture: {
+                    store.send(.touchFortuneToby)
+                },
+                onTapGesture: {
+                    GA.Click(event: .mainRecordArchiveButton).send()
+                    store.send(.delegate(.pushRecordListView))
+                }
+            )
             .ignoresSafeArea(.container)
         }
         .onAppear {
             store.send(.onAppear)
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                store.send(.refreshNotificationPermissionStatus)
+            }
         }
         .modal(
             isPresented: $store.isPresentDailyFortuneModal,

@@ -11,6 +11,7 @@ protocol StateFactory {
     func makeMainNavigationState(mainState: MainStore.State) -> MainNavigationStore.State
     func makeMainState(context: MainStore.Context) -> MainStore.State
     func makeSettingState(context: SettingStore.Context) -> SettingStore.State
+    func makeFortuneState(context: FortuneStore.Context) -> FortuneStore.State
 
     // Record
     func makeRecordEntryPointState(context: RecordEntryPointStore.Context) -> RecordEntryPointStore.State

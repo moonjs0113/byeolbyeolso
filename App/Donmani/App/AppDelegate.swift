@@ -30,25 +30,29 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         UNUserNotificationCenter.current().delegate = self
         
         // Firebase
-        FirebaseApp.configure()
 #if DEBUG
         FirebaseConfiguration.shared.setLoggerLevel(.min)
-#endif
+#else
+        FirebaseApp.configure()
         Messaging.messaging().delegate = self
         Messaging.messaging().isAutoInitEnabled = true
-        
+#endif
         if let windowScene = application.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first {
             window.overrideUserInterfaceStyle = .light
         }
         
         // Google AdMob
+#if DEBUG
         MobileAds.shared.start()
-//        MobileAds.shared.requestConfiguration.testDeviceIdentifiers = [ "ec365e0096743d5ba2d70e77b9ec2b76"]
+        MobileAds.shared.requestConfiguration.testDeviceIdentifiers = [ "ec365e0096743d5ba2d70e77b9ec2b76"]
+#else
+        MobileAds.shared.start()
+#endif
         
         return true
     }
-
+    
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return .portrait
     }

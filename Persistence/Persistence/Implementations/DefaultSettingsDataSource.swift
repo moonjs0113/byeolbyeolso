@@ -29,6 +29,7 @@ public final class DefaultSettingsDataSource: SettingsDataSource {
         case lastNewBottleGuideDay
         case shouldShowRewardToolTip
         case lastFortuneDay
+        case shouldShowInitialFortuneModal
         case shouldShowFortuneByNotification
         case shouldPushRecordAfterFortuneConfirm
         case appVersion
@@ -133,6 +134,11 @@ public final class DefaultSettingsDataSource: SettingsDataSource {
     public var lastFortuneDay: String {
         get { string(for: .lastFortuneDay, defaultValue: "00000000") }
         set { userDefaults.set(newValue, forKey: Key.lastFortuneDay.rawValue) }
+    }
+
+    public var shouldShowInitialFortuneModal: Bool {
+        get { bool(for: .shouldShowInitialFortuneModal, defaultValue: true) }
+        set { userDefaults.set(newValue, forKey: Key.shouldShowInitialFortuneModal.rawValue) }
     }
 
     public var shouldShowFortuneByNotification: Bool {

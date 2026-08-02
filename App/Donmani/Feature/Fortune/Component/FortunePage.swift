@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Kingfisher
 import DesignSystem
 import Domain
 
@@ -113,7 +114,7 @@ struct FortunePage: View {
                 fortune: fortune,
                 isFlipped: isFlipped
             )
-            .frame(height: 300)
+            .frame(height: 313)
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: .s5,
@@ -273,7 +274,7 @@ private struct FortuneFlipCard: View, Animatable {
     var body: some View {
         ZStack {
             if progress < 0.5 {
-                cardBackground(ColorPalette.Semantic.dailyFortuneBackground)
+                frontCardFace
                     .scaleEffect(
                         x: max(0.001, 1 - (progress * 2)),
                         y: 1,
@@ -291,9 +292,26 @@ private struct FortuneFlipCard: View, Animatable {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    @ViewBuilder
+    private var frontCardFace: some View {
+        if let imageURL = URL(string: fortune.imageUrl), !fortune.imageUrl.isEmpty {
+            KFImage(imageURL)
+                .placeholder {
+                    cardBackground(ColorPalette.Semantic.dailyFortuneBackground)
+                }
+                .cancelOnDisappear(false)
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipped()
+        } else {
+            cardBackground(ColorPalette.Semantic.dailyFortuneBackground)
+        }
+    }
+
     private func cardBackground(_ color: Color) -> some View {
         RoundedRectangle(
-            cornerRadius: .s5,
+            cornerRadius: .s3,
             style: .continuous
         )
         .fill(color)

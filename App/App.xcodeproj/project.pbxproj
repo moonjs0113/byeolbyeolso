@@ -27,6 +27,7 @@
 		C7A5DA922D7D6ED100C3BC6D /* DesignSystem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; };
 		C7A5DA932D7D6ED100C3BC6D /* DesignSystem.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C7BF8A342D50F4F600ACE68D /* DesignSystem.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = C7A6A2952D4A89D500B4CF35 /* ComposableArchitecture */; };
+		C7B4A157301F839B000CAF2D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C7B4A156301F839B000CAF2D /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +126,7 @@
 			files = (
 				C7A6A2962D4A89D500B4CF35 /* ComposableArchitecture in Frameworks */,
 				C72CD4B62D92FCAC00274F37 /* FirebaseMessaging in Frameworks */,
+				C7B4A157301F839B000CAF2D /* Kingfisher in Frameworks */,
 				C70523B02FDBFA1300988FA5 /* Persistence.framework in Frameworks */,
 				C70523952FDBE58A00988FA5 /* Repositories.framework in Frameworks */,
 				C70523922FDBE57800988FA5 /* Core.framework in Frameworks */,
@@ -221,6 +223,7 @@
 				C72CD4B52D92FCAC00274F37 /* FirebaseMessaging */,
 				C7199C0F2EB786A200926C94 /* GoogleMobileAds */,
 				C7322540300CEFC900308BB6 /* Lottie */,
+				C7B4A156301F839B000CAF2D /* Kingfisher */,
 			);
 			productName = Donmani;
 			productReference = C7A6A24E2D4A826B00B4CF35 /* Donmani.app */;
@@ -309,6 +312,7 @@
 				C72CD4AE2D92FCAC00274F37 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C7199C0E2EB786A200926C94 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				C732253F300CEFC900308BB6 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				C7B4A155301F839B000CAF2D /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C7A6A24F2D4A826B00B4CF35 /* Products */;
@@ -727,6 +731,14 @@
 				version = 1.18.0;
 			};
 		};
+		C7B4A155301F839B000CAF2D /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = exactVersion;
+				version = 8.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -764,6 +776,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C7A6A2942D4A89D500B4CF35 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		C7B4A156301F839B000CAF2D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C7B4A155301F839B000CAF2D /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

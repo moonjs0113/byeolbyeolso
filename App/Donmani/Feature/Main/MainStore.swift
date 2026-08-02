@@ -127,8 +127,14 @@ struct MainStore {
                         let items = rewardRepository.loadEquippedItems(year: day.year, month: day.month)
                         let backgroundRewardData: Data? = items[.background].map { try? fileRepository.loadRewardData(from: $0, resourceType: .image) }
                         let effectRewardData: Data? = items[.effect].map { try? fileRepository.loadRewardData(from: $0, resourceType: .json) }
-                        let decorationRewardName: String? = items[.decoration].map { RewardResourceMapper(id: $0.id, category: .decoration).resource() }
-                        let decorationRewardId: Int? = items[.decoration]?.id
+                        let equippedDecorationItem = items[.decoration]
+                        let showsDefaultFortuneToby = equippedDecorationItem.map(\.id) != 23
+                        let decorationRewardName: String? = equippedDecorationItem
+                            .filter { $0.id != 3 }
+                            .map { RewardResourceMapper(id: $0.id, category: .decoration).resource() }
+                        let decorationRewardId: Int? = equippedDecorationItem
+                            .map(\.id)
+                            .flatMap { $0 == 3 ? nil : $0 }
                         let bottleRewardId: Int? = items[.bottle].map { $0.id }
                         let bottleShape: BottleShape = bottleRewardId.map { BottleShape(id: $0) } ?? .default
                         let decorationData = DecorationData(
@@ -136,6 +142,7 @@ struct MainStore {
                             effectRewardData: effectRewardData,
                             decorationRewardName: decorationRewardName,
                             decorationRewardId: decorationRewardId,
+                            showsDefaultFortuneToby: showsDefaultFortuneToby,
                             bottleRewardId: bottleRewardId,
                             bottleShape: bottleShape
                         )
@@ -249,7 +256,13 @@ struct MainStore {
             case .touchTodayFortuneConfirm:
                 state.isPresentingTodayFortuneView = false
                 return .run { send in
-                    let fortunes = makeFortunes()
+                    let endDay: Day = .today
+                    let startDay = endDay.adding(day: -6) ?? endDay
+                    let fortunes = try await fortuneRepository.getFortunes(
+                        startDay: startDay,
+                        endDay: endDay
+                    )
+                    .sorted { $0.day < $1.day }
                     await send(.delegate(.pushFortuneView(fortunes)))
                 }
                 
@@ -272,28 +285,6 @@ struct MainStore {
 }
 
 extension MainStore {
-    /// TEMP Function
-    func makeFortunes() -> [Fortune] {
-        return (0..<7)
-            .compactMap { offset in
-                Calendar.current.date(byAdding: .day, value: -(6 - offset), to: Date.now)
-            }
-            .map { date in
-                let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-                return Fortune(
-                    day: Day(
-                        year: components.year ?? 0,
-                        month: components.month ?? 0,
-                        day: components.day ?? 0
-                    ),
-                    title: "새로운 한 주를 시작하는 당신에게 행운이 배달돼요!📦",
-                    subtitle: "",
-                    content: "새로운 달이 시작되었으니 오늘은 가벼운 마음으로 지갑 속 영수증을 정리하며 마음을 정돈해 보세요. 깨끗해진 지갑만큼 이번 달에는 기분 좋은 소비 행운이 가득 들어올 것만 같은 예감이 들거든요.",
-                    item: "연두색"
-                )
-            }
-    }
-    
     func requestDailyFortuneEffect(readSource: FortuneReadSource) -> Effect<MainStore.Action> {
         .run { send in
             do {

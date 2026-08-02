@@ -13,14 +13,24 @@ struct DecorationData {
     let effectRewardData: Data?
     let decorationRewardName: String?
     let decorationRewardId: Int?
+    let showsDefaultFortuneToby: Bool
     let bottleRewardId: Int?
     let bottleShape: BottleShape
     
-    init(backgroundRewardData: Data?, effectRewardData: Data?, decorationRewardName: String?, decorationRewardId: Int?, bottleRewardId: Int?, bottleShape: BottleShape) {
+    init(
+        backgroundRewardData: Data?,
+        effectRewardData: Data?,
+        decorationRewardName: String?,
+        decorationRewardId: Int?,
+        showsDefaultFortuneToby: Bool = true,
+        bottleRewardId: Int?,
+        bottleShape: BottleShape
+    ) {
         self.backgroundRewardData = backgroundRewardData
         self.effectRewardData = effectRewardData
         self.decorationRewardName = decorationRewardName
         self.decorationRewardId = decorationRewardId
+        self.showsDefaultFortuneToby = showsDefaultFortuneToby
         self.bottleRewardId = bottleRewardId
         self.bottleShape = bottleShape
     }

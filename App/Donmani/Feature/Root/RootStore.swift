@@ -153,8 +153,14 @@ struct RootStore {
     func convertDecorationData(items: [RewardItemCategory: Reward]) -> DecorationData {
         let backgroundRewardData: Data? = items[.background].map { try? fileRepository.loadRewardData(from: $0, resourceType: .image) }
         let effectRewardData: Data? = items[.effect].map { try? fileRepository.loadRewardData(from: $0, resourceType: .json) }
-        let decorationRewardName: String? = items[.decoration].map { RewardResourceMapper(id: $0.id, category: .decoration).resource() }
-        let decorationRewardId: Int? = items[.decoration]?.id
+        let equippedDecorationItem = items[.decoration]
+        let showsDefaultFortuneToby = equippedDecorationItem.map(\.id) != 23
+        let decorationRewardName: String? = equippedDecorationItem
+            .filter { $0.id != 3 }
+            .map { RewardResourceMapper(id: $0.id, category: .decoration).resource() }
+        let decorationRewardId: Int? = equippedDecorationItem
+            .map(\.id)
+            .flatMap { $0 == 3 ? nil : $0 }
         let bottleRewardId: Int? = items[.bottle].map { $0.id }
         let bottleShape: BottleShape = bottleRewardId.map { BottleShape(id: $0) } ?? .default
         return DecorationData(
@@ -162,6 +168,7 @@ struct RootStore {
             effectRewardData: effectRewardData,
             decorationRewardName: decorationRewardName,
             decorationRewardId: decorationRewardId,
+            showsDefaultFortuneToby: showsDefaultFortuneToby,
             bottleRewardId: bottleRewardId,
             bottleShape: bottleShape
         )

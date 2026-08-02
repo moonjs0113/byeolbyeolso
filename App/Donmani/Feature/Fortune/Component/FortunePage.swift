@@ -323,7 +323,8 @@ private struct PreviewFortunePage: View {
                 title: "\(day.day)일 운세",
                 subtitle: "",
                 content: "",
-                item: ""
+                item: "",
+                imageUrl: ""
             )
         }
 

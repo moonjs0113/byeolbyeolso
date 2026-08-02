@@ -96,7 +96,8 @@ struct FortuneView: View {
                                 title: "새로운 한 주를 시작하는 당신에게 행운이 배달돼요!📦",
                                 subtitle: "",
                                 content: "새로운 달이 시작되었으니 오늘은 가벼운 마음으로 지갑 속 영수증을 정리하며 마음을 정돈해 보세요. 깨끗해진 지갑만큼 이번 달에는 기분 좋은 소비 행운이 가득 들어올 것만 같은 예감이 들거든요.",
-                                item: "연두색"
+                                item: "연두색",
+                                imageUrl: ""
                             )
                         },
                     referenceToday: .today,

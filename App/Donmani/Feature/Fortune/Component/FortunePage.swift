@@ -109,7 +109,10 @@ struct FortunePage: View {
         let recordButtonLabel = recordButtonLabel(for: fortune.day)
 
         VStack(spacing: 16) {
-            FortuneFlipCard(isFlipped: isFlipped)
+            FortuneFlipCard(
+                fortune: fortune,
+                isFlipped: isFlipped
+            )
             .frame(height: 300)
             .clipShape(
                 RoundedRectangle(
@@ -141,7 +144,7 @@ struct FortunePage: View {
                     color: Color.white
                 )
                 DText(
-                    fortune.title,
+                    fortune.subtitle,
                     style: .h2,
                     weight: .bold,
                     color: Color.white
@@ -251,9 +254,14 @@ struct FortunePage: View {
 }
 
 private struct FortuneFlipCard: View, Animatable {
+    let fortune: Fortune
     var progress: CGFloat
 
-    init(isFlipped: Bool) {
+    init(
+        fortune: Fortune,
+        isFlipped: Bool
+    ) {
+        self.fortune = fortune
         self.progress = isFlipped ? 1 : 0
     }
 
@@ -265,14 +273,14 @@ private struct FortuneFlipCard: View, Animatable {
     var body: some View {
         ZStack {
             if progress < 0.5 {
-                cardFace(ColorPalette.Semantic.dailyFortuneBackground)
+                cardBackground(ColorPalette.Semantic.dailyFortuneBackground)
                     .scaleEffect(
                         x: max(0.001, 1 - (progress * 2)),
                         y: 1,
                         anchor: .center
                     )
             } else {
-                cardFace(ColorPalette.Primary.deepBlue20)
+                cardContent
                     .scaleEffect(
                         x: max(0.001, (progress - 0.5) * 2),
                         y: 1,
@@ -283,14 +291,53 @@ private struct FortuneFlipCard: View, Animatable {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    @ViewBuilder
-    private func cardFace(_ color: Color) -> some View {
+    private func cardBackground(_ color: Color) -> some View {
         RoundedRectangle(
             cornerRadius: .s5,
             style: .continuous
         )
         .fill(color)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var cardContent: some View {
+        VStack(spacing: 16) {
+            HStack(spacing: 8) {
+                DImage(DImageAsset.dailyFortune)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 68, height: 68)
+                VStack(
+                    alignment: .leading,
+                    spacing: 4
+                ) {
+                    DText("토비 요정이 전해주는", style: .b2, weight: .medium, color: .fromHex("#806AEB"))
+                        .multilineTextAlignment(.leading)
+                    DText(fortune.day.fortuneDate, style: .h3, weight: .bold, color: .fromHex("#04091E"))
+                        .multilineTextAlignment(.leading)
+                }
+                Spacer()
+            }
+            DText(fortune.content, style: .b1, weight: .regular, color: .fromHex("#04091E"))
+                .lineSpacing(8)
+            HStack {
+                DText("⭐️ \(fortune.item)", style: .b3, weight: .medium, color: .fromHex("#FFFFFF"))
+                    .kerning(-0.5)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 8)
+                    .background {
+                        Capsule()
+                            .fill(Color.fromHex("#6045E6"))
+                    }
+                Spacer()
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(20)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            cardBackground(ColorPalette.Semantic.dailyFortuneBackground)
+        }
     }
 }
 

@@ -81,6 +81,7 @@ struct MainStore {
         case delegate(Delegate)
         
         case touchDailyFortuneConfirm
+        case touchFortuneToby
         case touchTodayFortuneConfirm
         case completeDailyFortuneDismiss
         
@@ -255,16 +256,10 @@ struct MainStore {
                 
             case .touchTodayFortuneConfirm:
                 state.isPresentingTodayFortuneView = false
-                return .run { send in
-                    let endDay: Day = .today
-                    let startDay = endDay.adding(day: -6) ?? endDay
-                    let fortunes = try await fortuneRepository.getFortunes(
-                        startDay: startDay,
-                        endDay: endDay
-                    )
-                    .sorted { $0.day < $1.day }
-                    await send(.delegate(.pushFortuneView(fortunes)))
-                }
+                return requestWeeklyFortuneEffect()
+                
+            case .touchFortuneToby:
+                return requestWeeklyFortuneEffect()
                 
             case .touchEnableNotificationButton:
                 GA.Click(event: .settingNotice).send()
@@ -285,6 +280,19 @@ struct MainStore {
 }
 
 extension MainStore {
+    func requestWeeklyFortuneEffect() -> Effect<MainStore.Action> {
+        .run { send in
+            let endDay: Day = .today
+            let startDay = endDay.adding(day: -6) ?? endDay
+            let fortunes = try await fortuneRepository.getFortunes(
+                startDay: startDay,
+                endDay: endDay
+            )
+            .sorted { $0.day < $1.day }
+            await send(.delegate(.pushFortuneView(fortunes)))
+        }
+    }
+
     func requestDailyFortuneEffect(readSource: FortuneReadSource) -> Effect<MainStore.Action> {
         .run { send in
             do {

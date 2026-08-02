@@ -89,11 +89,15 @@ struct MainView: View {
             StarBottleView(
                 records: store.records,
                 decorationData: store.decorationData,
-                starBottleAction: $store.starBottleAction
-            ) {
-                GA.Click(event: .mainRecordArchiveButton).send()
-                store.send(.delegate(.pushRecordListView))
-            }
+                starBottleAction: $store.starBottleAction,
+                onFortuneTobyTapGesture: {
+                    store.send(.touchFortuneToby)
+                },
+                onTapGesture: {
+                    GA.Click(event: .mainRecordArchiveButton).send()
+                    store.send(.delegate(.pushRecordListView))
+                }
+            )
             .ignoresSafeArea(.container)
         }
         .onAppear {

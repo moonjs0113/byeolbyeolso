@@ -77,6 +77,7 @@ struct StarBottleView: View {
     }
     
     private let onTapGesture: (() -> Void)?
+    private let onFortuneTobyTapGesture: (() -> Void)?
     
     @Binding private var starBottleAction: StarBottleAction
     
@@ -109,6 +110,7 @@ struct StarBottleView: View {
         decorationData: DecorationData,
         viewType: StarBottleViewType = .default,
         starBottleAction: Binding<StarBottleAction> = .constant(.none),
+        onFortuneTobyTapGesture: (() -> Void)? = nil,
         onTapGesture: (() -> Void)? = nil
     ) {
         self.records = records
@@ -131,6 +133,7 @@ struct StarBottleView: View {
         self.bottleRewardId = decorationData.bottleRewardId
         self.bottleShape = decorationData.bottleShape
         
+        self.onFortuneTobyTapGesture = onFortuneTobyTapGesture
         self.onTapGesture = onTapGesture
     }
 
@@ -154,11 +157,14 @@ struct StarBottleView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: viewType == .decoration ? Self.width * 0.24 : Self.width * 0.28)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        onFortuneTobyTapGesture?()
+                    }
                 Spacer()
             }
             Spacer()
         }
-        .allowsHitTesting(false)
         .offset(
             x: viewType == .decoration ? -(Self.width / 5.5) : -(Self.width / 12),
             y: viewType == .decoration ? -(Self.width / 14) : -(Self.width / 5)
@@ -172,6 +178,10 @@ struct StarBottleView: View {
                     .resizable()
                     .aspectRatio(0.67, contentMode: .fit)
                     .frame(height: .screenWidth * 0.27)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        onFortuneTobyTapGesture?()
+                    }
                     .offset(
                         x: spaceVacanceItemOffset.x,
                         y: spaceVacanceItemOffset.y

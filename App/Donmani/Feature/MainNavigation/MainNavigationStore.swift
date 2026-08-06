@@ -13,13 +13,27 @@ import Domain
 
 @Reducer
 struct MainNavigationStore {
+    enum HomeEvent {
+        case onboardingEnd
+        case notificationPermission
+        case fortune
+        case newStarBottle
+    }
     
     @ObservableState
     struct State {
         var mainState: MainStore.State
         var path = StackState<MainNavigationStore.Path.State>()
+        var currentHomeEvent: HomeEvent? = nil
+        var shouldShowOnboardingEndHomeEvent: Bool
+        var shouldShowNewStarBottleHomeEvent: Bool
         
         init(mainState: MainStore.State) {
+            self.shouldShowOnboardingEndHomeEvent = mainState.isPresentingAlreadyWrite
+            self.shouldShowNewStarBottleHomeEvent = mainState.isPresentingNewStarBottle
+            var mainState = mainState
+            mainState.isPresentingAlreadyWrite = false
+            mainState.isPresentingNewStarBottle = false
             self.mainState = mainState
         }
     }
@@ -36,6 +50,8 @@ struct MainNavigationStore {
         case requestNotificationPermission
         case presentCancelBottom
         case receiveFortuneNotification
+        case processHomeEvents
+        case completeHomeEvent(shouldContinueImmediately: Bool)
         
         case changeStarBottleOpacity
         
@@ -131,6 +147,15 @@ struct MainNavigationStore {
                         let hasYesterdayRecord = recordRepository.load(date: .yesterday).isSome
                         await send(.push(.rewardStart(feedbackInfo, hasTodayRecord, hasYesterdayRecord)))
                     }
+
+                case .completeOnboardingEndHomeEvent(let shouldContinueImmediately):
+                    return .send(.completeHomeEvent(shouldContinueImmediately: shouldContinueImmediately))
+
+                case .completeFortuneHomeEvent(let shouldContinueImmediately):
+                    return .send(.completeHomeEvent(shouldContinueImmediately: shouldContinueImmediately))
+
+                case .completeNewStarBottleHomeEvent(let shouldContinueImmediately):
+                    return .send(.completeHomeEvent(shouldContinueImmediately: shouldContinueImmediately))
                 }
                 
             case .path(.element(let id, let action)):
@@ -185,6 +210,68 @@ struct MainNavigationStore {
                     await NotificationManager().checkNotificationPermission()
                     await send(.changeStarBottleOpacity)
                 }
+
+            case .processHomeEvents:
+                guard state.path.ids.isEmpty, state.currentHomeEvent == nil else {
+                    return .none
+                }
+                state.mainState.starBottleOpacity = 1.0
+
+                if state.shouldShowOnboardingEndHomeEvent {
+                    state.shouldShowOnboardingEndHomeEvent = false
+                    state.currentHomeEvent = .onboardingEnd
+                    state.mainState.isPresentingAlreadyWrite = true
+                    return .none
+                }
+
+                if settings.shouldShowRequestNotificationPermission {
+                    state.currentHomeEvent = .notificationPermission
+                    settings.shouldShowRequestNotificationPermission = false
+                    return .run { send in
+                        await NotificationManager().checkNotificationPermission()
+                        await send(.completeHomeEvent(shouldContinueImmediately: true))
+                    }
+                }
+
+                if settings.shouldShowInitialFortuneModal || settings.shouldShowFortuneByNotification {
+                    state.currentHomeEvent = .fortune
+
+                    if settings.shouldShowInitialFortuneModal {
+                        settings.shouldShowInitialFortuneModal = false
+                        settings.shouldShowFortuneByNotification = false
+                        settings.shouldPushRecordAfterFortuneConfirm = false
+                        state.mainState.shouldPushRecordAfterFortuneConfirm = false
+                        state.mainState.isPresentingTodayFortuneView = true
+                        return .none
+                    }
+
+                    let shouldPushRecordAfterFortuneConfirm = settings.shouldPushRecordAfterFortuneConfirm
+                    settings.shouldShowFortuneByNotification = false
+                    settings.shouldPushRecordAfterFortuneConfirm = false
+                    return .send(
+                        .mainAction(
+                            .presentDailyFortune(
+                                .notification,
+                                shouldPushRecordAfterFortuneConfirm
+                            )
+                        )
+                    )
+                }
+
+                if state.shouldShowNewStarBottleHomeEvent {
+                    state.shouldShowNewStarBottleHomeEvent = false
+                    state.currentHomeEvent = .newStarBottle
+                    state.mainState.isPresentingNewStarBottle = true
+                    return .none
+                }
+                return .none
+                
+            case .completeHomeEvent(let shouldContinueImmediately):
+                state.currentHomeEvent = nil
+                if shouldContinueImmediately {
+                    return .send(.processHomeEvents)
+                }
+                return .none
                 
             case .presentCancelBottom:
                 if let lastElementID = state.path.ids.last {
@@ -205,9 +292,7 @@ struct MainNavigationStore {
 
             case .receiveFortuneNotification:
                 state.path.removeAll()
-                return .run { send in
-                    await send(.mainAction(.presentDailyFortuneByNotification))
-                }
+                return .send(.processHomeEvents)
                 
             case .changeStarBottleOpacity:
                 state.mainState.starBottleOpacity = 1.0

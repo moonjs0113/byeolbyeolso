@@ -67,7 +67,7 @@ struct FortuneFlipCard: View, Animatable {
 
     private func cardBackground(_ color: Color) -> some View {
         RoundedRectangle(
-            cornerRadius: .s3,
+            cornerRadius: .s5,
             style: .continuous
         )
         .fill(color)

@@ -47,13 +47,10 @@ struct MainNavigationStore {
         case _updateMainStatePresentingRewardToolTipFlag(Bool)
         
         case requestAppStoreReview
-        case requestNotificationPermission
         case presentCancelBottom
         case receiveFortuneNotification
         case processHomeEvents
         case completeHomeEvent(shouldContinueImmediately: Bool)
-        
-        case changeStarBottleOpacity
         
         case push(Destination)
         enum Destination {
@@ -204,12 +201,6 @@ struct MainNavigationStore {
                 return .run { _ in
                     await requestAppStoreReview()
                 }
-                
-            case .requestNotificationPermission:
-                return .run { send in
-                    await NotificationManager().checkNotificationPermission()
-                    await send(.changeStarBottleOpacity)
-                }
 
             case .processHomeEvents:
                 guard state.path.ids.isEmpty, state.currentHomeEvent == nil else {
@@ -293,9 +284,6 @@ struct MainNavigationStore {
             case .receiveFortuneNotification:
                 state.path.removeAll()
                 return .send(.processHomeEvents)
-                
-            case .changeStarBottleOpacity:
-                state.mainState.starBottleOpacity = 1.0
                 
             default:
                 break

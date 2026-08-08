@@ -41,6 +41,7 @@ struct MainStore {
         var isRequestNotificationPermission: Bool = true
         var isPresentDailyFortuneModal: Bool = false
         var shouldPushRecordAfterFortuneConfirm: Bool = false
+        var shouldWaitForHomeReturnAfterFortuneCompletion: Bool = false
         var isLoading: Bool = false
         var starBottleOpacity = 1.0
         var yOffset: CGFloat = 0
@@ -66,9 +67,9 @@ struct MainStore {
         case refreshNotificationPermissionStatus
         case _updateNotificationPermissionStatus(Bool)
         case touchEnableNotificationButton
-        case checkDailyFortuneModal
-        case presentDailyFortuneByNotification
+        case presentDailyFortune(FortuneReadSource, Bool)
         case _updateDailyFortune(Fortune)
+        case completeDailyFortuneWithoutPresentation
         case fetchRewardItem(DecorationData)
         
         case closePopover
@@ -94,6 +95,9 @@ struct MainStore {
             case pushBottleCalendarView([Int: RecordCountSummary])
             case pushFortuneView([Fortune])
             case pushRewardStartView
+            case completeOnboardingEndHomeEvent(shouldContinueImmediately: Bool)
+            case completeFortuneHomeEvent(shouldContinueImmediately: Bool)
+            case completeNewStarBottleHomeEvent(shouldContinueImmediately: Bool)
         }
     }
     
@@ -147,7 +151,6 @@ struct MainStore {
                         if (hasTodayRecord && !hasYesterdayRecord) {
                             await send(.checkToolTip)
                         }
-                        await send(.checkDailyFortuneModal)
                     }
                 )
                 
@@ -160,31 +163,20 @@ struct MainStore {
             case ._updateNotificationPermissionStatus(let isEnabled):
                 state.isNotificationEnabled = isEnabled
                 
-            case .checkDailyFortuneModal:
-                let shouldShowByNotification = settings.shouldShowFortuneByNotification
-                let shouldShowInitialModal = settings.shouldShowInitialFortuneModal
-                guard shouldShowByNotification || shouldShowInitialModal else {
-                    return .none
-                }
-                state.shouldPushRecordAfterFortuneConfirm = shouldShowByNotification
-                ? settings.shouldPushRecordAfterFortuneConfirm
-                : false
-                settings.shouldShowFortuneByNotification = false
-                if !shouldShowByNotification {
-                    settings.shouldShowInitialFortuneModal = false
-                }
-                let readSource: FortuneReadSource = shouldShowByNotification ? .notification : .appDirection
+            case .presentDailyFortune(let readSource, let shouldPushRecordAfterFortuneConfirm):
+                state.shouldPushRecordAfterFortuneConfirm = shouldPushRecordAfterFortuneConfirm
+                state.shouldWaitForHomeReturnAfterFortuneCompletion = false
                 return requestDailyFortuneEffect(readSource: readSource)
-                
-            case .presentDailyFortuneByNotification:
-                state.shouldPushRecordAfterFortuneConfirm = settings.shouldPushRecordAfterFortuneConfirm
-                settings.shouldShowFortuneByNotification = false
-                return requestDailyFortuneEffect(readSource: .notification)
                 
             case ._updateDailyFortune(let fortune):
                 state.dailyFortune = fortune
                 state.isPresentDailyFortuneModal = true
                 settings.lastFortuneDay = Day.today.yyyyMMddCompact
+
+            case .completeDailyFortuneWithoutPresentation:
+                state.shouldPushRecordAfterFortuneConfirm = false
+                state.shouldWaitForHomeReturnAfterFortuneCompletion = false
+                return .send(.delegate(.completeFortuneHomeEvent(shouldContinueImmediately: true)))
                 
             case .fetchRewardItem(let decorationData):
                 state.decorationData = decorationData
@@ -198,18 +190,22 @@ struct MainStore {
             case .dismissNewStarBottleView:
                 state.isPresentingNewStarBottle = false
                 UINavigationController.isBlockSwipe = false
-                return .run { send in
-                    async let year2025 = recordRepository.getYearlyRecordSummary(year: 2025)
-                    async let year2026 = recordRepository.getYearlyRecordSummary(year: 2026)
-                    let result = [
-                        2025: try await year2025,
-                        2026: try await year2026
-                    ]
-                    await send(.delegate(.pushBottleCalendarView(result)))
-                }
+                return .merge(
+                    .send(.delegate(.completeNewStarBottleHomeEvent(shouldContinueImmediately: false))),
+                    .run { send in
+                        async let year2025 = recordRepository.getYearlyRecordSummary(year: 2025)
+                        async let year2026 = recordRepository.getYearlyRecordSummary(year: 2026)
+                        let result = [
+                            2025: try await year2025,
+                            2026: try await year2026
+                        ]
+                        await send(.delegate(.pushBottleCalendarView(result)))
+                    }
+                )
                 
             case .dismissAlreadyWrite:
                 state.isPresentingAlreadyWrite = false
+                return .send(.delegate(.completeOnboardingEndHomeEvent(shouldContinueImmediately: true)))
                 
             case .shakeTwice:
                 if state.shakeCount >= 6 {
@@ -241,6 +237,7 @@ struct MainStore {
                 state.isPresentDailyFortuneModal = false
                 settings.shouldPushRecordAfterFortuneConfirm = false
                 if state.shouldPushRecordAfterFortuneConfirm {
+                    state.shouldWaitForHomeReturnAfterFortuneCompletion = true
                     return .run { send in
                         await send(.delegate(.pushRecordEntryPointView))
                     }
@@ -248,7 +245,10 @@ struct MainStore {
                 
             case .touchTodayFortuneConfirm:
                 state.isPresentingTodayFortuneView = false
-                return requestWeeklyFortuneEffect()
+                return .merge(
+                    .send(.delegate(.completeFortuneHomeEvent(shouldContinueImmediately: false))),
+                    requestWeeklyFortuneEffect()
+                )
                 
             case .touchFortuneToby:
                 return requestWeeklyFortuneEffect()
@@ -260,7 +260,10 @@ struct MainStore {
                 }
                 
             case .completeDailyFortuneDismiss:
+                let shouldContinueImmediately = !state.shouldWaitForHomeReturnAfterFortuneCompletion
                 state.shouldPushRecordAfterFortuneConfirm = false
+                state.shouldWaitForHomeReturnAfterFortuneCompletion = false
+                return .send(.delegate(.completeFortuneHomeEvent(shouldContinueImmediately: shouldContinueImmediately)))
                 
             default:
                 break
@@ -292,7 +295,7 @@ extension MainStore {
                 await send(._updateDailyFortune(fortune))
                 try? await fortuneRepository.putFortuneRead(readSource: readSource)
             } catch {
-                return
+                await send(.completeDailyFortuneWithoutPresentation)
             }
         }
     }

@@ -99,9 +99,6 @@ struct RootStore {
                     let mainNavigationState = stateFactory.makeMainNavigationState(mainState: mainState)
                     let mainNavigationStore = storeFactory.makeMainNavigationStore(state: mainNavigationState)
                     send(.presentMainView(mainNavigationStore))
-                    
-                    try await Task.sleep(nanoseconds: .nanosecondsPerSecond)
-                    await NotificationManager().checkNotificationPermission()
                 }
                 
             case .presentRecordEntryPointView:

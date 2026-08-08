@@ -62,12 +62,12 @@ struct MainNavigationView: View {
                 SettingView(store: store)
             }
         }
+        .onAppear {
+            navigationStore.send(.processHomeEvents)
+        }
         .onChange(of: navigationStore.path.ids) { oldPathIDs, newPathIDs in
             if newPathIDs.count.isZero {
-                Task {
-                    try await Task.sleep(nanoseconds: .nanosecondsPerSecond / 3)
-                    await navigationStore.send(.requestNotificationPermission).finish()
-                }
+                navigationStore.send(.processHomeEvents)
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .didReceivePushNavigation)) { notification in
